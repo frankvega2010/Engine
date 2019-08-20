@@ -30,4 +30,5 @@ void BaseGame::Update()
 void BaseGame::DeInit()
 {
 	window->DeInit();
+	delete window;
 }

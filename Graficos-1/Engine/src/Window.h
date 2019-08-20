@@ -3,6 +3,7 @@
 
 #define DLLEXPORT __declspec(dllexport)
 
+#include "../libs/GLEW/include/glew.h"
 #include "../libs/GLFW/include/glfw3.h"
 #include "gl/GL.h"
 
