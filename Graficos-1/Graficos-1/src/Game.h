@@ -1,7 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "../Engine/BaseGame.h"
+#include "BaseGame.h"
 
 using namespace Basegame;
 

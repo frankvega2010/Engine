@@ -4,6 +4,8 @@
 void main()
 {
 	BaseGame g;
-	g.OpenWindow();
+	g.Init();
+	g.Update();
+	g.DeInit();
 	std::cin.get();
 }

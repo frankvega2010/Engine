@@ -3,14 +3,19 @@
 
 #define DLLEXPORT __declspec(dllexport)
 
+#include "Window.h"
+
 namespace Basegame
 {
 	class DLLEXPORT BaseGame
 	{
 	private:
+		Window* window;
 	public:
+		void Init();
 		void MostrarAlgo();
-		int OpenWindow();
+		void Update();
+		void DeInit();
 	};
 }
 
