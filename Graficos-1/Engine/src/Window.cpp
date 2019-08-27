@@ -12,7 +12,7 @@ namespace Basegame
 
 	Window::~Window()
 	{
-
+		//delete window;
 	}
 
 	void Window::Init()
@@ -21,7 +21,7 @@ namespace Basegame
 		window = glfwCreateWindow(width, height, name, NULL, NULL);
 		if (!window)
 			glfwTerminate();
-
+		
 		glfwMakeContextCurrent(window);
 	}
 

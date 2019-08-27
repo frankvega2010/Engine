@@ -97,7 +97,8 @@
       <AdditionalDependencies>Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y "$(ProjectDir)libs\Engine.dll" "$(Project)Win32\Release"</Command>
+      <Command>xcopy /Y "$(ProjectDir)libs\Engine.dll" "$(ProjectDir)Win32\Debug\"
+xcopy /Y "$(ProjectDir)libs\glew32.dll" "$(ProjectDir)Win32\Debug\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
