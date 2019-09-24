@@ -4,6 +4,8 @@
 #define DLLEXPORT __declspec(dllexport)
 
 #include "Window.h"
+#include "Input.h"
+#include "Renderer.h"
 
 namespace Basegame
 {
@@ -11,10 +13,13 @@ namespace Basegame
 	{
 	private:
 		Window* window;
+		Input gameInput;
+		Renderer gameRender;
 	public:
 		void Init();
 		void MostrarAlgo();
 		void Update();
+		void KeyCallback(GLFWwindow* window);
 		void DeInit();
 	};
 }
