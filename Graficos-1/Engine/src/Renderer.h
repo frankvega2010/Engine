@@ -10,6 +10,9 @@ class Renderer
 private:
 	GLuint VertexArrayID;
 	GLuint vertexbuffer;
+	GLint uniTrans;
+	GLint uniProj;
+	GLint uniView;
 public:
 
 	float rotateX = 0.0f;
