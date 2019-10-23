@@ -1,35 +1,130 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Archivos de origen">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Archivos de encabezado">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="src\BaseGame.cpp">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Engine\Cpps</Filter>
     </ClCompile>
-    <ClCompile Include="src\Window.cpp">
-      <Filter>Archivos de origen</Filter>
+    <ClCompile Include="src\loadShaders.cpp">
+      <Filter>Engine\Cpps</Filter>
     </ClCompile>
     <ClCompile Include="src\Renderer.cpp">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Engine\Cpps</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Window.cpp">
+      <Filter>Engine\Cpps</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\BaseGame.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Window.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Engine\Header</Filter>
     </ClInclude>
     <ClInclude Include="src\Renderer.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Engine\Header</Filter>
     </ClInclude>
+    <ClInclude Include="src\Window.h">
+      <Filter>Engine\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\loadShaders.h">
+      <Filter>Engine\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\glm\common.hpp">
+      <Filter>Engine\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\glm\exponential.hpp">
+      <Filter>Engine\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\glm\ext.hpp">
+      <Filter>Engine\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\glm\fwd.hpp">
+      <Filter>Engine\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\glm\geometric.hpp">
+      <Filter>Engine\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\glm\glm.hpp">
+      <Filter>Engine\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\glm\integer.hpp">
+      <Filter>Engine\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\glm\mat2x2.hpp">
+      <Filter>Engine\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\glm\mat2x3.hpp">
+      <Filter>Engine\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\glm\mat2x4.hpp">
+      <Filter>Engine\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\glm\mat3x2.hpp">
+      <Filter>Engine\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\glm\mat3x3.hpp">
+      <Filter>Engine\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\glm\mat3x4.hpp">
+      <Filter>Engine\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\glm\mat4x2.hpp">
+      <Filter>Engine\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\glm\mat4x3.hpp">
+      <Filter>Engine\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\glm\mat4x4.hpp">
+      <Filter>Engine\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\glm\matrix.hpp">
+      <Filter>Engine\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\glm\packing.hpp">
+      <Filter>Engine\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\glm\trigonometric.hpp">
+      <Filter>Engine\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\glm\vec2.hpp">
+      <Filter>Engine\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\glm\vec3.hpp">
+      <Filter>Engine\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\glm\vec4.hpp">
+      <Filter>Engine\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\glm\vector_relational.hpp">
+      <Filter>Engine\glm</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\SimpleVertexShader.vertexshader">
+      <Filter>Engine\Shaders</Filter>
+    </None>
+    <None Include="src\SimpleFragmentShader.fragmentshader">
+      <Filter>Engine\Shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Engine">
+      <UniqueIdentifier>{4e546242-cda2-4690-ba1a-f923bea885f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Header">
+      <UniqueIdentifier>{d7ecde1f-cf9a-4078-a171-bae032933b0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Cpps">
+      <UniqueIdentifier>{f43a7788-2b10-494e-8fdf-8a41585ae3e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Shaders">
+      <UniqueIdentifier>{bd1b199f-c98b-466c-ac79-7475b27952db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\glm">
+      <UniqueIdentifier>{f29de1f6-eb2e-4041-96ec-470ac6b3ca97}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="libs\glm\CMakeLists.txt">
+      <Filter>Engine\glm</Filter>
+    </Text>
   </ItemGroup>
 </Project>

@@ -3,9 +3,7 @@
 
 #define DLLEXPORT __declspec(dllexport)
 
-#include "../libs/GLEW/include/glew.h"
-#include "../libs/GLFW/include/glfw3.h"
-#include "gl/GL.h"
+struct GLFWwindow;
 
 namespace Basegame
 {
@@ -26,6 +24,7 @@ namespace Basegame
 		void PollEvents();
 		void Init();
 		void DeInit();
+		GLFWwindow* GetWindow();
 	};
 }
 #endif

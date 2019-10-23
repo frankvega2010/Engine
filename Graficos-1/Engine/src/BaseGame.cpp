@@ -3,8 +3,12 @@
 #include "Window.h"
 #include "Renderer.h"
 #include <ctime>
+#include "glew.h"
+#include "glfw3.h"
 
 using namespace Basegame;
+
+Renderer r;
 
 void BaseGame::MostrarAlgo()
 {
@@ -21,32 +25,51 @@ void BaseGame::Update()
 {
 	glewExperimental = true;
 	glewInit();
-	
-	Renderer r;
-	r.Init();
 
-	// Identificar el vertex buffer
-	
-	// Generar un buffer, poner el resultado en el vertexbuffer que acabamos de crear
-	
+	r.Init();
 
 	while(!window->GetOpened())
 	{
-		//window->SetBackgroundColor(rand() % 2, rand() % 2, rand() % 2, 1);
-
 		window->Clear();
+
 		r.SetAttributes();
-		// Dibujar el triángulo !
-		glDrawArrays(GL_TRIANGLES, 0, 3); // Empezar desde el vértice 0S; 3 vértices en total -> 1 triángulo
-		glDisableVertexAttribArray(0);
+
+		if (glfwGetKey(window->GetWindow(), GLFW_KEY_RIGHT) == GLFW_PRESS)
+		{
+			r.Translate(1.0f, glm::vec3(1.0f, 0.0f, 0.0f));
+		}
+
+		if (glfwGetKey(window->GetWindow(), GLFW_KEY_LEFT) == GLFW_PRESS)
+		{
+			r.Translate(1.0f, glm::vec3(-1.0f, 0.0f, 0.0f));
+		}
+
+		if (glfwGetKey(window->GetWindow(), GLFW_KEY_A) == GLFW_PRESS)
+		{
+			r.Rotate(1.0f, glm::vec3(1.0f, 0.0f, 0.0f));
+		}
+
+		if (glfwGetKey(window->GetWindow(), GLFW_KEY_S) == GLFW_PRESS)
+		{
+			r.Rotate(1.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+		}
+
+		if (glfwGetKey(window->GetWindow(), GLFW_KEY_D) == GLFW_PRESS)
+		{
+			r.Rotate(1.0f, glm::vec3(0.0f, 0.0f, 1.0f));
+		}
+
+		glDrawElements(GL_TRIANGLES, 24, GL_UNSIGNED_INT, nullptr);
 
 		window->SwapBuffers();
+
 		window->PollEvents();
 	}
 }
 
 void BaseGame::DeInit()
 {
+	r.DeInit();
 	window->DeInit();
 	delete window;
 }

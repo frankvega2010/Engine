@@ -1,6 +1,7 @@
 #include "Window.h"
 #include <iostream>
-
+#include "glew.h"
+#include "glfw3.h"
 namespace Basegame
 {
 	Window::Window(int w, int h, const char* n)
@@ -18,6 +19,9 @@ namespace Basegame
 	void Window::Init()
 	{
 		glfwInit();
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
+		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
 		window = glfwCreateWindow(width, height, name, NULL, NULL);
 		if (!window)
 			glfwTerminate();
@@ -53,5 +57,10 @@ namespace Basegame
 	void Window::SetBackgroundColor(int r, int g, int b, int a)
 	{
 		glClearColor(r, g, b, a);
+	}
+
+	GLFWwindow* Window::GetWindow()
+	{
+		return window;
 	}
 }
