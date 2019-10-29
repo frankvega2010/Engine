@@ -12,22 +12,19 @@ private:
 	GLfloat x;
 	GLfloat y;
 public:
-	void SetX(GLfloat newx) { x = newx; };
-	void SetY(GLfloat newy) { y = newy; };
+	void SetX(GLfloat newx) { x = newx; }
+	void SetY(GLfloat newy) { y = newy; }
 	GLfloat GetX() { return x; }
-	GLfloat GetY() { return y; };
+	GLfloat GetY() { return y; }
 };
 
 class DLLEXPORT Shape
 {
 private:
-	Vertex vertices[3];
-	float x;
-	float y;
+	GLuint indices[3];
 public:
-	
+	void SetIndices(GLuint i[3]);
 };
-
 
 #endif
 
