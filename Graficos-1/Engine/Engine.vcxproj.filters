@@ -13,6 +13,9 @@
     <ClCompile Include="src\Window.cpp">
       <Filter>Engine\Cpps</Filter>
     </ClCompile>
+    <ClCompile Include="Shape.cpp">
+      <Filter>Engine\Cpps</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\BaseGame.h">
@@ -99,6 +102,9 @@
     <ClInclude Include="src\stb_image.h">
       <Filter>Engine\Cpps</Filter>
     </ClInclude>
+    <ClInclude Include="Shape.h">
+      <Filter>Engine\Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\SimpleVertexShader.vertexshader">
@@ -112,9 +118,6 @@
     <Filter Include="Engine">
       <UniqueIdentifier>{4e546242-cda2-4690-ba1a-f923bea885f1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Header">
-      <UniqueIdentifier>{d7ecde1f-cf9a-4078-a171-bae032933b0c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Cpps">
       <UniqueIdentifier>{f43a7788-2b10-494e-8fdf-8a41585ae3e4}</UniqueIdentifier>
     </Filter>
@@ -123,6 +126,9 @@
     </Filter>
     <Filter Include="Engine\glm">
       <UniqueIdentifier>{f29de1f6-eb2e-4041-96ec-470ac6b3ca97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Header">
+      <UniqueIdentifier>{d7ecde1f-cf9a-4078-a171-bae032933b0c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

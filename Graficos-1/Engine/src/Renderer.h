@@ -6,7 +6,9 @@
 #include "gtx/transform.hpp"
 #include "gtc/type_ptr.hpp"
 
-class Renderer
+#define DLLEXPORT __declspec(dllexport)
+
+class DLLEXPORT Renderer
 {
 private:
 	unsigned int uniModel;

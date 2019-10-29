@@ -105,8 +105,6 @@ void Renderer::Init()
 
 	glEnableVertexAttribArray(2);
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)(7 * sizeof(float)));
-
-
 }
 
 void Renderer::SetAttributes()

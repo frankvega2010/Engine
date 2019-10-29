@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Shape.cpp" />
     <ClCompile Include="src\BaseGame.cpp" />
     <ClCompile Include="src\loadShaders.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
@@ -48,6 +49,7 @@
     <ClInclude Include="libs\glm\vec3.hpp" />
     <ClInclude Include="libs\glm\vec4.hpp" />
     <ClInclude Include="libs\glm\vector_relational.hpp" />
+    <ClInclude Include="Shape.h" />
     <ClInclude Include="src\BaseGame.h" />
     <ClInclude Include="src\loadShaders.h" />
     <ClInclude Include="src\Renderer.h" />
