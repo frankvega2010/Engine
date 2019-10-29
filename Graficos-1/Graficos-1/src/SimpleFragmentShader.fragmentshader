@@ -6,6 +6,9 @@ in vec3 Color;
 
 uniform vec4 u_Color;
 
+uniform sampler2D ourTexture;
+in vec2 TexCoords;
+
 void main(){
-  outColor = vec4(Color, 1.0);
+  outColor = texture(ourTexture, TexCoords) * vec4(Color,1.0);
 }

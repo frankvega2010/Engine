@@ -4,20 +4,25 @@
 #include "glfw3.h"
 #include "gl/GL.h"
 
+#include <iostream>
+
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+
 GLuint programID;
 
 void Renderer::Init()
 {
 	GLfloat g_vertex_buffer_data[] = {
-		-160.0f, -120.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-		   0.0f, -120.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-		 160.0f, -120.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-		 160.0f,    0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f,
-		 160.0f,  120.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-		   0.0f,  120.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-		-160.0f,  120.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-		-160.0f,    0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f,
-		   0.0f,    0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f
+		-160.0f, -120.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+		   0.0f, -120.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.5f, 0.0f,
+		 160.0f, -120.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f,
+		 160.0f,    0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.5f,
+		 160.0f,  120.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,
+		   0.0f,  120.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.5f, 1.0f,
+		-160.0f,  120.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
+		-160.0f,    0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.5f,
+		   0.0f,    0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.5f, 0.5f
 	};
 
 	unsigned int indices[] = {
@@ -44,12 +49,12 @@ void Renderer::Init()
 		4,                  // tamaño
 		GL_FLOAT,           // tipo
 		GL_FALSE,           // normalizado?
-		7 * sizeof(float),  // Paso
+		9 * sizeof(float),  // Paso
 		(void*)0            // desfase del buffer
 	);
 
 	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (void*)(4*sizeof(float)));
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)(4 * sizeof(float)));
 
 	GLuint indexBufferObject;
 	glGenBuffers(1, &indexBufferObject);
@@ -71,11 +76,37 @@ void Renderer::Init()
 	GLuint vMat = glGetUniformLocation(programID, "u_V");
 	glUniformMatrix4fv(vMat, 1, GL_FALSE, glm::value_ptr(view));
 
-	/*int colorLoc = glGetUniformLocation(programID, "u_Color");
-	glUniform4f(colorLoc, 0.0f, 0.0f, 1.0f, 1.0f);*/
-
 	uniModel = glGetUniformLocation(programID, "u_M");
 	glUniformMatrix4fv(uniModel, 1, GL_FALSE, glm::value_ptr(myMatrix));
+
+	/////////////////////////////////////////////////////////////////////
+
+	unsigned int texture;
+	glGenTextures(1, &texture);
+	glBindTexture(GL_TEXTURE_2D, texture);
+	glTextureParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTextureParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTextureParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTextureParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	int width, height, nrChannels;
+
+	stbi_set_flip_vertically_on_load(true);
+
+	unsigned char* data = stbi_load("res/alien.jpg", &width, &height, &nrChannels, 0);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+
+	glGenerateMipmap(GL_TEXTURE_2D);
+
+	stbi_image_free(data);
+
+	glBindTexture(GL_TEXTURE_2D, texture);
+
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)(7 * sizeof(float)));
+
+
 }
 
 void Renderer::SetAttributes()

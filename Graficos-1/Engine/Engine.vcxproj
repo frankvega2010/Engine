@@ -51,6 +51,7 @@
     <ClInclude Include="src\BaseGame.h" />
     <ClInclude Include="src\loadShaders.h" />
     <ClInclude Include="src\Renderer.h" />
+    <ClInclude Include="src\stb_image.h" />
     <ClInclude Include="src\Window.h" />
   </ItemGroup>
   <ItemGroup>

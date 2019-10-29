@@ -96,6 +96,9 @@
     <ClInclude Include="libs\glm\vector_relational.hpp">
       <Filter>Engine\glm</Filter>
     </ClInclude>
+    <ClInclude Include="src\stb_image.h">
+      <Filter>Engine\Cpps</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\SimpleVertexShader.vertexshader">
