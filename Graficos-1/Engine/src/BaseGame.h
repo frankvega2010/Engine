@@ -5,18 +5,18 @@
 
 #include "Window.h"
 
-namespace Basegame
+class Renderer;
+
+class DLLEXPORT BaseGame
 {
-	class DLLEXPORT BaseGame
-	{
-	private:
-		Window* window;
-	public:
-		void Init();
-		void MostrarAlgo();
-		void Update();
-		void DeInit();
-	};
-}
+private:
+	Window* window;
+	Renderer* renderer;
+public:
+	bool Init();
+	void MostrarAlgo();
+	void Update();
+	void DeInit();
+};
 
 #endif

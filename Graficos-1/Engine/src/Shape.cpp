@@ -42,6 +42,14 @@ void Shape::Draw()
 void Shape::DrawMesh(int typeDraw)
 {
 	WorldMatrix = glm::mat4(1.0f);
+
+	renderer->BeginDraw(0);
+	renderer->BindBuffer(0, bufferID, 3);
+	renderer->BeginDraw(1);
+	renderer->BindBuffer(1, colorBufferID, 3);
+	renderer->DrawBuffer(vertexCount, typeDraw);
+	renderer->EndDraw(0);
+	renderer->EndDraw(1);
 }
 
 void Shape::SetVertices(float* vertices, int count)

@@ -1,8 +1,8 @@
 #include "Renderer.h"
 #include "loadShaders.h"
 #include "glew.h"
-#include "glfw3.h"
 #include "gl/GL.h"
+#include "glfw3.h"
 
 #include <iostream>
 
@@ -11,77 +11,40 @@
 
 GLuint programID;
 
-void Renderer::Init()
+bool Renderer::Init(Window* w)
 {
-	GLfloat g_vertex_buffer_data[] = {
-		-160.0f, -120.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-		   0.0f, -120.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.5f, 0.0f,
-		 160.0f, -120.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f,
-		 160.0f,    0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.5f,
-		 160.0f,  120.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,
-		   0.0f,  120.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.5f, 1.0f,
-		-160.0f,  120.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
-		-160.0f,    0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.5f,
-		   0.0f,    0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.5f, 0.5f
-	};
+	window = w;
 
-	unsigned int indices[] = {
-		0,1,7,
-		1,8,7,
-		1,2,3,
-		3,8,1,
-		3,4,5,
-		3,8,5,
-		5,6,7,
-		5,8,7
-	};
+	glfwMakeContextCurrent(window->GetWindow());
 
-	GLuint vertexbuffer;
-	glGenBuffers(1, &vertexbuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
+	if (glewInit() != GLEW_OK)
+	{
+		cout << "murio glew" << endl;
+		return -1;
+	}
 
-	glEnableVertexAttribArray(0);
-	//1rst attribute buffer : vértices
-	//glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-	glVertexAttribPointer(
-		0,                  // atributo 0. No hay razón particular para el 0, pero debe corresponder en el shader.
-		4,                  // tamaño
-		GL_FLOAT,           // tipo
-		GL_FALSE,           // normalizado?
-		9 * sizeof(float),  // Paso
-		(void*)0            // desfase del buffer
-	);
+	cout << glGetString(GL_VERSION) << endl;
 
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)(4 * sizeof(float)));
+	glGenVertexArrays(1, &vertexArrayID);
+	glBindVertexArray(vertexArrayID);
 
-	GLuint indexBufferObject;
-	glGenBuffers(1, &indexBufferObject);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferObject);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+	orthoProjectionMatrix = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 0.0f, 100.0f);
+	projectionMatrix = orthoProjectionMatrix;
 
-	programID = LoadShaders("src/SimpleVertexShader.vertexshader", "src/SimpleFragmentShader.fragmentshader");
-	glUseProgram(programID);
+	camPos = glm::vec3(0.0f, 0.0f, 1.0f); //donde esta
+	eyePos = glm::vec3(0.0f, 0.0f, 0.0f); //donde mira
 
-	myMatrix = glm::mat4(1.0f);
+	viewMatrix = glm::lookAt(camPos, eyePos, glm::vec3(0.0f, 1.0f, 0.0f));
 
-	glm::mat4 proj = glm::ortho(-320.0f, 320.0f, -240.0f, 240.0f, -100.0f, 100.0f);
+	worldMatrix = glm::mat4(1.0f);
 
-	GLuint pMat = glGetUniformLocation(programID, "u_P");
-	glUniformMatrix4fv(pMat, 1, GL_FALSE, glm::value_ptr(proj));
+	UpdateWVP();
 
-	glm::mat4 view = glm::translate(myMatrix, glm::vec3(0.0f, 0.0f, 0.0f));
-
-	GLuint vMat = glGetUniformLocation(programID, "u_V");
-	glUniformMatrix4fv(vMat, 1, GL_FALSE, glm::value_ptr(view));
-
-	uniModel = glGetUniformLocation(programID, "u_M");
-	glUniformMatrix4fv(uniModel, 1, GL_FALSE, glm::value_ptr(myMatrix));
+	return true;
 
 	/////////////////////////////////////////////////////////////////////
 
-	unsigned int texture;
+	/*unsigned int texture;
 	glGenTextures(1, &texture);
 	glBindTexture(GL_TEXTURE_2D, texture);
 	glTextureParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -104,7 +67,7 @@ void Renderer::Init()
 	glBindTexture(GL_TEXTURE_2D, texture);
 
 	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)(7 * sizeof(float)));
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)(7 * sizeof(float)));*/
 }
 
 void Renderer::SetAttributes()
@@ -116,20 +79,49 @@ void Renderer::DeInit()
 	glDeleteProgram(programID);
 }
 
-void Renderer::Rotate(float angle, glm::vec3 axis)
+
+void Renderer::BeginDraw(unsigned int attribID)
 {
-	myMatrix = glm::rotate(myMatrix, glm::radians(angle), axis);
-	glUniformMatrix4fv(uniModel, 1, GL_FALSE, glm::value_ptr(myMatrix));
+	glEnableVertexAttribArray(attribID);
 }
 
-void Renderer::Scale(glm::vec3 scaleValues)
+void Renderer::EndDraw(unsigned int attribID)
 {
-	myMatrix = glm::scale(myMatrix, scaleValues);
-	glUniformMatrix4fv(uniModel, 1, GL_FALSE, glm::value_ptr(myMatrix));
+	glDisableVertexAttribArray(attribID);
 }
 
-void Renderer::Translate(float value, glm::vec3 axis)
+void Renderer::BindBuffer(unsigned int attribID, unsigned int vtxBuffer, unsigned int size)
 {
-	myMatrix = glm::translate(myMatrix, value * axis);
-	glUniformMatrix4fv(uniModel, 1, GL_FALSE, glm::value_ptr(myMatrix));
+	glBindBuffer(GL_ARRAY_BUFFER, vtxBuffer);
+	glVertexAttribPointer(attribID, size, GL_FLOAT, GL_FALSE, 0, (void*)0);
+}
+
+void Renderer::SetClearColor(float r, float g, float b, float a)
+{
+	glClearColor(r, g, b, a);
+}
+
+void Renderer::ClearScreen()
+{
+	glClear(GL_COLOR_BUFFER_BIT);
+}
+
+void Renderer::DrawBuffer(int size, int typeDraw)
+{
+	glDrawArrays(typeDraw, 0, size);
+}
+
+void Renderer::LoadIMatrix()
+{
+	//WorldMatrix = 
+}
+
+void Renderer::SetWMatrix(glm::mat4 matrix)
+{
+
+}
+
+void Renderer::UpdateWVP()
+{
+	WVPMatrix = projectionMatrix * viewMatrix * worldMatrix;
 }

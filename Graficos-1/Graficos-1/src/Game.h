@@ -3,8 +3,6 @@
 
 #include "BaseGame.h"
 
-using namespace Basegame;
-
 class Game
 {
 private:

@@ -5,8 +5,7 @@
 
 using namespace std;
 
-namespace Basegame
-{
+
 	Window::Window(int w, int h, const char* n)
 	{
 		width = w;
@@ -22,17 +21,17 @@ namespace Basegame
 	void Window::Init()
 	{
 		glfwInit();
+		
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
 
+		
 		window = glfwCreateWindow(width, height, name, NULL, NULL);
 		if (!window)
 			glfwTerminate();
 		
-		glfwMakeContextCurrent(window);
-
-		cout << glGetString(GL_VERSION) << endl;
+		
 	}
 
 	void Window::DeInit()
@@ -69,4 +68,3 @@ namespace Basegame
 	{
 		return window;
 	}
-}

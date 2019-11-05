@@ -6,60 +6,37 @@
 #include "glew.h"
 #include "glfw3.h"
 
-using namespace Basegame;
-
-Renderer r;
-
 void BaseGame::MostrarAlgo()
 {
 	std::cout << "heh" << std::endl;
 }
 
-void BaseGame::Init()
+bool BaseGame::Init()
 {
 	window = new Window(640, 480, "Ventana");
 	window->Init();
+
+	renderer = new Renderer();
+	if (!renderer->Init(window))
+	{
+		cout << "renderer pincho" << endl;
+		return false;
+	}
+
+	renderer->SetClearColor(0.5f, 0.0f, 0.5f, 1.0f);
+	renderer->ClearScreen();
+	return true;
 }
 
 void BaseGame::Update()
 {
-	glewExperimental = true;
-	glewInit();
-
-	r.Init();
-
 	while(!window->GetOpened())
 	{
-		window->Clear();
 
-		r.SetAttributes();
+		renderer->ClearScreen();
+		
 
-		if (glfwGetKey(window->GetWindow(), GLFW_KEY_RIGHT) == GLFW_PRESS)
-		{
-			r.Translate(1.0f, glm::vec3(1.0f, 0.0f, 0.0f));
-		}
-
-		if (glfwGetKey(window->GetWindow(), GLFW_KEY_LEFT) == GLFW_PRESS)
-		{
-			r.Translate(1.0f, glm::vec3(-1.0f, 0.0f, 0.0f));
-		}
-
-		if (glfwGetKey(window->GetWindow(), GLFW_KEY_A) == GLFW_PRESS)
-		{
-			r.Rotate(1.0f, glm::vec3(1.0f, 0.0f, 0.0f));
-		}
-
-		if (glfwGetKey(window->GetWindow(), GLFW_KEY_S) == GLFW_PRESS)
-		{
-			r.Rotate(1.0f, glm::vec3(0.0f, 1.0f, 0.0f));
-		}
-
-		if (glfwGetKey(window->GetWindow(), GLFW_KEY_D) == GLFW_PRESS)
-		{
-			r.Rotate(1.0f, glm::vec3(0.0f, 0.0f, 1.0f));
-		}
-
-		glDrawElements(GL_TRIANGLES, 24, GL_UNSIGNED_INT, nullptr);
+		//glDrawElements(GL_TRIANGLES, 24, GL_UNSIGNED_INT, nullptr);
 
 		window->SwapBuffers();
 
@@ -69,7 +46,7 @@ void BaseGame::Update()
 
 void BaseGame::DeInit()
 {
-	r.DeInit();
+	renderer->DeInit();
 	window->DeInit();
 	delete window;
 }
