@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Shape.cpp" />
     <ClCompile Include="src\BaseGame.cpp" />
     <ClCompile Include="src\loadShaders.cpp" />
@@ -26,6 +27,7 @@
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Entity.h" />
     <ClInclude Include="libs\glm\common.hpp" />
     <ClInclude Include="libs\glm\exponential.hpp" />
     <ClInclude Include="libs\glm\ext.hpp" />

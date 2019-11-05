@@ -16,6 +16,9 @@
     <ClCompile Include="Shape.cpp">
       <Filter>Engine\Cpps</Filter>
     </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Engine\Cpps</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\BaseGame.h">
@@ -103,6 +106,9 @@
       <Filter>Engine\Cpps</Filter>
     </ClInclude>
     <ClInclude Include="Shape.h">
+      <Filter>Engine\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
       <Filter>Engine\Header</Filter>
     </ClInclude>
   </ItemGroup>
