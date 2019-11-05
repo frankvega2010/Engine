@@ -13,10 +13,10 @@
     <ClCompile Include="src\Window.cpp">
       <Filter>Engine\Cpps</Filter>
     </ClCompile>
-    <ClCompile Include="Shape.cpp">
+    <ClCompile Include="src\Entity.cpp">
       <Filter>Engine\Cpps</Filter>
     </ClCompile>
-    <ClCompile Include="Entity.cpp">
+    <ClCompile Include="src\Shape.cpp">
       <Filter>Engine\Cpps</Filter>
     </ClCompile>
   </ItemGroup>
@@ -105,10 +105,10 @@
     <ClInclude Include="src\stb_image.h">
       <Filter>Engine\Cpps</Filter>
     </ClInclude>
-    <ClInclude Include="Shape.h">
+    <ClInclude Include="src\Shape.h">
       <Filter>Engine\Header</Filter>
     </ClInclude>
-    <ClInclude Include="Entity.h">
+    <ClInclude Include="src\Entity.h">
       <Filter>Engine\Header</Filter>
     </ClInclude>
   </ItemGroup>

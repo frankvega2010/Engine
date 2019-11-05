@@ -1,29 +1,34 @@
 #ifndef SHAPE_H
 #define SHAPE_H
-#include "glew.h"
-#include "glfw3.h"
-#include "gl/GL.h"
 
-#define DLLEXPORT __declspec(dllexport)
+#include "Entity.h"
 
-class Vertex
+class Shape : public Entity
 {
-private:
-	GLfloat x;
-	GLfloat y;
-public:
-	void SetX(GLfloat newx) { x = newx; }
-	void SetY(GLfloat newy) { y = newy; }
-	GLfloat GetX() { return x; }
-	GLfloat GetY() { return y; }
-};
+protected:
+	bool shouldDispose;
+	bool shouldDisposeColor;
 
-class DLLEXPORT Shape
-{
-private:
-	GLuint indices[3];
+	int vertexCount;
+	int colorVertexCount;
+	int idxVtxCount;
+
+	unsigned int colorBufferID;
+	unsigned int bufferID;
+	unsigned int indexBufferID;
+	unsigned int* indxVertex;
+	float* vertex;
+	float* colorVertex;
 public:
-	void SetIndices(GLuint i[3]);
+	Shape(Renderer* r);
+	void Draw();
+	void DrawMesh(int typeDraw);
+	void SetVertices(float* vertices, int count);
+	void SetColorVertex(float* vertices, int count);
+	void SetIndexVertices(unsigned int* vertices, int count);
+	void Dispose();
+	void DisposeColor();
+	~Shape();
 };
 
 #endif

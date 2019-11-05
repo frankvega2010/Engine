@@ -7,7 +7,9 @@ using namespace glm;
 
 class Renderer;
 
-class Entity
+#define DLLEXPORT __declspec(dllexport)
+
+class DLLEXPORT Entity
 {
 private:
 	vec3 pos;
