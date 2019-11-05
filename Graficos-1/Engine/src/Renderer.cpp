@@ -113,12 +113,13 @@ void Renderer::DrawBuffer(int size, int typeDraw)
 
 void Renderer::LoadIMatrix()
 {
-	//WorldMatrix = 
+	worldMatrix = glm::mat4(1.0f);
 }
 
 void Renderer::SetWMatrix(glm::mat4 matrix)
 {
-
+	worldMatrix = matrix;
+	UpdateWVP();
 }
 
 void Renderer::UpdateWVP()

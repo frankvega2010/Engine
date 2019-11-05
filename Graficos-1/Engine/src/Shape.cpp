@@ -41,7 +41,8 @@ void Shape::Draw()
 
 void Shape::DrawMesh(int typeDraw)
 {
-	WorldMatrix = glm::mat4(1.0f);
+	renderer->LoadIMatrix();
+	renderer->SetWMatrix(WorldMatrix);
 
 	renderer->BeginDraw(0);
 	renderer->BindBuffer(0, bufferID, 3);
