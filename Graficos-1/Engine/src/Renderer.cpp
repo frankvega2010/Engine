@@ -15,7 +15,7 @@ bool Renderer::Init(Window* w)
 {
 	window = w;
 
-	glfwMakeContextCurrent(window->GetWindow());
+	glfwMakeContextCurrent(window->GetWindow());// hace el contexto de OpenGL a esta window especifica
 
 	if (glewInit() != GLEW_OK)
 	{
@@ -23,10 +23,10 @@ bool Renderer::Init(Window* w)
 		return -1;
 	}
 
-	cout << glGetString(GL_VERSION) << endl;
+	cout << glGetString(GL_VERSION) << endl;//Imprime con que version de opengl se esta trabajando y con que placa
 
-	glGenVertexArrays(1, &vertexArrayID);
-	glBindVertexArray(vertexArrayID);
+	glGenVertexArrays(1, &vertexArrayID);//Genera vertex array (numero de arrays a generar, donde se guardan)
+	glBindVertexArray(vertexArrayID);// elige el vertex array que se va a usar
 
 	orthoProjectionMatrix = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 0.0f, 100.0f);
 	projectionMatrix = orthoProjectionMatrix;
@@ -76,24 +76,24 @@ void Renderer::SetAttributes()
 
 void Renderer::DeInit()
 {
-	glDeleteProgram(programID);
+	glDeleteProgram(programID);// libera la memoria ocupada por el programa
 }
 
 
 void Renderer::BeginDraw(unsigned int attribID)
 {
-	glEnableVertexAttribArray(attribID);
+	glEnableVertexAttribArray(attribID);//activa vertex atrrib array
 }
 
 void Renderer::EndDraw(unsigned int attribID)
 {
-	glDisableVertexAttribArray(attribID);
+	glDisableVertexAttribArray(attribID);//desactiva vertex atrrib array
 }
 
 void Renderer::BindBuffer(unsigned int attribID, unsigned int vtxBuffer, unsigned int size)
 {
-	glBindBuffer(GL_ARRAY_BUFFER, vtxBuffer);
-	glVertexAttribPointer(attribID, size, GL_FLOAT, GL_FALSE, 0, (void*)0);
+	glBindBuffer(GL_ARRAY_BUFFER, vtxBuffer);//elije que tipo de buffers
+	glVertexAttribPointer(attribID, size, GL_FLOAT, GL_FALSE, 0, (void*)0);//indice, tamaño, tipo de dato, normalizado, offset, puntero
 }
 
 void Renderer::SetClearColor(float r, float g, float b, float a)
@@ -108,7 +108,7 @@ void Renderer::ClearScreen()
 
 void Renderer::DrawBuffer(int size, int typeDraw)
 {
-	glDrawArrays(typeDraw, 0, size);
+	glDrawArrays(typeDraw, 0, size);//Draw call, el 0 es el offset
 }
 
 void Renderer::LoadIMatrix()

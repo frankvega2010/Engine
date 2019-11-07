@@ -51,12 +51,12 @@ using namespace std;
 
 	void Window::SwapBuffers()
 	{
-		glfwSwapBuffers(window);
+		glfwSwapBuffers(window);//cambia los front buffers y los back buffers
 	}
 
 	void Window::PollEvents()
 	{
-		glfwPollEvents();
+		glfwPollEvents();//espera inputs o "events"
 	}
 
 	void Window::SetBackgroundColor(int r, int g, int b, int a)

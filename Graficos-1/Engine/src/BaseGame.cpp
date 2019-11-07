@@ -43,7 +43,7 @@ void BaseGame::Update()
 
 	Shape* shape = new Shape(renderer);
 
-	glUseProgram(programID);
+	glUseProgram(programID);//elije que programa se va a usar
 
 	//shape->SetRot(0.0f, 0.0f, 0.0f);
 	//shape->SetPos(0.0f, 0.0f, 0.0f);
