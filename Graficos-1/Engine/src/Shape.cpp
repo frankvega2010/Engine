@@ -53,18 +53,6 @@ void Shape::DrawMesh(int typeDraw)
 	renderer->EndDraw(1);
 }
 
-void Shape::SetVertices(float* vertices, int count)
-{
-	Dispose();
-
-	vertexCount = count;
-	shouldDispose = true;
-	glGenBuffers(1, &bufferID);
-	glBindBuffer(GL_ARRAY_BUFFER, bufferID);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float)*count * 3, vertices, GL_STATIC_DRAW);
-
-}
-
 void Shape::SetColorVertex(float* vertices, int count)
 {
 	DisposeColor();
@@ -84,14 +72,6 @@ void Shape::SetIndexVertices(unsigned int* vertices, int count)
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float)*count, &vertices[0], GL_STATIC_DRAW);
 }
 
-void Shape::Dispose()
-{
-	if (shouldDispose)
-	{
-		glDeleteBuffers(1, &bufferID);
-		shouldDispose = false;
-	}
-}
 
 void Shape::DisposeColor()
 {

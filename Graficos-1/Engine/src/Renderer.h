@@ -29,7 +29,7 @@ private:
 	mat4 projectionMatrix;
 	mat4 orthoProjectionMatrix;
 	mat4 WVPMatrix;
-
+	mat4 WVP;
 	vec3 camPos;
 	vec3 eyePos;
 	vec3 upPos;
@@ -40,6 +40,11 @@ public:
 	void DeInit();
 	void SetClearColor(float r, float g, float b, float a);
 	void ClearScreen();
+	unsigned int GenBuffer(float* buffer, int size);
+	void DestroyBuffer(unsigned int buffer);
+	unsigned int ChargeTexture(unsigned int width, unsigned int height, unsigned char * data);
+	void BindTexture(unsigned int texture, unsigned int textureID);
+	mat4& GetWVP();
 	void Rotate(float angle, glm::vec3 axis);
 	void Translate(float value, glm::vec3 axis);
 	void Scale(glm::vec3 scaleValues);

@@ -6,7 +6,6 @@
 class Shape : public Entity
 {
 protected:
-	bool shouldDispose;
 	bool shouldDisposeColor;
 
 	int vertexCount;
@@ -14,7 +13,6 @@ protected:
 	int idxVtxCount;
 
 	unsigned int colorBufferID;
-	unsigned int bufferID;
 	unsigned int indexBufferID;
 	unsigned int* indxVertex;
 	float* vertex;
@@ -23,7 +21,6 @@ public:
 	Shape(Renderer* r);
 	void Draw();
 	void DrawMesh(int typeDraw);
-	void SetVertices(float* vertices, int count);
 	void SetColorVertex(float* vertices, int count);
 	void SetIndexVertices(unsigned int* vertices, int count);
 	void Dispose();

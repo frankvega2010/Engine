@@ -126,3 +126,44 @@ void Renderer::UpdateWVP()
 {
 	WVPMatrix = projectionMatrix * viewMatrix * worldMatrix;
 }
+
+unsigned int Renderer::GenBuffer(float * buffer, int size)
+{
+	unsigned int vertexBuffer;
+	glGenBuffers(1, &vertexBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+	glBufferData(GL_ARRAY_BUFFER, size, buffer, GL_STATIC_DRAW);
+	return vertexBuffer;
+}
+void Renderer::DestroyBuffer(unsigned int buffer)
+{
+	glDeleteBuffers(1, &buffer);
+}
+unsigned int Renderer::ChargeTexture(unsigned int width, unsigned int height, unsigned char * data)
+{
+	unsigned int textureID;
+	glGenTextures(1, &textureID);
+
+	glBindTexture(GL_TEXTURE_2D, textureID);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, data);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+
+	glGenerateMipmap(GL_TEXTURE_2D);
+
+	return textureID;
+}
+void Renderer::BindTexture(unsigned int texture, unsigned int textureID)
+{
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture);
+	glUniform1i(textureID, 0);
+}
+mat4 & Renderer::GetWVP()
+{
+	return WVP;
+}

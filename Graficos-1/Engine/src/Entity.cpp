@@ -1,5 +1,6 @@
 #include "Entity.h"
-
+#include "glew.h"
+#include "glfw3.h"
 #include "gtc/matrix_transform.hpp"
 
 Entity::Entity(Renderer* r)
@@ -90,4 +91,23 @@ void Entity::Rotate(float x, float y, float z)
 	RotationMatrix *= rotate(mat4(1.0f), rot[2], vec3(0.0f, 0.0f, 1.0f));
 
 	UpdateWorldMatrix();
+}
+void Entity::SetVertices(float* vertices, int count)
+{
+	Dispose();
+
+	vertexCount = count;
+	shouldDispose = true;
+	glGenBuffers(1, &bufferID);
+	glBindBuffer(GL_ARRAY_BUFFER, bufferID);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float)*count * 3, vertices, GL_STATIC_DRAW);
+
+}
+void Entity::Dispose()
+{
+	if (shouldDispose)
+	{
+		glDeleteBuffers(1, &bufferID);
+		shouldDispose = false;
+	}
 }

@@ -23,7 +23,9 @@ protected:
 	mat4 RotationMatrix;
 	mat4 ScaleMatrix;
 	void UpdateWorldMatrix();
-
+	int vertexCount;
+	bool shouldDispose;
+	unsigned int bufferID;
 public:
 	Entity(Renderer* r);
 	virtual void Draw() = 0;
@@ -32,6 +34,8 @@ public:
 	void SetScale(float x, float y, float z);
 	void Translate(float x, float y, float z);
 	void Rotate(float x, float y, float z);
+	void SetVertices(float* vertices, int count);
+	void Dispose();
 	vec3 GetPos();
 	vec3 GetRot();
 	vec3 GetScale();
