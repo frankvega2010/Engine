@@ -19,8 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Animation.cpp" />
-    <ClCompile Include="src\DeltaTime.cpp" />
     <ClCompile Include="src\Sprite.cpp" />
     <ClCompile Include="src\BaseGame.cpp" />
     <ClCompile Include="src\Entity.cpp" />
@@ -30,7 +28,6 @@
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\DeltaTime.h" />
     <ClInclude Include="libs\glm\common.hpp" />
     <ClInclude Include="libs\glm\exponential.hpp" />
     <ClInclude Include="libs\glm\ext.hpp" />
@@ -54,7 +51,6 @@
     <ClInclude Include="libs\glm\vec3.hpp" />
     <ClInclude Include="libs\glm\vec4.hpp" />
     <ClInclude Include="libs\glm\vector_relational.hpp" />
-    <ClInclude Include="src\Animation.h" />
     <ClInclude Include="src\Sprite.h" />
     <ClInclude Include="src\BaseGame.h" />
     <ClInclude Include="src\Entity.h" />

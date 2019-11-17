@@ -22,12 +22,6 @@
     <ClCompile Include="src\Sprite.cpp">
       <Filter>Engine\Cpps</Filter>
     </ClCompile>
-    <ClCompile Include="src\DeltaTime.cpp">
-      <Filter>Engine\Cpps</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Animation.cpp">
-      <Filter>Engine\Cpps</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\BaseGame.h">
@@ -121,12 +115,6 @@
       <Filter>Engine\Header</Filter>
     </ClInclude>
     <ClInclude Include="src\Sprite.h">
-      <Filter>Engine\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="src\DeltaTime.h">
-      <Filter>Engine\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Animation.h">
       <Filter>Engine\Header</Filter>
     </ClInclude>
   </ItemGroup>
