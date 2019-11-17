@@ -2,31 +2,36 @@
 #define SHAPE_H
 
 #include "Entity.h"
+#include "Material.h"
 
-class Shape : public Entity
+
+class DLLEXPORT Shape : public Entity
 {
 protected:
+	Material * material;
+
+	bool shouldDispose;
 	bool shouldDisposeColor;
 
 	int vertexCount;
 	int colorVertexCount;
-	int idxVtxCount;
 
-	unsigned int colorBufferID;
-	unsigned int indexBufferID;
-	unsigned int* indxVertex;
-	float* vertex;
-	float* colorVertex;
+	unsigned int colorBufferId;
+	unsigned int bufferId;
+
+	float * vertex;
+	float * colorVertex;
+
 public:
-	Shape(Renderer* r);
-	void Draw();
+	Shape(Renderer * render);
+	virtual void Draw();
 	void DrawMesh(int typeDraw);
-	void SetColorVertex(float* vertices, int count);
-	void SetIndexVertices(unsigned int* vertices, int count);
+	void SetVertices(float * vertices, int count);
+	void SetColorVertex(float * vertices, int count);
+	void SetMaterial(Material* material);
 	void Dispose();
 	void DisposeColor();
 	~Shape();
 };
 
 #endif
-

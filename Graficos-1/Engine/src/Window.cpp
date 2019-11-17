@@ -1,70 +1,58 @@
 #include "Window.h"
-#include <iostream>
-#include "glew.h"
-#include "glfw3.h"
 
-using namespace std;
+using namespace glm;
 
-
-	Window::Window(int w, int h, const char* n)
+bool Window::Start(int width, int height, const char* name)
+{
+	if (!glfwInit())
 	{
-		width = w;
-		height = h;
-		name = n;
+		fprintf(stderr, "Failed to initialize GLFW\n");
+		return false;
 	}
 
-	Window::~Window()
-	{
-		//delete window;
-	}
+	glfwWindowHint(GLFW_SAMPLES, 4);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); //macos
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	window = glfwCreateWindow(width, height, name, NULL, NULL);
 
-	void Window::Init()
-	{
-		glfwInit();
-		
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
-
-		
-		window = glfwCreateWindow(width, height, name, NULL, NULL);
-		if (!window)
-			glfwTerminate();
-		
-		
-	}
-
-	void Window::DeInit()
-	{
+	if (window == NULL) {
+		fprintf(stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n");
 		glfwTerminate();
+		return false;
 	}
 
-	bool Window::GetOpened()
-	{
-		return glfwWindowShouldClose(window);
-	}
+	
 
-	void Window::Clear()
-	{
-		glClear(GL_COLOR_BUFFER_BIT);
-	}
+	return true;
+}
 
-	void Window::SwapBuffers()
-	{
-		glfwSwapBuffers(window);//cambia los front buffers y los back buffers
-	}
+bool Window::Stop()
+{
+	if (window != NULL)
+		glfwDestroyWindow((GLFWwindow*)window);
+	window = NULL;
+	glfwTerminate();
+	return true;
+}
 
-	void Window::PollEvents()
-	{
-		glfwPollEvents();//espera inputs o "events"
-	}
+bool Window::ShouldClose()
+{
+	if(window)
+		return glfwWindowShouldClose((GLFWwindow*)window);
+	
+}
 
-	void Window::SetBackgroundColor(int r, int g, int b, int a)
-	{
-		glClearColor(r, g, b, a);
-	}
+void Window::PollEvents()
+{
+	glfwPollEvents();
+}
 
-	GLFWwindow* Window::GetWindow()
-	{
-		return window;
-	}
+Window::Window()
+{
+}
+
+Window::~Window()
+{
+}

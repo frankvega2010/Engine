@@ -1,85 +1,97 @@
 #include "Shape.h"
 
-#include "Renderer.h"
-#include "glew.h"
-#include "glfw3.h"
-
-Shape::Shape(Renderer* r) : Entity(r)
+Shape::Shape(Renderer * render) :Entity(render)
 {
 	shouldDispose = false;
-	bufferID = -1;
+	material = NULL;
+	bufferId = -1;
 	vertexCount = -1;
 	shouldDisposeColor = false;
-	colorBufferID = -1;
+	colorBufferId = -1;
 	colorVertexCount = -1;
 
 	vertex = new float[12]
 	{
-		-1.0f, -1.0f, 0.0f,
-		 1.0f, -1.0f, 0.0f,
-		-1.0f,  1.0f, 0.0f,
-		 1.0f,  1.0f, 0.0f
+		-1.0f,-1.0f , 0.0f ,
+		1.0f,-1.0f , 0.0f ,
+		-1.0f, 1.0f , 0.0f ,
+		1.0f, 1.0f , 0.0f
 	};
 
 	colorVertex = new float[12]
 	{
-		0.555f, 0.365f, 0.945f,
-		0.945f, 0.774f, 0.589f,
-		0.110f, 0.411f, 0.912f,
-		0.859f, 0.258f, 0.679f,
+		0.555f,  0.365f,  0.945f,
+		0.945f,  0.774f,  0.589f,
+		0.859f,  0.258f,  0.679f,
+		0.110f,  0.411f,  0.912f
 	};
 
 	SetVertices(vertex, 4);
 	SetColorVertex(colorVertex, 4);
 }
 
-void Shape::Draw()
-{
-	DrawMesh(GL_TRIANGLE_STRIP);
-
-}
-
 void Shape::DrawMesh(int typeDraw)
 {
-	renderer->LoadIMatrix();
-	renderer->SetWMatrix(WorldMatrix);
+	render->LoadIMatrix();
+	render->SetWMatrix(WorldMatrix);
 
-	renderer->BeginDraw(0);
-	renderer->BindBuffer(0, bufferID, 3);
-	renderer->BeginDraw(1);
-	renderer->BindBuffer(1, colorBufferID, 3);
-	renderer->DrawBuffer(vertexCount, typeDraw);
-	renderer->EndDraw(0);
-	renderer->EndDraw(1);
+	if (material != NULL) {
+		material->BindProgram();
+		material->Bind("WVP");
+		material->SetMatrixProperty(render->GetWVP());
+	}
+
+	render->BeginDraw(0);
+	render->BindBuffer(0, bufferId, 3);
+	render->BeginDraw(1);
+	render->BindBuffer(1, colorBufferId, 3);
+	render->DrawBuffer(vertexCount, typeDraw);
+	render->EndDraw(0);
+	render->EndDraw(1);
 }
 
-void Shape::SetColorVertex(float* vertices, int count)
+void Shape::SetVertices(float * vertices, int count)
+{
+	Dispose();
+
+	vertexCount = count;
+	shouldDispose = true;
+	bufferId = render->GenBuffer(vertices, sizeof(float)* count * 3);
+}
+
+void Shape::SetColorVertex(float * vertices, int count)
 {
 	DisposeColor();
+
 	colorVertexCount = count;
 	shouldDisposeColor = true;
-	glGenBuffers(1, &colorBufferID);
-	glBindBuffer(GL_ARRAY_BUFFER, colorBufferID);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float)*count * 3, vertices, GL_STATIC_DRAW);
+	colorBufferId = render->GenBuffer(vertices, sizeof(float)* count * 3);
 }
 
-void Shape::SetIndexVertices(unsigned int* vertices, int count)
+void Shape::SetMaterial(Material * material)
 {
-	idxVtxCount = count;
-	shouldDisposeColor = true;
-	glGenBuffers(1, &indexBufferID);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferID);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float)*count, &vertices[0], GL_STATIC_DRAW);
+	this->material = material;
 }
 
+void Shape::Dispose()
+{
+	if (shouldDispose) {
+		render->DestroyBuffer(bufferId);
+		shouldDispose = false;
+	}
+}
 
 void Shape::DisposeColor()
 {
-	if (shouldDisposeColor)
-	{
-		glDeleteBuffers(1, &colorBufferID);
+	if (shouldDisposeColor) {
+		render->DestroyBuffer(colorBufferId);
 		shouldDisposeColor = false;
 	}
+}
+
+void Shape::Draw()
+{
+	DrawMesh(GL_TRIANGLE_STRIP);
 }
 
 Shape::~Shape()

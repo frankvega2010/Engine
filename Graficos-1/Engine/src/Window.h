@@ -1,28 +1,26 @@
-#ifndef WWINDOW_H
-#define WWINDOW_H
+#ifndef WINDOW_H
+#define WINDOW_H
+
+#include <stdio.h>
+#include <stdlib.h>
+#include "glew.h"
+#include <glfw3.h>
+#include <glm.hpp>
 
 #define DLLEXPORT __declspec(dllexport)
 
-struct GLFWwindow;
-
 class DLLEXPORT Window
 {
-private:
-	int width;
-	int height;
-	const char* name;
-	GLFWwindow* window;
+private: 
+	void * window;
 public:
-	Window(int w, int h, const char* n);
+	Window();
 	~Window();
-	void SetBackgroundColor(int r, int g, int b, int a);
-	bool GetOpened();
-	void Clear();
-	void SwapBuffers();
-	void PollEvents();
-	void Init();
-	void DeInit();
-	GLFWwindow* GetWindow();
+	bool Start(int width, int height, const char* name);
+	bool Stop();
+	const void* GetWindowPtr() { return (const void*)window; }
+	bool ShouldClose();
+	void PollEvents();	
 };
-
 #endif
+

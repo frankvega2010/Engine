@@ -3,10 +3,14 @@
 
 #include "BaseGame.h"
 
-class Game
+class Game : public BaseGame
 {
 private:
 public:
+	bool OnStart();
+	bool OnStop();
+	bool OnUpdate();
+	void OnDraw();
 };
 
 #endif

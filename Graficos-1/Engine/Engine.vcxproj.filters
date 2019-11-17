@@ -1,12 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="src\BaseGame.cpp">
-      <Filter>Engine\Cpps</Filter>
-    </ClCompile>
-    <ClCompile Include="src\loadShaders.cpp">
-      <Filter>Engine\Cpps</Filter>
-    </ClCompile>
     <ClCompile Include="src\Renderer.cpp">
       <Filter>Engine\Cpps</Filter>
     </ClCompile>
@@ -22,18 +16,18 @@
     <ClCompile Include="src\Sprite.cpp">
       <Filter>Engine\Cpps</Filter>
     </ClCompile>
+    <ClCompile Include="src\Material.cpp">
+      <Filter>Engine\Cpps</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BaseGame.cpp">
+      <Filter>Engine\Cpps</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\BaseGame.h">
-      <Filter>Engine\Header</Filter>
-    </ClInclude>
     <ClInclude Include="src\Renderer.h">
       <Filter>Engine\Header</Filter>
     </ClInclude>
     <ClInclude Include="src\Window.h">
-      <Filter>Engine\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="src\loadShaders.h">
       <Filter>Engine\Header</Filter>
     </ClInclude>
     <ClInclude Include="libs\glm\common.hpp">
@@ -115,6 +109,12 @@
       <Filter>Engine\Header</Filter>
     </ClInclude>
     <ClInclude Include="src\Sprite.h">
+      <Filter>Engine\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Material.h">
+      <Filter>Engine\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BaseGame.h">
       <Filter>Engine\Header</Filter>
     </ClInclude>
   </ItemGroup>
