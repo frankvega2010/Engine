@@ -1,6 +1,6 @@
 #include "BaseGame.h"
 #include "Input.h"
-
+#include "ColisionManager.h"
 BaseGame::BaseGame() {
 
 }
@@ -13,6 +13,8 @@ bool BaseGame::Start(int h, int w, char* name) {
 	if (!window->Start(w, h, name))
 		return false;
 
+	/*collisionManager = new ColisionManager();*/
+	 
 	render = new Renderer();
 	if (!render->Start(window))
 		return false;
@@ -32,6 +34,7 @@ void BaseGame::Loop() {
 		OnDraw();
 		render->SwapBuffer();
 		window->PollEvents();
+		/*collisionManager->CheckCollision(shape1, shape2);*/
 	}
 }
 

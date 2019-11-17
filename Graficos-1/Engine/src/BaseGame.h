@@ -1,6 +1,6 @@
 #ifndef BASEGAME_H
 #define BASEGAME_H
-
+#include "ColisionManager.h"
 #include "Renderer.h"
 #include "Window.h"
 #include <iostream>
@@ -14,6 +14,7 @@ private:
 	double lastFrame;
 protected:
 	Renderer * render;
+	ColisionManager * colisionManager;
 	virtual bool OnStart() = 0;
 	virtual bool OnStop() = 0;
 	virtual bool OnUpdate() = 0;

@@ -128,8 +128,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Animation.cpp" />
     <ClCompile Include="src\BaseGame.cpp" />
     <ClCompile Include="src\ColisionManager.cpp" />
+    <ClCompile Include="src\DeltaTime.cpp" />
     <ClCompile Include="src\Entity.cpp" />
     <ClCompile Include="src\Input.cpp" />
     <ClCompile Include="src\Material.cpp" />
@@ -140,8 +142,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ColisionManager.h" />
+    <ClInclude Include="src\Animation.h" />
     <ClInclude Include="src\BaseGame.h" />
     <ClInclude Include="src\ColisionManager.h" />
+    <ClInclude Include="src\DeltaTime.h" />
     <ClInclude Include="src\Entity.h" />
     <ClInclude Include="src\Input.h" />
     <ClInclude Include="src\Material.h" />
