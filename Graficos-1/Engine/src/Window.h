@@ -12,13 +12,13 @@
 class DLLEXPORT Window
 {
 private: 
-	void * window;
+	GLFWwindow * window;
 public:
 	Window();
 	~Window();
 	bool Start(int width, int height, const char* name);
 	bool Stop();
-	const void* GetWindowPtr() { return (const void*)window; }
+	GLFWwindow* GetWindowPtr() { return window; }
 	bool ShouldClose();
 	void PollEvents();	
 };

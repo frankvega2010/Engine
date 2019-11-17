@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "Shape.h"
+#include "Input.h"
 
 Shape* sq;
 
@@ -14,6 +15,11 @@ bool Game::OnStart()
 
 bool Game::OnUpdate()
 {
+	if(Input::GetKeyPressed(GLFW_KEY_RIGHT))
+	{
+		sq->Rotate(0.0f, 0.0f, 1.0f);
+	}
+	
 	return true;
 }
 

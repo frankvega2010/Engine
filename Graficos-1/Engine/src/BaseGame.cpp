@@ -1,4 +1,5 @@
 #include "BaseGame.h"
+#include "Input.h"
 
 BaseGame::BaseGame() {
 
@@ -17,6 +18,8 @@ bool BaseGame::Start(int h, int w, char* name) {
 		return false;
 	render->setClearScreenColor(0.0f, 0.0f, 4.0f, 0.0f);
 	render->ClearScreen();
+
+	Input::SetWindow(window);
 
 	return OnStart();
 }

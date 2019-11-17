@@ -22,6 +22,9 @@
     <ClCompile Include="src\BaseGame.cpp">
       <Filter>Engine\Cpps</Filter>
     </ClCompile>
+    <ClCompile Include="src\Input.cpp">
+      <Filter>Engine\Cpps</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Renderer.h">
@@ -115,6 +118,9 @@
       <Filter>Engine\Header</Filter>
     </ClInclude>
     <ClInclude Include="src\BaseGame.h">
+      <Filter>Engine\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Input.h">
       <Filter>Engine\Header</Filter>
     </ClInclude>
   </ItemGroup>
