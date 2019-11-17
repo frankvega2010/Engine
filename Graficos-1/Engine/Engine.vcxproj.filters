@@ -33,10 +33,9 @@
     <ClCompile Include="src\Window.cpp">
       <Filter>Cpps</Filter>
     </ClCompile>
-    <ClCompile Include="ColisionManager.cpp">
+    <ClCompile Include="src\ColisionManager.cpp">
       <Filter>Cpps</Filter>
     </ClCompile>
-    <ClCompile Include="src\ColisionManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\BaseGame.h">
@@ -69,7 +68,9 @@
     <ClInclude Include="ColisionManager.h">
       <Filter>Hpps</Filter>
     </ClInclude>
-    <ClInclude Include="src\ColisionManager.h" />
+    <ClInclude Include="src\ColisionManager.h">
+      <Filter>Hpps</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\SimpleFragmentShader.fragmentshader" />
