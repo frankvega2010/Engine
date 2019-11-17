@@ -12,15 +12,14 @@ Sprite::Sprite(Renderer * render, int columns, int rows) : Shape(render) {
 	};
 	SetVertices(vertex, 4);
 
-	//anim = new Animation(columns, rows);
+	uvArray = new float[8]
+	{
+		0.0f,0.0f,
+		0.0f,1.0f,
+		1.0f,0.0f,
+		1.0f,1.0f
+	};
 
-	//uvArray = anim->UpdateAnimation(0);/*new float[8]
-	//								   {
-	//								   0.0f, 0.0f,
-	//								   0.0f, 1.0f,
-	//								   1.0f, 0.0f,
-	//								   1.0f, 1.0f,
-	//								   };*/
 	SetTextureVertex(uvArray, 4);
 }
 
@@ -51,10 +50,12 @@ bool Sprite::getCollision()
 	return onCollision;
 }
 
-void Sprite::LoadMaterial(const char * bmpFile) {
-	//TextureImporter::LoadBMP(bmpFile,texture);
-	//textureID = render->ChargeTexture(texture.width, texture.height, texture.data);
-	//material->BindTexture("myTextureSampler");
+void Sprite::LoadMaterial(const char * texPath) {
+	stbi_set_flip_vertically_on_load(true);
+	data = stbi_load(texPath, &width, &height, &nrChannels, 0);
+	textureID = render->ChargeTexture(width, height, data);
+	stbi_image_free(data);
+	material->BindTexture("fragmentTexCoords");
 }
 
 void Sprite::DisposeTexture() {

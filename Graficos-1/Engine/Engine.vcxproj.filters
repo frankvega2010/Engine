@@ -1,157 +1,66 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="src\Renderer.cpp">
-      <Filter>Engine\Cpps</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Window.cpp">
-      <Filter>Engine\Cpps</Filter>
+    <Filter Include="Hpps">
+      <UniqueIdentifier>{9f217e6b-1e23-4239-9e17-bb469f2fc7c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Cpps">
+      <UniqueIdentifier>{1f95fc96-e009-4c24-99a7-3926dcc7b672}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\BaseGame.cpp">
+      <Filter>Cpps</Filter>
     </ClCompile>
     <ClCompile Include="src\Entity.cpp">
-      <Filter>Engine\Cpps</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Shape.cpp">
-      <Filter>Engine\Cpps</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Sprite.cpp">
-      <Filter>Engine\Cpps</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Material.cpp">
-      <Filter>Engine\Cpps</Filter>
-    </ClCompile>
-    <ClCompile Include="src\BaseGame.cpp">
-      <Filter>Engine\Cpps</Filter>
+      <Filter>Cpps</Filter>
     </ClCompile>
     <ClCompile Include="src\Input.cpp">
-      <Filter>Engine\Cpps</Filter>
+      <Filter>Cpps</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Material.cpp">
+      <Filter>Cpps</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer.cpp">
+      <Filter>Cpps</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Shape.cpp">
+      <Filter>Cpps</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Sprite.cpp">
+      <Filter>Cpps</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Window.cpp">
+      <Filter>Cpps</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Renderer.h">
-      <Filter>Engine\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Window.h">
-      <Filter>Engine\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\glm\common.hpp">
-      <Filter>Engine\glm</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\glm\exponential.hpp">
-      <Filter>Engine\glm</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\glm\ext.hpp">
-      <Filter>Engine\glm</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\glm\fwd.hpp">
-      <Filter>Engine\glm</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\glm\geometric.hpp">
-      <Filter>Engine\glm</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\glm\glm.hpp">
-      <Filter>Engine\glm</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\glm\integer.hpp">
-      <Filter>Engine\glm</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\glm\mat2x2.hpp">
-      <Filter>Engine\glm</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\glm\mat2x3.hpp">
-      <Filter>Engine\glm</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\glm\mat2x4.hpp">
-      <Filter>Engine\glm</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\glm\mat3x2.hpp">
-      <Filter>Engine\glm</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\glm\mat3x3.hpp">
-      <Filter>Engine\glm</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\glm\mat3x4.hpp">
-      <Filter>Engine\glm</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\glm\mat4x2.hpp">
-      <Filter>Engine\glm</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\glm\mat4x3.hpp">
-      <Filter>Engine\glm</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\glm\mat4x4.hpp">
-      <Filter>Engine\glm</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\glm\matrix.hpp">
-      <Filter>Engine\glm</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\glm\packing.hpp">
-      <Filter>Engine\glm</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\glm\trigonometric.hpp">
-      <Filter>Engine\glm</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\glm\vec2.hpp">
-      <Filter>Engine\glm</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\glm\vec3.hpp">
-      <Filter>Engine\glm</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\glm\vec4.hpp">
-      <Filter>Engine\glm</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\glm\vector_relational.hpp">
-      <Filter>Engine\glm</Filter>
-    </ClInclude>
-    <ClInclude Include="src\stb_image.h">
-      <Filter>Engine\Cpps</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Shape.h">
-      <Filter>Engine\Header</Filter>
+    <ClInclude Include="src\BaseGame.h">
+      <Filter>Hpps</Filter>
     </ClInclude>
     <ClInclude Include="src\Entity.h">
-      <Filter>Engine\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Sprite.h">
-      <Filter>Engine\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Material.h">
-      <Filter>Engine\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="src\BaseGame.h">
-      <Filter>Engine\Header</Filter>
+      <Filter>Hpps</Filter>
     </ClInclude>
     <ClInclude Include="src\Input.h">
-      <Filter>Engine\Header</Filter>
+      <Filter>Hpps</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="src\SimpleVertexShader.vertexshader">
-      <Filter>Engine\Shaders</Filter>
-    </None>
-    <None Include="src\SimpleFragmentShader.fragmentshader">
-      <Filter>Engine\Shaders</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Filter Include="Engine">
-      <UniqueIdentifier>{4e546242-cda2-4690-ba1a-f923bea885f1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Cpps">
-      <UniqueIdentifier>{f43a7788-2b10-494e-8fdf-8a41585ae3e4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Shaders">
-      <UniqueIdentifier>{bd1b199f-c98b-466c-ac79-7475b27952db}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\glm">
-      <UniqueIdentifier>{f29de1f6-eb2e-4041-96ec-470ac6b3ca97}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Header">
-      <UniqueIdentifier>{d7ecde1f-cf9a-4078-a171-bae032933b0c}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="libs\glm\CMakeLists.txt">
-      <Filter>Engine\glm</Filter>
-    </Text>
+    <ClInclude Include="src\Material.h">
+      <Filter>Hpps</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer.h">
+      <Filter>Hpps</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shape.h">
+      <Filter>Hpps</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Sprite.h">
+      <Filter>Hpps</Filter>
+    </ClInclude>
+    <ClInclude Include="src\stb_image.h">
+      <Filter>Hpps</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Window.h">
+      <Filter>Hpps</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

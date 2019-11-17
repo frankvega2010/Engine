@@ -3,11 +3,19 @@
 
 #include "Shape.h"
 
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+
 class DLLEXPORT Sprite : public Shape
 {
 private:
 
 	//BMPheader texture;
+
+	int width;
+	int height;
+	int nrChannels;
+	unsigned char* data;
 	float * uvArray;
 	unsigned int uvBufferID;
 	unsigned int textureID;
