@@ -14,7 +14,7 @@ Entity::Entity(Renderer *renderPTR)
 
 	pos[0] = pos[1] = pos[2] = 0.0f;
 	rot[0] = rot[1] = rot[2] = 0.0f;
-	scale[0] = scale[1] = scale[2] = 1.0f;
+	scale[0] = scale[1] = scale[2] = 2.0f;
 }
 
 void Entity::SetPos(float x, float y, float z)
