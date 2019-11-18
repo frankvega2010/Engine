@@ -3,6 +3,8 @@
 
 #include "Shape.h"
 
+#include "Animation.h"
+
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
@@ -21,7 +23,7 @@ private:
 	unsigned int textureID;
 	int uvVtxCount;
 	bool shouldDisposeTexture;
-	//Animation * anim;
+	Animation * anim;
 
 	bool onCollision;
 public:
@@ -31,13 +33,13 @@ public:
 	void DisposeTexture();
 	void SetTextureVertex(float * vertices, int count);
 
-	void UpdAnim(float deltaTime);
+	void UpdAnim(float frame);
 	void SetAnim(int initF, int finishF, float timePerF);
 
 	void setCollision();
 	bool getCollision();
 
-	Sprite(Renderer * render, int columns, int rows);
+	Sprite(Renderer * render, int columns, int rows, int frames);
 	~Sprite();
 };
 

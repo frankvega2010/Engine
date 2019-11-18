@@ -1,14 +1,14 @@
 #include "Sprite.h"
 #include "ColisionManager.h"
 
-Sprite::Sprite(Renderer * render, int columns, int rows) : Shape(render) {
+Sprite::Sprite(Renderer * render, int columns, int rows, int frames) : Shape(render) {
 	onCollision = false;
 	vertex = new float[12]
 	{
-		-5.0f, -5.0f, 0.f,
-		-5.0f,  5.0f, 0.f,
-		 5.0f, -5.0f, 0.f,
-		 5.0f,  5.0f, 0.f
+		-3.0f, -3.0f, 0.f,
+		-3.0f,  3.0f, 0.f,
+		 3.0f, -3.0f, 0.f,
+		 3.0f,  3.0f, 0.f
 	};
 	SetVertices(vertex, 4);
 
@@ -20,7 +20,12 @@ Sprite::Sprite(Renderer * render, int columns, int rows) : Shape(render) {
 		1.0f/columns,1.0f/rows
 	};
 
-	scale[0] = scale[1] = scale[2] = 10.0f;
+	anim = new Animation(columns, rows, frames);
+
+	anim->SetActualFrame(0);
+	uvArray = anim->GetFrameUv(0);
+
+	scale[0] = scale[1] = scale[2] = 6.0f;
 
 	SetTextureVertex(uvArray, 4);
 }
@@ -33,8 +38,8 @@ void Sprite::SetTextureVertex(float * vertices, int count) {
 	uvBufferID = render->GenBuffer(vertices, sizeof(float)* count * 2);
 }
 
-void Sprite::UpdAnim(float deltaTime) {
-	//uvArray = anim->UpdateAnimation(deltaTime);
+void Sprite::UpdAnim(float frame) {
+	uvArray = anim->GetFrameUv(frame);
 	SetTextureVertex(uvArray, 4);
 }
 
@@ -94,4 +99,5 @@ void Sprite::Draw() {
 Sprite::~Sprite() {
 	delete[] vertex;
 	delete[] uvArray;
+	delete anim;
 }

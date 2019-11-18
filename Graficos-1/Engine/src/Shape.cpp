@@ -97,7 +97,7 @@ Shape::~Shape()
 {
 	delete[] vertex;
 	delete[] colorVertex;
-
+	delete material;
 	Dispose();
 	DisposeColor();
 }

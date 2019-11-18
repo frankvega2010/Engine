@@ -4,23 +4,28 @@
 #include "Sprite.h"
 #include "ColisionManager.h"
 
-Shape* sq;
+Sprite* sq;
 Sprite* spr;
 
 bool Game::OnStart()
 {
-	sq = new Shape(render);
+	sq = new Sprite(render, 1, 1, 1);
 	Material* sqmat = new Material();
-	sqmat->LoadShaders("src/ShapeVertexShader.txt", "src/ShapeFragmentShader.txt");
+	sqmat->LoadShaders("src/TextureVertexShader.txt", "src/TextureFragmentShader.txt");
 	sq->SetMaterial(sqmat);
+	sq->LoadMaterial("res/alien.jpg", false);
 	sq->SetPos(5.0f, 0.0f, 0.0f);
 
-	spr = new Sprite(render,2,1);
+	spr = new Sprite(render,2,1,2);
 	Material* sprmat = new Material();
 	sprmat->LoadShaders("src/TextureVertexShader.txt", "src/TextureFragmentShader.txt");
 	spr->SetMaterial(sprmat);
 	spr->LoadMaterial("res/megaman.png",true);
 	spr->SetPos(-10.0f, 0.0f, 0.0f);
+
+	//delete sprmat;
+	//delete sqmat;
+
 	return true;
 }
 
@@ -37,7 +42,13 @@ bool Game::OnUpdate()
 		}
 		else
 			spr->SetPos(prevPos.x,prevPos.y,0.0f);
+
+		spr->UpdAnim(1);
 		
+	}
+	else
+	{
+		spr->UpdAnim(0);
 	}
 	if (Input::GetKeyPressed(GLFW_KEY_LEFT))
 	{
@@ -45,7 +56,6 @@ bool Game::OnUpdate()
 		{
 			prevPos = spr->GetPos();
 			spr->Translate(-0.01f, 0.0f, 0.0f);
-
 		}
 		else
 			spr->SetPos(prevPos.x, prevPos.y, 0.0f);
@@ -91,5 +101,7 @@ void Game::OnDraw()
 
 bool Game::OnStop()
 {
+	delete spr;
+	delete sq;
 	return true;
 }
