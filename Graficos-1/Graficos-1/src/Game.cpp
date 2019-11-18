@@ -15,7 +15,7 @@ bool Game::OnStart()
 	sq->SetMaterial(sqmat);
 	sq->SetPos(5.0f, 0.0f, 0.0f);
 
-	spr = new Sprite(render,0,0);
+	spr = new Sprite(render,2,1);
 	Material* sprmat = new Material();
 	sprmat->LoadShaders("src/TextureVertexShader.txt", "src/TextureFragmentShader.txt");
 	spr->SetMaterial(sprmat);

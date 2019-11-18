@@ -15,9 +15,9 @@ Sprite::Sprite(Renderer * render, int columns, int rows) : Shape(render) {
 	uvArray = new float[8]
 	{
 		0.0f,0.0f,
-		0.0f,1.0f,
-		1.0f,0.0f,
-		1.0f,1.0f
+		0.0f,1.0f/rows,
+		1.0f/columns,0.0f,
+		1.0f/columns,1.0f/rows
 	};
 
 	scale[0] = scale[1] = scale[2] = 10.0f;

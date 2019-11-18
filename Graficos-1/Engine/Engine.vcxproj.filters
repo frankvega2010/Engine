@@ -37,7 +37,9 @@
       <Filter>Cpps</Filter>
     </ClCompile>
     <ClCompile Include="src\DeltaTime.cpp" />
-    <ClCompile Include="src\Animation.cpp" />
+    <ClCompile Include="src\Animation.cpp">
+      <Filter>Cpps</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\BaseGame.h">
@@ -71,7 +73,9 @@
       <Filter>Hpps</Filter>
     </ClInclude>
     <ClInclude Include="src\DeltaTime.h" />
-    <ClInclude Include="src\Animation.h" />
+    <ClInclude Include="src\Animation.h">
+      <Filter>Hpps</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\SimpleFragmentShader.fragmentshader" />

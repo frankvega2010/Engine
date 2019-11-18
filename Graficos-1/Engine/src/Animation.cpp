@@ -1,6 +1,6 @@
 #include "Animation.h"
 
-Animation::Animation(float x, float y, int totalframes) : cantX(x), cantY(y), actualFrame(0), frame(new float[8]), frameTotal(totalframes), row(0), column(0), timer(20)
+Animation::Animation(float x, float y, int totalframes) : cantX(x), cantY(y), actualFrame(0), frame(new float[2]), frameTotal(totalframes), row(0), column(0)
 {
 	frameWidth = 1 / cantX;
 	frameHeight = 1 / cantY;
