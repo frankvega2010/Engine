@@ -5,10 +5,10 @@ Sprite::Sprite(Renderer * render, int columns, int rows) : Shape(render) {
 	onCollision = false;
 	vertex = new float[12]
 	{
-		-1.0f, -1.0f, 0.f,
-		-1.0f,  1.0f, 0.f,
-		1.0f, -1.0f, 0.f,
-		1.0f,  1.0f, 0.f
+		-5.0f, -5.0f, 0.f,
+		-5.0f,  5.0f, 0.f,
+		 5.0f, -5.0f, 0.f,
+		 5.0f,  5.0f, 0.f
 	};
 	SetVertices(vertex, 4);
 
@@ -19,6 +19,8 @@ Sprite::Sprite(Renderer * render, int columns, int rows) : Shape(render) {
 		1.0f,0.0f,
 		1.0f,1.0f
 	};
+
+	scale[0] = scale[1] = scale[2] = 10.0f;
 
 	SetTextureVertex(uvArray, 4);
 }
@@ -50,10 +52,10 @@ bool Sprite::getCollision()
 	return onCollision;
 }
 
-void Sprite::LoadMaterial(const char * texPath) {
+void Sprite::LoadMaterial(const char * texPath, bool alpha) {
 	stbi_set_flip_vertically_on_load(true);
 	data = stbi_load(texPath, &width, &height, &nrChannels, 0);
-	textureID = render->ChargeTexture(width, height, data);
+	textureID = render->ChargeTexture(width, height, data, alpha);
 	stbi_image_free(data);
 	material->BindTexture("fragmentTexCoords");
 }

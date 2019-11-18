@@ -25,7 +25,6 @@ Shape::Shape(Renderer * render) :Entity(render)
 		0.859f,  0.258f,  0.679f,
 		0.110f,  0.411f,  0.912f
 	};
-
 	SetVertices(vertex, 4);
 	SetColorVertex(colorVertex, 4);
 }

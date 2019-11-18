@@ -69,7 +69,7 @@ void Renderer::BindBuffer(unsigned int atribID, unsigned int vtxBuffer, unsigned
 	);
 }
 
-unsigned int Renderer::ChargeTexture(unsigned int width, unsigned int height, unsigned char * data)
+unsigned int Renderer::ChargeTexture(unsigned int width, unsigned int height, unsigned char * data, bool alpha)
 {
 	unsigned int textureID;
 	glGenTextures(1, &textureID);
@@ -81,7 +81,10 @@ unsigned int Renderer::ChargeTexture(unsigned int width, unsigned int height, un
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	if (data)
 	{
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, data);
+		if(!alpha)
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+		else
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 		glGenerateMipmap(GL_TEXTURE_2D);
 		cout << "cargo tex" << endl;
 	}

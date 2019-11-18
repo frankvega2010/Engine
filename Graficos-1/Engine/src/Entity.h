@@ -12,7 +12,7 @@ class DLLEXPORT Entity
 private:
 	vec3 pos;
 	vec3 rot;
-	vec3 scale;
+
 
 protected:
 	Renderer* render;
@@ -23,7 +23,7 @@ protected:
 	void UpdateWorldMatrix();
 
 public:
-
+	vec3 scale;
 	Entity(Renderer * renderPTR);
 	virtual void Draw() = 0;
 	void SetPos(float x, float y, float z);

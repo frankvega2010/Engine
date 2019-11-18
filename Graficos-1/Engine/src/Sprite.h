@@ -27,7 +27,7 @@ private:
 public:
 	void Draw() override;
 	void DrawMeshWithTexture(int typeDraw);
-	void LoadMaterial(const char * bmpFile);
+	void LoadMaterial(const char * path, bool alpha);
 	void DisposeTexture();
 	void SetTextureVertex(float * vertices, int count);
 

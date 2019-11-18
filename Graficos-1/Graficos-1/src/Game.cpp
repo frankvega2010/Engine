@@ -19,7 +19,7 @@ bool Game::OnStart()
 	Material* sprmat = new Material();
 	sprmat->LoadShaders("src/TextureVertexShader.txt", "src/TextureFragmentShader.txt");
 	spr->SetMaterial(sprmat);
-	spr->LoadMaterial("res/alien.jpg");
+	spr->LoadMaterial("res/megaman.png",true);
 	spr->SetPos(-10.0f, 0.0f, 0.0f);
 	return true;
 }
@@ -72,7 +72,14 @@ bool Game::OnUpdate()
 		else
 			spr->SetPos(prevPos.x, prevPos.y, 0.0f);
 	}
-	
+	if (Input::GetKeyPressed(GLFW_KEY_B))
+	{
+		if (!CollisionManager::CheckCollision(spr, sq))
+		{
+			spr->SetScale(spr->GetScale().x + 0.01f, spr->GetScale().y + 0.01f, spr->GetScale().z);
+		}
+		
+	}
 	return true;
 }
 
