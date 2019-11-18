@@ -67,9 +67,6 @@
     <ClInclude Include="src\Window.h">
       <Filter>Hpps</Filter>
     </ClInclude>
-    <ClInclude Include="ColisionManager.h">
-      <Filter>Hpps</Filter>
-    </ClInclude>
     <ClInclude Include="src\ColisionManager.h">
       <Filter>Hpps</Filter>
     </ClInclude>

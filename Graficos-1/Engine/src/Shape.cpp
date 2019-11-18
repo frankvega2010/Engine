@@ -1,5 +1,5 @@
 #include "Shape.h"
-
+#include "ColisionManager.h"
 Shape::Shape(Renderer * render) :Entity(render)
 {
 	shouldDispose = false;

@@ -1,5 +1,5 @@
 #include "Sprite.h"
-
+#include "ColisionManager.h"
 
 Sprite::Sprite(Renderer * render, int columns, int rows) : Shape(render) {
 	onCollision = false;

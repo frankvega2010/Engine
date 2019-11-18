@@ -14,7 +14,7 @@ private:
 	double lastFrame;
 protected:
 	Renderer * render;
-	ColisionManager * colisionManager;
+	CollisionManager * colisionManager;
 	virtual bool OnStart() = 0;
 	virtual bool OnStop() = 0;
 	virtual bool OnUpdate() = 0;

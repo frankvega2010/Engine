@@ -3,14 +3,16 @@
 
 class Shape;
 
-#define EXPORTDLL _declspec(dllexport)
+using namespace std;
 
-class EXPORTDLL ColisionManager
+#define DLLEXPORT _declspec(dllexport)
+
+class DLLEXPORT CollisionManager
 {
 public:
-	ColisionManager() {};
-	~ColisionManager() {};
-	bool CheckCollision(Shape shape1, Shape shape2);
+	CollisionManager() {};
+	~CollisionManager() {};
+	static bool CheckCollision(Shape* shape1, Shape* shape2);
 };
 
 #endif

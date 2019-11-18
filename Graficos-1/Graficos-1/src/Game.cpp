@@ -2,6 +2,7 @@
 #include "Shape.h"
 #include "Input.h"
 #include "Sprite.h"
+#include "ColisionManager.h"
 
 Shape* sq;
 Sprite* spr;
@@ -12,25 +13,64 @@ bool Game::OnStart()
 	Material* sqmat = new Material();
 	sqmat->LoadShaders("src/ShapeVertexShader.txt", "src/ShapeFragmentShader.txt");
 	sq->SetMaterial(sqmat);
+	sq->SetPos(5.0f, 0.0f, 0.0f);
 
 	spr = new Sprite(render,0,0);
 	Material* sprmat = new Material();
 	sprmat->LoadShaders("src/TextureVertexShader.txt", "src/TextureFragmentShader.txt");
 	spr->SetMaterial(sprmat);
 	spr->LoadMaterial("res/alien.jpg");
-
+	spr->SetPos(-10.0f, 0.0f, 0.0f);
 	return true;
 }
 
+vec2 prevPos;
+
 bool Game::OnUpdate()
 {
-	if(Input::GetKeyPressed(GLFW_KEY_RIGHT))
+	if (Input::GetKeyPressed(GLFW_KEY_RIGHT))
 	{
-		sq->Rotate(0.0f, 0.0f, 1.0f);
+		if (!CollisionManager::CheckCollision(spr, sq))
+		{
+			prevPos = spr->GetPos();
+			spr->Translate(0.01f, 0.0f, 0.0f);
+		}
+		else
+			spr->SetPos(prevPos.x,prevPos.y,0.0f);
+		
 	}
 	if (Input::GetKeyPressed(GLFW_KEY_LEFT))
 	{
-		spr->SetScale(spr->GetScale().x + 0.1f, spr->GetScale().y + 0.1f, spr->GetScale().z);
+		if (!CollisionManager::CheckCollision(spr, sq))
+		{
+			prevPos = spr->GetPos();
+			spr->Translate(-0.01f, 0.0f, 0.0f);
+
+		}
+		else
+			spr->SetPos(prevPos.x, prevPos.y, 0.0f);
+	}
+	if (Input::GetKeyPressed(GLFW_KEY_UP))
+	{
+		if (!CollisionManager::CheckCollision(spr, sq))
+		{
+			prevPos = spr->GetPos();
+			spr->Translate(0.0f, 0.01f, 0.0f);
+
+		}
+
+		else
+			spr->SetPos(prevPos.x, prevPos.y, 0.0f);
+	}
+	if (Input::GetKeyPressed(GLFW_KEY_DOWN))
+	{
+		if (!CollisionManager::CheckCollision(spr, sq))
+		{
+			prevPos = spr->GetPos();
+			spr->Translate(0.0f, -0.01f, 0.0f);
+		}
+		else
+			spr->SetPos(prevPos.x, prevPos.y, 0.0f);
 	}
 	
 	return true;
