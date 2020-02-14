@@ -1,6 +1,6 @@
-#ifndef SPRITE_H
-#define SPRITE_H
-
+//#ifndef SPRITE_H
+//#define SPRITE_H
+#pragma once
 #include "Shape.h"
 
 #include "Animation.h"
@@ -43,4 +43,4 @@ public:
 	~Sprite();
 };
 
-#endif
+//#endif

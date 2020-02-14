@@ -36,12 +36,18 @@
     <ClCompile Include="src\ColisionManager.cpp">
       <Filter>Cpps</Filter>
     </ClCompile>
-    <ClCompile Include="src\DeltaTime.cpp" />
     <ClCompile Include="src\Animation.cpp">
       <Filter>Cpps</Filter>
     </ClCompile>
-    <ClCompile Include="src\Tile.cpp" />
-    <ClCompile Include="src\TileMap.cpp" />
+    <ClCompile Include="src\DeltaTime.cpp">
+      <Filter>Cpps</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tile.cpp">
+      <Filter>Cpps</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TileMap.cpp">
+      <Filter>Cpps</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\BaseGame.h">
@@ -74,12 +80,18 @@
     <ClInclude Include="src\ColisionManager.h">
       <Filter>Hpps</Filter>
     </ClInclude>
-    <ClInclude Include="src\DeltaTime.h" />
     <ClInclude Include="src\Animation.h">
       <Filter>Hpps</Filter>
     </ClInclude>
-    <ClInclude Include="src\Tile.h" />
-    <ClInclude Include="src\TileMap.h" />
+    <ClInclude Include="src\DeltaTime.h">
+      <Filter>Hpps</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tile.h">
+      <Filter>Hpps</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TileMap.h">
+      <Filter>Hpps</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\SimpleFragmentShader.fragmentshader" />

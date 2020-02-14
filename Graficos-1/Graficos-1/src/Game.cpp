@@ -3,9 +3,12 @@
 #include "Input.h"
 #include "Sprite.h"
 #include "ColisionManager.h"
+#include "Tilemap.h"
+#include <iostream>
 
 Sprite* sq;
 Sprite* spr;
+TileMap* myLevel;
 
 bool Game::OnStart()
 {
@@ -22,6 +25,9 @@ bool Game::OnStart()
 	spr->SetMaterial(sprmat);
 	spr->LoadMaterial("res/megaman.png",true);
 	spr->SetPos(-10.0f, 0.0f, 0.0f);
+
+	Material* matmap = new Material();
+	myLevel = new TileMap(render, matmap, "res/example_11.png", 2, 2);
 
 	//delete sprmat;
 	//delete sqmat;
@@ -95,6 +101,8 @@ bool Game::OnUpdate()
 
 void Game::OnDraw()
 {
+	myLevel->DrawTiles();
+	myLevel->UpdateTilesAnim(0.05f);
 	sq->Draw();
 	spr->Draw();
 }
@@ -103,5 +111,6 @@ bool Game::OnStop()
 {
 	delete spr;
 	delete sq;
+	delete myLevel;
 	return true;
 }
