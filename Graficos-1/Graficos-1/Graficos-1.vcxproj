@@ -25,6 +25,16 @@
   <ItemGroup>
     <ClInclude Include="src\Game.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\alien.jpg" />
+    <Image Include="res\megaman.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="src\ShapeFragmentShader.txt" />
+    <Text Include="src\ShapeVertexShader.txt" />
+    <Text Include="src\TextureFragmentShader.txt" />
+    <Text Include="src\TextureVertexShader.txt" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{CBC7F42E-29D4-4538-B891-95B8D143E352}</ProjectGuid>
