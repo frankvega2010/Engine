@@ -10,7 +10,7 @@
 using namespace std;
 using namespace glm;
 
-class DLLEXPORT Renderer
+class ENGINE_API Renderer
 {
 private:
 	Window* win;
@@ -29,7 +29,7 @@ public:
 	void BeginDraw(unsigned int atribID);
 	void EndDraw(unsigned int atribID);
 	void BindBuffer(unsigned int atribID, unsigned int vtxBuffer, unsigned int size);
-	unsigned int ChargeTexture(unsigned int width, unsigned int height, unsigned char * data, bool alpha);
+	unsigned int ChargeTexture(unsigned int width, unsigned int height, unsigned char * data);
 	void BindTexture(unsigned int texture, unsigned int textureID);
 	void DrawBuffer(int size, int typeDraw);
 	void DestroyBuffer(unsigned int buffer);

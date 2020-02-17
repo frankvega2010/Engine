@@ -5,7 +5,7 @@
 #include "Material.h"
 
 
-class DLLEXPORT Shape : public Entity
+class ENGINE_API Shape : public Entity
 {
 protected:
 	Material * material;

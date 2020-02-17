@@ -5,13 +5,15 @@
 #include "glfw3.h"
 #include "Window.h"
 
-#define DLLEXPORT __declspec(dllexport)
+//#define DLLEXPORT __declspec(dllexport)
 
-class DLLEXPORT Input
+class ENGINE_API Input
 {
 private:
-	static Window* window;
+	//static Window* window;
+	static Window *win;
 public:
+	Input(Window *window);
 	static bool GetKeyPressed(int key);
 	static bool SetWindow(Window* w);
 };

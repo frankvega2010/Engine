@@ -1,46 +1,35 @@
-//#ifndef SPRITE_H
-//#define SPRITE_H
 #pragma once
+#include "Exports.h"
 #include "Shape.h"
-
+#include "TextureImporter.h"
 #include "Animation.h"
 
-#define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
-
-class DLLEXPORT Sprite : public Shape
+class ENGINE_API Sprite :
+	public Shape
 {
+
 private:
 
-	//BMPheader texture;
-
-	int width;
-	int height;
-	int nrChannels;
-	unsigned char* data;
+	BMPheader texture;
 	float * uvArray;
 	unsigned int uvBufferID;
 	unsigned int textureID;
 	int uvVtxCount;
-	bool shouldDisposeTexture;
 	Animation * anim;
-
 	bool onCollision;
+
 public:
 	void Draw() override;
 	void DrawMeshWithTexture(int typeDraw);
-	void LoadMaterial(const char * path, bool alpha);
-	void DisposeTexture();
+	void LoadMaterial(const char * bmpFile);
 	void SetTextureVertex(float * vertices, int count);
 
-	void UpdAnim(float frame);
+	void UpdAnim(float deltaTime);
 	void SetAnim(int initF, int finishF, float timePerF);
 
 	void setCollision();
 	bool getCollision();
 
-	Sprite(Renderer * render, int columns, int rows, int frames);
+	Sprite(Renderer * render, int columns, int rows);
 	~Sprite();
 };
-
-//#endif

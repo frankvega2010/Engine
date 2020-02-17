@@ -48,6 +48,8 @@
     <ClCompile Include="src\TileMap.cpp">
       <Filter>Cpps</Filter>
     </ClCompile>
+    <ClCompile Include="src\TextureImporter.cpp" />
+    <ClCompile Include="src\SpriteSheet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\BaseGame.h">
@@ -92,9 +94,17 @@
     <ClInclude Include="src\TileMap.h">
       <Filter>Hpps</Filter>
     </ClInclude>
+    <ClInclude Include="src\Exports.h" />
+    <ClInclude Include="src\TextureImporter.h" />
+    <ClInclude Include="src\SpriteSheet.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\SimpleFragmentShader.fragmentshader" />
     <None Include="src\SimpleVertexShader.vertexshader" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\alien.jpg" />
+    <Image Include="res\example_11.png" />
+    <Image Include="res\NewTile.bmp" />
   </ItemGroup>
 </Project>

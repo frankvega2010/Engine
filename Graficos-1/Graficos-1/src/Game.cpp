@@ -12,18 +12,18 @@ TileMap* myLevel;
 
 bool Game::OnStart()
 {
-	sq = new Sprite(render, 1, 1, 1);
+	sq = new Sprite(render, 1, 1);
 	Material* sqmat = new Material();
 	sqmat->LoadShaders("src/TextureVertexShader.txt", "src/TextureFragmentShader.txt");
 	sq->SetMaterial(sqmat);
-	sq->LoadMaterial("res/alien.jpg", false);
+	sq->LoadMaterial("res/alien.jpg");
 	sq->SetPos(5.0f, 0.0f, 0.0f);
 
-	spr = new Sprite(render,2,1,2);
+	spr = new Sprite(render,2,1);
 	Material* sprmat = new Material();
 	sprmat->LoadShaders("src/TextureVertexShader.txt", "src/TextureFragmentShader.txt");
 	spr->SetMaterial(sprmat);
-	spr->LoadMaterial("res/megaman.png",true);
+	spr->LoadMaterial("res/megaman.png");
 	spr->SetPos(-10.0f, 0.0f, 0.0f);
 
 	Material* matmap = new Material();

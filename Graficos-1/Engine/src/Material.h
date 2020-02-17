@@ -5,13 +5,13 @@
 #include "glfw3.h"
 #include<glm.hpp>
 #include<gtc\matrix_transform.hpp>
-
-#define DLLEXPORT __declspec(dllexport)
+#include "Exports.h"
+//#define DLLEXPORT __declspec(dllexport)
 
 using namespace glm;
 using namespace std;
 
-class DLLEXPORT Material
+class ENGINE_API Material
 {
 	unsigned int ProgramID;
 	unsigned int matrixID;

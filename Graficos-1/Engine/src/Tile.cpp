@@ -1,6 +1,6 @@
 #include "Tile.h"
 
-Tile::Tile(Renderer* render, int columns, int rows) : Sprite(render, columns, rows, 1.0f )
+Tile::Tile(Renderer* render, int columns, int rows) : Sprite(render, columns, rows)
 {
 	_walkable = true;
 }

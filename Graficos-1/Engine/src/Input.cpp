@@ -1,11 +1,15 @@
 #include "Input.h"
 
-Window* Input::window = NULL;
+//Window* Input::window = NULL;
+Input::Input(Window *window)
+{
+	win = window;
+}
 
 bool Input::SetWindow(Window* w)
 {
-	window = w;
-	if (window)
+	win = w;
+	if (win)
 		return true;
 
 	return false;
@@ -13,7 +17,7 @@ bool Input::SetWindow(Window* w)
 
 bool Input::GetKeyPressed(int key)
 {
-	if (glfwGetKey(window->GetWindowPtr(), key) == GLFW_PRESS)
+	if (glfwGetKey((GLFWwindow*)win->GetWindowPtr(), key) == GLFW_PRESS)
 	{
 		return true;
 	}

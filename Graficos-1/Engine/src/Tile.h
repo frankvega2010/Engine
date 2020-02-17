@@ -3,7 +3,8 @@
 #pragma once
 #include "Sprite.h"
 
-class DLLEXPORT Tile : public Sprite
+
+class ENGINE_API Tile : public Sprite
 {
 private:
 	bool _walkable;

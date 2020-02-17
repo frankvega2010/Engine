@@ -2,19 +2,18 @@
 
 using namespace glm;
 
+Window::Window()
+{
+}
+
+Window::~Window()
+{
+}
 bool Window::Start(int width, int height, const char* name)
 {
 	if (!glfwInit())
-	{
-		fprintf(stderr, "Failed to initialize GLFW\n");
-		return false;
-	}
+		return -1;
 
-	glfwWindowHint(GLFW_SAMPLES, 4);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); //macos
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	window = glfwCreateWindow(width, height, name, NULL, NULL);
 
 	if (window == NULL) {
@@ -22,8 +21,6 @@ bool Window::Start(int width, int height, const char* name)
 		glfwTerminate();
 		return false;
 	}
-
-	
 
 	return true;
 }
@@ -39,9 +36,9 @@ bool Window::Stop()
 
 bool Window::ShouldClose()
 {
-	if(window)
+	if (window)
 		return glfwWindowShouldClose((GLFWwindow*)window);
-	
+
 }
 
 void Window::PollEvents()
@@ -49,10 +46,6 @@ void Window::PollEvents()
 	glfwPollEvents();
 }
 
-Window::Window()
-{
-}
-
-Window::~Window()
-{
+void* Window::GetWindow() {
+	return window;
 }

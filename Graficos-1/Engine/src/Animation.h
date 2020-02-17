@@ -1,35 +1,21 @@
-#ifndef ANIMATION_H
-#define ANIMATION_H
+#pragma once
+#include "Exports.h"
+#include "SpriteSheet.h"
 
-#include <glm.hpp>
-
-using namespace glm;
-
-struct Frame
-{
-	float* uvs;
-};
-
-class  Animation
+class ENGINE_API Animation
 {
 private:
-	int actualFrame;
-	int frameTotal;
-	float timer;
-	float cantY;
-	float cantX;
-	float row;
-	float column;
-	float frameWidth;
-	float frameHeight;
-	float* frame;
-	Frame* frames;
+	SpriteSheet* sprSheet;
+	int initialFrame;
+	int currentFrame;
+	int lastFrame;
+
+	float timePerFrame;
+	float currentTime;
+
 public:
-	Animation(float x, float y, int totalframes);
+	Animation(int column, int rows);
 	~Animation();
-	void SetActualFrame(int frame);
-	int GetActualFrame();
-	float* CalculateFrame();
-	float* GetFrameUv(int frame);
+	void SetAnimation(int initF, int finalF, float timePerF);
+	float * UpdateAnimation(float deltaTime);
 };
-#endif

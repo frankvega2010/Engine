@@ -27,7 +27,9 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\alien.jpg" />
+    <Image Include="res\example_11.png" />
     <Image Include="res\megaman.png" />
+    <Image Include="res\NewTile.bmp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\ShapeFragmentShader.txt" />

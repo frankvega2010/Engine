@@ -10,7 +10,7 @@ TileMap::TileMap(Renderer* render, Material* material, const char* bmpFile, int 
 		{
 			mapa[i][j] = new Tile(render, columns, rows);
 			mapa[i][j]->SetMaterial(material);
-			mapa[i][j]->LoadMaterial(bmpFile,true);
+			mapa[i][j]->LoadMaterial(bmpFile);
 			mapa[i][j]->SetPos(1 + (2.0f * i), 1 + (2.0f * j), 0);
 			mapa[i][j]->SetAnim(0, 0, 0.0f);
 		}

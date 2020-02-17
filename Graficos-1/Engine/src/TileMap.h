@@ -1,7 +1,7 @@
 #ifndef TILEMAP_H
 #define TILEMAP_H
 #include "Tile.h"
-class DLLEXPORT TileMap
+class ENGINE_API TileMap
 {
 private:
 	GLuint width;  //ancho en tiles

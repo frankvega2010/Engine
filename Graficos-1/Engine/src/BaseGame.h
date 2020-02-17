@@ -3,11 +3,12 @@
 #include "ColisionManager.h"
 #include "Renderer.h"
 #include "Window.h"
+#include "Exports.h"
 #include <iostream>
 
 using namespace std;
 
-class DLLEXPORT BaseGame {
+class ENGINE_API BaseGame {
 private:
 	
 	double currentFrame;

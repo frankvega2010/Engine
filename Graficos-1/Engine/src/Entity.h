@@ -7,7 +7,7 @@
 using namespace std;
 using namespace glm;
 
-class DLLEXPORT Entity
+class ENGINE_API Entity
 {
 private:
 	vec3 pos;

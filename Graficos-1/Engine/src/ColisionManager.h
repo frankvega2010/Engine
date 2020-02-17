@@ -1,13 +1,13 @@
 #ifndef COLISIONMANAGER_H
 #define COLISIONMANAGER_H
-
+#include "Exports.h"
 class Shape;
 
 using namespace std;
 
-#define DLLEXPORT _declspec(dllexport)
+//#define DLLEXPORT _declspec(dllexport)
 
-class DLLEXPORT CollisionManager
+class ENGINE_API CollisionManager
 {
 public:
 	CollisionManager() {};
