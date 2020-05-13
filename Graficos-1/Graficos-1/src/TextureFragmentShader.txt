@@ -1,0 +1,27 @@
+#version 330 core
+
+//out vec4 outColor;
+//
+//in vec3 Color;
+//
+//uniform vec4 u_Color;
+//
+//uniform sampler2D ourTexture;
+//in vec2 TexCoords;
+//
+//void main(){
+//  outColor = texture(ourTexture, TexCoords) * vec4(Color,1.0);
+//}
+
+out vec4 finalColor;
+in vec3 fragmentColor;
+in vec2 fragmentTexCoords;
+uniform sampler2D fragmentTexture;
+
+void main()
+{
+	vec4 texColor = texture(fragmentTexture, fragmentTexCoords);
+    if(texColor.a < 0.1)
+        discard;
+    finalColor  = texColor;
+}
