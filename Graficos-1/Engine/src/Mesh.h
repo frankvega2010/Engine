@@ -29,7 +29,7 @@ struct Vertex {
 	glm::vec3 bitangent;
 };
 
-struct TextureStruct {
+struct Texture {
 	unsigned int id;
 	string type;
 	string path;
@@ -40,11 +40,11 @@ public:
 	/*  Mesh Data  */
 	vector<Vertex> vertices;
 	vector<unsigned int> indices;
-	vector<TextureStruct> textures;
+	vector<Texture> textures;
 	unsigned int VAO;
 
 	// constructor
-	Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<TextureStruct> textures);
+	Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture> textures);
 
 	// render the mesh
 	void Draw(unsigned int program);

@@ -28,38 +28,16 @@ bool Game::OnStart()
 
 	cam->SetCameraSpeed(2.5f);
 
-	//m = new Model("res/backpack/backpack.obj");
-
-	//delete sprmat;
-	//delete sqmat;
+	m = new Model("res/backpack/backpack.obj");
 
 	return true;
 }
 
 vec2 prevPos;
-glm::vec3 camPos;
 
 bool Game::OnUpdate()
 {
-
-	/*if (Input::GetKeyPressed(GLFW_KEY_W))
-	{
-		cam->LookAt(cam->GetCamComponent('p') + glm::vec3(0.0f,0.0f,0.01f), cam->GetCamComponent('c'), cam->GetCamComponent('u'));
-	}
-	if (Input::GetKeyPressed(GLFW_KEY_S))
-	{
-		cam->LookAt(cam->GetCamComponent('p') + glm::vec3(0.0f, 0.0f, -0.01f), cam->GetCamComponent('c'), cam->GetCamComponent('u'));
-	}
-	if (Input::GetKeyPressed(GLFW_KEY_A))
-	{
-		cam->LookAt(cam->GetCamComponent('p') + glm::vec3(-0.01f, 0.0f, 0.0f), cam->GetCamComponent('c'), cam->GetCamComponent('u'));
-	}
-	if (Input::GetKeyPressed(GLFW_KEY_D))
-	{
-		cam->LookAt(cam->GetCamComponent('p') + glm::vec3(0.01f, 0.0f, 0.0f), cam->GetCamComponent('c'), cam->GetCamComponent('u'));
-	}*/
-
-	//m->Draw();
+	m->Draw();
 
 	cam->UpdateCamera();
 

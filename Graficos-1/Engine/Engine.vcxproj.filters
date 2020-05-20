@@ -54,6 +54,9 @@
     <ClCompile Include="src\AssimpImporter.cpp">
       <Filter>Cpps</Filter>
     </ClCompile>
+    <ClCompile Include="src\Shader.cpp">
+      <Filter>Cpps</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\BaseGame.h">
@@ -102,6 +105,9 @@
       <Filter>Hpps</Filter>
     </ClInclude>
     <ClInclude Include="src\AssimpImporter.h">
+      <Filter>Hpps</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shader.h">
       <Filter>Hpps</Filter>
     </ClInclude>
   </ItemGroup>
