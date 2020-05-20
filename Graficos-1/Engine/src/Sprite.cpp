@@ -35,7 +35,7 @@ void Sprite::SetTextureVertex(float * vertices, int count) {
 
 	uvVtxCount = count;
 	shouldDisposeTexture = true;
-	uvBufferID = render->GenBuffer(vertices, sizeof(float)* count * 2);
+	uvBufferID = renderer->GenBuffer(vertices, sizeof(float)* count * 2);
 }
 
 void Sprite::UpdAnim(float frame) {
@@ -60,36 +60,36 @@ bool Sprite::getCollision()
 void Sprite::LoadMaterial(const char * texPath, bool alpha) {
 	stbi_set_flip_vertically_on_load(true);
 	data = stbi_load(texPath, &width, &height, &nrChannels, 0);
-	textureID = render->ChargeTexture(width, height, data, alpha);
+	textureID = renderer->ChargeTexture(width, height, data, alpha);
 	stbi_image_free(data);
 	material->BindTexture("fragmentTexCoords");
 }
 
 void Sprite::DisposeTexture() {
 	if (shouldDisposeTexture) {
-		render->DestroyBuffer(uvBufferID);
+		renderer->DestroyBuffer(uvBufferID);
 		shouldDisposeTexture = false;
 	}
 }
 
 void Sprite::DrawMeshWithTexture(int typeDraw) {
-	render->LoadIMatrix();
-	render->SetWMatrix(WorldMatrix);
+	renderer->LoadWorldMatrix();
+	renderer->SetWorldMatrix(WorldMatrix);
 
 	if (material != NULL) {
 		material->BindProgram();
 		material->Bind("WVP");
-		material->SetMatrixProperty(render->GetWVP());
+		material->SetMatrixProperty(renderer->GetWVP());
 	}
 
-	render->BindTexture(textureID, uvBufferID);
-	render->BeginDraw(0);
-	render->BindBuffer(0, bufferId, 3);
-	render->BeginDraw(1);
-	render->BindBuffer(1, uvBufferID, 2);
-	render->DrawBuffer(vertexCount, typeDraw);
-	render->EndDraw(0);
-	render->EndDraw(1);
+	renderer->BindTexture(textureID, uvBufferID);
+	renderer->BeginDraw(0);
+	renderer->BindBuffer(0, bufferId, 3);
+	renderer->BeginDraw(1);
+	renderer->BindBuffer(1, uvBufferID, 2);
+	renderer->DrawBuffer(vertexCount, typeDraw);
+	renderer->EndDraw(0);
+	renderer->EndDraw(1);
 }
 
 void Sprite::Draw() {

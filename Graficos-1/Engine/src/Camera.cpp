@@ -1,82 +1,111 @@
 #include "Camera.h"
 #include <iostream>
-
+#include "Input.h"
+#include "BaseGame.h"
 using namespace std;
 
 Camera* Camera::thisCam = nullptr;
 double Camera::xposs = 0.0f;
 double Camera::yposs = 0.0f;
 
-Camera::Camera(Window* w)
+float Camera::yaw = 0.0f;
+float Camera::pitch = 0.0f;
+
+bool  Camera::firstMouse = true;
+float Camera::lastX = 0.0f;
+float Camera::lastY = 0.0f;
+
+Camera::Camera(Window* w, glm::vec3 p, glm::vec3 t, glm::vec3 f, glm::vec3 u)
 {
 	actualWindow = w;
 	glfwSetCursorPosCallback(w->GetGLFWWindowPtr(), &Camera::mouse_callback);
 	thisCam = this;
+	cameraPos = p; up = u; cameraFront = f;
+	cameraTarget = t;
+	LookAt();
 }
 
-void Camera::LookAt(glm::vec3 p, glm::vec3 c, glm::vec3 u)
+void Camera::LookAt()
 {
-	pos = p; center = c; up = u;
-	ViewMatrix = glm::lookAt(pos, center, up);
+	cameraDirection = glm::normalize(cameraPos - cameraTarget);
+	cameraRight = glm::normalize(glm::cross(up, cameraDirection));
+	cameraUp = glm::cross(cameraDirection, cameraRight);
+	viewMatrix = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 }
 
 glm::mat4 Camera::GetMatrix()
 {
-	return ViewMatrix;
+	return viewMatrix;
 }
 
-void Camera::CoutPosVec()
+void Camera::UpdateCamera()
 {
-	cout << "x:" << up.x << "y:" << up.y
-		<< "z:" << up.z << endl;
-}
-
-glm::vec3 Camera::GetCamComponent(char comp)
-{
-	switch (comp)
+	bool moved = false;
+	if(Input::GetKeyPressed(GLFW_KEY_W))
 	{
-	case 'p':
-		return pos;
-		break;
-	case 'c':
-		return center;
-		break;
-	case 'u':
-		return up;
-		break;
-	default:
-		return glm::vec3(0.0f, 0.0f, 0.0f);
-		break;
+		cameraPos += cameraSpeed * BaseGame::GetDeltaTime() * cameraFront;
+		moved = true;
 	}
+	if (Input::GetKeyPressed(GLFW_KEY_S))
+	{
+		cameraPos -= cameraSpeed * BaseGame::GetDeltaTime() * cameraFront;
+		moved = true;
+	}
+	if (Input::GetKeyPressed(GLFW_KEY_A))
+	{
+		cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * BaseGame::GetDeltaTime() * cameraSpeed;
+		moved = true;
+	}
+	if (Input::GetKeyPressed(GLFW_KEY_D))
+	{
+		cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * BaseGame::GetDeltaTime() * cameraSpeed;
+		moved = true;
+	}
+
+	if (moved)
+		LookAt();
 }
 
 glm::vec3 Camera::GetCameraPosition()
 {
-	return pos;
+	return cameraPos;
 }
 
-void Camera::NewCenterCalculation()
+void Camera::SetCameraSpeed(float s)
 {
-	lastX = actualWindow->GetWidth() / 2;
-	lastY = actualWindow->GetHeigth() / 2;
-
-	float xoffset = xposs - lastX;
-	float yoffset = lastY - yposs; // reversed since y-coordinates range from bottom to top
-	lastX = xposs;
-	lastY = yposs;
-
-	const float sensitivity = 0.05f;
-	xoffset *= sensitivity;
-	yoffset *= sensitivity;
-
-	glm::vec3 newCenter = { xoffset, yoffset, center.z };
-
-	LookAt(pos, newCenter, up);
+	cameraSpeed = s;
 }
 
 void Camera::mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {
-	xposs = xpos;
-	yposs = ypos;
-	Camera::thisCam->NewCenterCalculation();
+	if (firstMouse)
+	{
+		lastX = xpos;
+		lastY = ypos;
+		firstMouse = false;
+	}
+
+	float xoffset = xpos - lastX;
+	float yoffset = lastY - ypos;
+	lastX = xpos;
+	lastY = ypos;
+
+	float sensitivity = 0.05;
+	xoffset *= sensitivity;
+	yoffset *= sensitivity;
+
+	yaw += xoffset;
+	pitch += yoffset;
+
+	if (pitch > 89.0f)
+		pitch = 89.0f;
+	if (pitch < -89.0f)
+		pitch = -89.0f;
+
+	glm::vec3 direction;
+	direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+	direction.y = sin(glm::radians(pitch));
+	direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+	Camera::thisCam->cameraFront = glm::normalize(direction);
+	Camera::thisCam->LookAt();
 }

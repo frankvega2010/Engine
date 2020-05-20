@@ -3,9 +3,12 @@
 #include "Input.h"
 #include "Sprite.h"
 #include "ColisionManager.h"
+#include "Model.h"
 
 Sprite* sq;
 Sprite* spr;
+
+Model* m;
 
 bool Game::OnStart()
 {
@@ -23,6 +26,10 @@ bool Game::OnStart()
 	spr->LoadMaterial("res/megaman.png",true);
 	spr->SetPos(-10.0f, 0.0f, -10.0f);
 
+	cam->SetCameraSpeed(2.5f);
+
+	//m = new Model("res/backpack/backpack.obj");
+
 	//delete sprmat;
 	//delete sqmat;
 
@@ -34,6 +41,28 @@ glm::vec3 camPos;
 
 bool Game::OnUpdate()
 {
+
+	/*if (Input::GetKeyPressed(GLFW_KEY_W))
+	{
+		cam->LookAt(cam->GetCamComponent('p') + glm::vec3(0.0f,0.0f,0.01f), cam->GetCamComponent('c'), cam->GetCamComponent('u'));
+	}
+	if (Input::GetKeyPressed(GLFW_KEY_S))
+	{
+		cam->LookAt(cam->GetCamComponent('p') + glm::vec3(0.0f, 0.0f, -0.01f), cam->GetCamComponent('c'), cam->GetCamComponent('u'));
+	}
+	if (Input::GetKeyPressed(GLFW_KEY_A))
+	{
+		cam->LookAt(cam->GetCamComponent('p') + glm::vec3(-0.01f, 0.0f, 0.0f), cam->GetCamComponent('c'), cam->GetCamComponent('u'));
+	}
+	if (Input::GetKeyPressed(GLFW_KEY_D))
+	{
+		cam->LookAt(cam->GetCamComponent('p') + glm::vec3(0.01f, 0.0f, 0.0f), cam->GetCamComponent('c'), cam->GetCamComponent('u'));
+	}*/
+
+	//m->Draw();
+
+	cam->UpdateCamera();
+
 	if (Input::GetKeyPressed(GLFW_KEY_RIGHT))
 	{
 		if (!CollisionManager::CheckCollision(spr, sq))
@@ -83,18 +112,13 @@ bool Game::OnUpdate()
 		else
 			spr->SetPos(prevPos.x, prevPos.y, spr->GetPos().z);
 	}
-	if (Input::GetKeyPressed(GLFW_KEY_4))
-	{
-		cam->LookAt(cam->GetCamComponent('p'), cam->GetCamComponent('c') + vec3(-0.01f, 0.0f, 0.0f), cam->GetCamComponent('u'));
-	}
-	if (Input::GetKeyPressed(GLFW_KEY_5))
-	{
-		cam->LookAt(cam->GetCamComponent('p'), cam->GetCamComponent('c') + vec3(0.01f, 0.0f, 0.0f), cam->GetCamComponent('u'));
-	}
+	
 	if (Input::GetKeyPressed(GLFW_KEY_ESCAPE))
 	{
 		return false;
 	}
+
+
 
 	return true;
 }

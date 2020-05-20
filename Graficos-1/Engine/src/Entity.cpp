@@ -3,10 +3,12 @@
 
 #include "Shape.h"
 
+Renderer* Entity::renderer = nullptr;
+
 Entity::Entity(Renderer *renderPTR)
 {
 	//boundBox = NULL;
-	render = renderPTR;
+	renderer = renderPTR;
 	WorldMatrix = mat4(1.0f);
 	TranslateMatrix = mat4(1.0f);
 	RotMatrix = mat4(1.0f);
@@ -102,4 +104,9 @@ void Entity::Rotate(float x, float y, float z)
 	RotMatrix *= rotate(mat4(1.0f), rot[2], vec3(0.0f, 0.0f, 1.0f));
 
 	UpdateWorldMatrix();
+}
+
+Renderer* Entity::GetRenderer()
+{
+	return renderer;
 }

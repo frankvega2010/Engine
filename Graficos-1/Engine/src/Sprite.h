@@ -5,7 +5,6 @@
 
 #include "Animation.h"
 
-#define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
 class DLLEXPORT Sprite : public Shape
@@ -42,5 +41,4 @@ public:
 	Sprite(Renderer * render, int columns, int rows, int frames);
 	~Sprite();
 };
-
 #endif

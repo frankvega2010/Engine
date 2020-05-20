@@ -15,7 +15,7 @@ private:
 
 
 protected:
-	Renderer* render;
+	static Renderer* renderer;
 	mat4 WorldMatrix;
 	mat4 TranslateMatrix;
 	mat4 RotMatrix;
@@ -23,6 +23,7 @@ protected:
 	void UpdateWorldMatrix();
 
 public:
+	static Renderer* GetRenderer();
 	vec3 scale;
 	Entity(Renderer * renderPTR);
 	virtual void Draw() = 0;

@@ -8,21 +8,34 @@
 class DLLEXPORT Camera
 {
 private:
-	glm::vec3 pos;
-	glm::vec3 center;
+	glm::vec3 cameraPos;
+	glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
 	glm::vec3 up;
-	glm::mat4 ViewMatrix;
+	glm::vec3 cameraDirection;
+	glm::vec3 cameraRight;
+	glm::vec3 cameraUp;
+
+	float cameraSpeed;
+
+	static float yaw;
+	static float pitch;
+
+	glm::mat4 viewMatrix;
 	Window* actualWindow;
-	float lastX;
-	float lastY;
+	
+	static bool firstMouse;
+	static float lastX;
+	static float lastY;
+
 	static Camera* thisCam;
 public:
-	Camera(Window* w);
-	void LookAt(glm::vec3 pos, glm::vec3 center, glm::vec3 up);
-	void CoutPosVec();
+	glm::vec3 cameraFront;
+	Camera(Window* w, glm::vec3 p, glm::vec3 t, glm::vec3 f, glm::vec3 u);
+	void LookAt();
+	void SetCameraSpeed(float s);
 	glm::mat4 GetMatrix();
-	glm::vec3 GetCamComponent(char comp);
 	glm::vec3 GetCameraPosition();
+	void UpdateCamera();
 	static double xposs;
 	static double yposs;
 	static void mouse_callback(GLFWwindow* window, double xpos, double ypos);

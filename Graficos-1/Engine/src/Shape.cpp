@@ -31,22 +31,22 @@ Shape::Shape(Renderer * render) :Entity(render)
 
 void Shape::DrawMesh(int typeDraw)
 {
-	render->LoadIMatrix(); //rever
-	render->SetWMatrix(WorldMatrix);
+	renderer->LoadWorldMatrix(); //rever
+	renderer->SetWorldMatrix(WorldMatrix);
 
 	if (material != NULL) {
 		material->BindProgram();
 		material->Bind("WVP");
-		material->SetMatrixProperty(render->GetWVP());
+		material->SetMatrixProperty(renderer->GetWVP());
 	}
 
-	render->BeginDraw(0);
-	render->BindBuffer(0, bufferId, 3);
-	render->BeginDraw(1);
-	render->BindBuffer(1, colorBufferId, 3);
-	render->DrawBuffer(vertexCount, typeDraw);
-	render->EndDraw(0);
-	render->EndDraw(1);
+	renderer->BeginDraw(0);
+	renderer->BindBuffer(0, bufferId, 3);
+	renderer->BeginDraw(1);
+	renderer->BindBuffer(1, colorBufferId, 3);
+	renderer->DrawBuffer(vertexCount, typeDraw);
+	renderer->EndDraw(0);
+	renderer->EndDraw(1);
 }
 
 void Shape::SetVertices(float * vertices, int count)
@@ -55,7 +55,7 @@ void Shape::SetVertices(float * vertices, int count)
 
 	vertexCount = count;
 	shouldDispose = true;
-	bufferId = render->GenBuffer(vertices, sizeof(float)* count * 3);
+	bufferId = renderer->GenBuffer(vertices, sizeof(float)* count * 3);
 }
 
 void Shape::SetColorVertex(float * vertices, int count)
@@ -64,7 +64,7 @@ void Shape::SetColorVertex(float * vertices, int count)
 
 	colorVertexCount = count;
 	shouldDisposeColor = true;
-	colorBufferId = render->GenBuffer(vertices, sizeof(float)* count * 3);
+	colorBufferId = renderer->GenBuffer(vertices, sizeof(float)* count * 3);
 }
 
 void Shape::SetMaterial(Material * mat)
@@ -75,7 +75,7 @@ void Shape::SetMaterial(Material * mat)
 void Shape::Dispose()
 {
 	if (shouldDispose) {
-		render->DestroyBuffer(bufferId);
+		renderer->DestroyBuffer(bufferId);
 		shouldDispose = false;
 	}
 }
@@ -83,7 +83,7 @@ void Shape::Dispose()
 void Shape::DisposeColor()
 {
 	if (shouldDisposeColor) {
-		render->DestroyBuffer(colorBufferId);
+		renderer->DestroyBuffer(colorBufferId);
 		shouldDisposeColor = false;
 	}
 }

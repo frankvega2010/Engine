@@ -90,7 +90,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Engine\libs\GLEW\include;$(SolutionDir)Engine\libs\glm;$(SolutionDir)Engine\libs\GLFW\include;$(SolutionDir)Engine\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Engine\libs\GLEW\include;$(SolutionDir)Engine\libs\glm;$(SolutionDir)Engine\libs\GLFW\include;$(SolutionDir)Engine\src;$(SolutionDir)Engine\libs\Assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(ProjectDir)libs;$(SolutionDir)Engine\libs\GLFW\lib;$(SolutionDir)Engine\libs\GLEW\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -98,7 +98,8 @@
     </Link>
     <PostBuildEvent>
       <Command>xcopy /Y "$(ProjectDir)libs\Engine.dll" "$(ProjectDir)Win32\Debug\"
-xcopy /Y "$(ProjectDir)libs\glew32.dll" "$(ProjectDir)Win32\Debug\"</Command>
+xcopy /Y "$(ProjectDir)libs\glew32.dll" "$(ProjectDir)Win32\Debug\"
+xcopy /Y "$(ProjectDir)libs\assimp-vc141-mt.dll" "$(ProjectDir)Win32\Debug\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

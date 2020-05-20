@@ -20,13 +20,13 @@ bool Renderer::Start(Window* wnd) {
 
 	ProjectionMatrix = glm::perspectiveFov(glm::radians(45.0f), 640.0f, 480.0f, 1.0f, 100.0f);
 
-	cam = new Camera(win);
-
-	cam->LookAt(glm::vec3(0, 0, 3), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+	cam = new Camera(win, glm::vec3(0, 0, 3), glm::vec3(0, 0, 0), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0, 1, 0));
 
 	WorldMatrix = glm::mat4(1.0f);
 
 	UpdateWVP();
+
+	glEnable(GL_DEPTH_TEST);
 
 	return true;
 }
@@ -113,7 +113,7 @@ void Renderer::DestroyBuffer(unsigned int buffer)
 }
 
 void Renderer::ClearScreen() {
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void Renderer::SwapBuffer() {
@@ -123,7 +123,6 @@ void Renderer::SwapBuffer() {
 void Renderer::UpdateWVP()
 {
 	WVP = ProjectionMatrix * cam->GetMatrix() * WorldMatrix;
-	//cam->CoutPosVec();
 }
 
 glm::mat4 & Renderer::GetWVP()
@@ -131,18 +130,18 @@ glm::mat4 & Renderer::GetWVP()
 	return WVP;
 }
 
-void Renderer::LoadIMatrix()
+void Renderer::LoadWorldMatrix()
 {
 	WorldMatrix = glm::mat4(1.0f);
 }
 
-void Renderer::SetWMatrix(glm::mat4 matrix)
+void Renderer::SetWorldMatrix(glm::mat4 matrix)
 {
 	WorldMatrix = matrix;
 	UpdateWVP();
 }
 
-void Renderer::MultiplyWMatrix(glm::mat4 matrix)
+void Renderer::MultiplyWorldMatrix(glm::mat4 matrix)
 {
 	WorldMatrix *= matrix;
 	UpdateWVP();
@@ -151,6 +150,11 @@ void Renderer::MultiplyWMatrix(glm::mat4 matrix)
 Camera* Renderer::GetCam()
 {
 	return cam;
+}
+
+glm::mat4 Renderer::GetProjMatrix()
+{
+	return ProjectionMatrix;
 }
 
 Renderer::Renderer() {

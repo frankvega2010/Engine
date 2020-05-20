@@ -1,6 +1,12 @@
 #include "BaseGame.h"
 #include "Input.h"
 #include "ColisionManager.h"
+
+
+double BaseGame::currentFrame = 0.0f;
+double BaseGame::lastFrame = 0.0f;
+double BaseGame::deltaTime = 0.0f;
+
 BaseGame::BaseGame() {
 
 }
@@ -25,13 +31,19 @@ bool BaseGame::Start(int h, int w, char* name) {
 
 	glfwSetInputMode(window->GetGLFWWindowPtr(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
+	lastFrame = 0.0f;
+
 	return OnStart();
 }
 
 void BaseGame::Loop() {
 	loop = true;
 	while (loop && !window->ShouldClose()) {
-		GetDeltaTime();
+		//------------------------------
+		currentFrame = glfwGetTime();
+		deltaTime = currentFrame - lastFrame;
+		lastFrame = currentFrame;
+		//------------------------------
 		loop = OnUpdate();
 		render->ClearScreen();
 		OnDraw();
@@ -40,10 +52,9 @@ void BaseGame::Loop() {
 	}
 }
 
-void BaseGame::GetDeltaTime() {
-	currentFrame = glfwGetTime();
-	deltaTime = currentFrame - lastFrame;
-	lastFrame = currentFrame;
+float BaseGame::GetDeltaTime() {
+
+	return deltaTime;
 }
 
 bool BaseGame::Stop() {

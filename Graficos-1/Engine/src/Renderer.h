@@ -22,7 +22,6 @@ private:
 	glm::mat4 ProjectionMatrix;
 	glm::mat4 WVP;
 public:
-public:
 	bool Start(Window* wnd);
 	bool Stop();
 	void setClearScreenColor(float r, float g, float b, float a);
@@ -38,10 +37,11 @@ public:
 	void SwapBuffer();
 	void UpdateWVP();
 	glm::mat4& GetWVP();
-	void LoadIMatrix();
-	void SetWMatrix(glm::mat4 matrix);
-	void MultiplyWMatrix(glm::mat4 matrix);
+	void SetWorldMatrix(glm::mat4 matrix);
+	void LoadWorldMatrix();
+	void MultiplyWorldMatrix(glm::mat4 matrix);
 	Camera* GetCam();
+	glm::mat4 GetProjMatrix();
 
 	Renderer();
 	~Renderer();

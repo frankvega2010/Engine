@@ -9,9 +9,8 @@ using namespace std;
 
 class DLLEXPORT BaseGame {
 private:
-	
-	double currentFrame;
-	double lastFrame;
+	static double currentFrame;
+	static double lastFrame;
 protected:
 	Camera* cam;
 	Renderer * render;
@@ -20,14 +19,14 @@ protected:
 	virtual bool OnStop() = 0;
 	virtual bool OnUpdate() = 0;
 	virtual void OnDraw() = 0;
-	double deltaTime;
+	static double deltaTime;
 	bool loop;
 public:
 	Window * window;
 	bool Start(int h, int w, char* name);
 	bool Stop();
 	void Loop();
-	void GetDeltaTime();
+	static float GetDeltaTime();
 	BaseGame();
 	~BaseGame();
 };
