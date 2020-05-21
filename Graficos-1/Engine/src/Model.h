@@ -23,43 +23,25 @@ using namespace std;
 
 //class Texture;
 
-unsigned int TextureFromFile(const char *path, const string &directory, bool gamma = false);
-
 class EXPORTDLL Model
 {
 public:
-	/*  Model Data */
-	vector<Texture> textures_loaded;	// stores all the textures loaded so far, optimization to make sure textures aren't loaded more than once.
+	Model(string path);
+	void Draw(Shader shader);
+private:
+	// model data
 	vector<Mesh> meshes;
 	string directory;
-	bool gammaCorrection;
+	vector<Texture> textures_loaded;
 
-	/*  Functions   */
-	// constructor, expects a filepath to a 3D model.
-	Model(string const &path);
-
-	void LoadModel(string const &path);
-
-	// draws the model, and thus all its meshes
-	void Draw(/*Shader shader*/);
-
-private:
-	const aiScene* scene;
-	unsigned int programID;
-	Material mat;
-
-
-	// processes a node in a recursive fashion. Processes each individual mesh located at the node and repeats this process on its children nodes (if any).
+	void LoadModel(string path);
 	void ProcessNode(aiNode *node, const aiScene *scene);
-
 	Mesh ProcessMesh(aiMesh *mesh, const aiScene *scene);
-
-	// checks all material textures of a given type and loads the textures if they're not loaded yet.
-	// the required info is returned as a Texture struct.
-	vector<Texture> LoadMaterialTextures(aiMaterial *mat, aiTextureType type, string typeName);
+	vector<Texture> LoadMaterialTextures(aiMaterial *mat, aiTextureType type,
+		string typeName);
 };
 
-unsigned int TextureFromFile(const char *path, const string &directory, bool gamma)
+unsigned int TextureFromFile(const char *path, const string &directory, bool gamma = false)
 {
 	string filename = string(path);
 	filename = directory + '/' + filename;

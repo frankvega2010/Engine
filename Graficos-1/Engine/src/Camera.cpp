@@ -33,7 +33,7 @@ void Camera::LookAt()
 	viewMatrix = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 }
 
-glm::mat4 Camera::GetMatrix()
+glm::mat4 Camera::GetViewMatrix()
 {
 	return viewMatrix;
 }

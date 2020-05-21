@@ -8,7 +8,7 @@
 //#include <sstream>
 //#include <iostream>
 #include <vector>
-
+#include "Shader.h"
 #include <glm.hpp>
 //#include <gtc/matrix_transform.hpp>
 
@@ -17,16 +17,9 @@ using namespace std;
 class LoadShader;
 
 struct Vertex {
-	// position
 	glm::vec3 position;
-	// normal
 	glm::vec3 normal;
-	// texCoords
 	glm::vec2 texCoords;
-	// tangent
-	glm::vec3 tangent;
-	// bitangent
-	glm::vec3 bitangent;
 };
 
 struct Texture {
@@ -37,24 +30,17 @@ struct Texture {
 
 class EXPORTDLL Mesh {
 public:
-	/*  Mesh Data  */
-	vector<Vertex> vertices;
+	// mesh data
+	vector<Vertex>       vertices;
 	vector<unsigned int> indices;
-	vector<Texture> textures;
-	unsigned int VAO;
+	vector<Texture>      textures;
 
-	// constructor
 	Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture> textures);
-
-	// render the mesh
-	void Draw(unsigned int program);
-
+	void Draw(Shader shader);
 private:
-	/*  Render data  */
-	unsigned int VBO, EBO;
+	//  render data
+	unsigned int VAO, VBO, EBO;
 
-	// initializes all the buffer objects/arrays
 	void SetupMesh();
 };
-
 #endif

@@ -4,11 +4,13 @@
 #include "Sprite.h"
 #include "ColisionManager.h"
 #include "Model.h"
+#include "Shader.h"
 
 Sprite* sq;
 Sprite* spr;
 
 Model* m;
+Shader* shad;
 
 bool Game::OnStart()
 {
@@ -26,6 +28,8 @@ bool Game::OnStart()
 	spr->LoadMaterial("res/megaman.png",true);
 	spr->SetPos(-10.0f, 0.0f, -10.0f);
 
+	shad = new Shader("src/3DVertexShader.txt", "src/3DFragmentShader.txt");
+
 	cam->SetCameraSpeed(2.5f);
 
 	m = new Model("res/backpack/backpack.obj");
@@ -37,7 +41,19 @@ vec2 prevPos;
 
 bool Game::OnUpdate()
 {
-	m->Draw();
+	shad->use();
+
+	glm::mat4 projection = render->GetProjMatrix();
+	glm::mat4 view = cam->GetViewMatrix();
+	shad->setMat4("projection", projection);
+	shad->setMat4("view", view);
+
+	// render the loaded model
+	glm::mat4 model = glm::mat4(1.0f);
+	model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
+	model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
+	shad->setMat4("model", model);
+	
 
 	cam->UpdateCamera();
 
@@ -105,6 +121,7 @@ void Game::OnDraw()
 {
 	sq->Draw();
 	spr->Draw();
+	m->Draw(*shad);
 }
 
 bool Game::OnStop()

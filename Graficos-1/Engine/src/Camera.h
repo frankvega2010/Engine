@@ -33,7 +33,7 @@ public:
 	Camera(Window* w, glm::vec3 p, glm::vec3 t, glm::vec3 f, glm::vec3 u);
 	void LookAt();
 	void SetCameraSpeed(float s);
-	glm::mat4 GetMatrix();
+	glm::mat4 GetViewMatrix();
 	glm::vec3 GetCameraPosition();
 	void UpdateCamera();
 	static double xposs;
