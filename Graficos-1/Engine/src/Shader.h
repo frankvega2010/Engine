@@ -1,7 +1,7 @@
 #ifndef SHADER_H
 #define SHADER_H
 
-#define EXPORTDLL _declspec(dllexport)
+#define DLLEXPORT _declspec(dllexport)
 
 #include "glew.h"
 #include "glfw3.h"
@@ -14,7 +14,7 @@
 #include <glm.hpp>
 #include <gtc/matrix_transform.hpp>
 
-class EXPORTDLL Shader
+class DLLEXPORT Shader
 {
 public:
 	unsigned int ID;

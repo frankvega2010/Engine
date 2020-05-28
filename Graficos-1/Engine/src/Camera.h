@@ -27,8 +27,9 @@ private:
 	static float lastX;
 	static float lastY;
 
-	static Camera* thisCam;
+	
 public:
+	static Camera* thisCam;
 	glm::vec3 cameraFront;
 	Camera(Window* w, glm::vec3 p, glm::vec3 t, glm::vec3 f, glm::vec3 u);
 	void LookAt();

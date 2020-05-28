@@ -1,7 +1,7 @@
 #ifndef MESH_H
 #define MESH_H
 
-#define EXPORTDLL _declspec(dllexport)
+#define DLLEXPORT _declspec(dllexport)
 
 #include <string>
 //#include <fstream>
@@ -14,12 +14,17 @@
 
 using namespace std;
 
-class LoadShader;
-
 struct Vertex {
-	glm::vec3 position;
-	glm::vec3 normal;
-	glm::vec2 texCoords;
+	// position
+	glm::vec3 Position;
+	// normal
+	glm::vec3 Normal;
+	// texCoords
+	glm::vec2 TexCoords;
+	// tangent
+	glm::vec3 Tangent;
+	// bitangent
+	glm::vec3 Bitangent;
 };
 
 struct Texture {
@@ -28,19 +33,25 @@ struct Texture {
 	string path;
 };
 
-class EXPORTDLL Mesh {
+class DLLEXPORT Mesh {
 public:
-	// mesh data
+	// mesh Data
 	vector<Vertex>       vertices;
 	vector<unsigned int> indices;
 	vector<Texture>      textures;
+	unsigned int VAO;
 
+	// constructor
 	Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture> textures);
-	void Draw(Shader shader);
-private:
-	//  render data
-	unsigned int VAO, VBO, EBO;
 
-	void SetupMesh();
+	// render the mesh
+	void Draw(Shader shader);
+
+private:
+	// render data 
+	unsigned int VBO, EBO;
+
+	// initializes all the buffer objects/arrays
+	void setupMesh();
 };
 #endif

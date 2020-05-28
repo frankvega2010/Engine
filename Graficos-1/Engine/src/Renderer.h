@@ -21,6 +21,7 @@ private:
 	glm::mat4 WorldMatrix;
 	glm::mat4 ProjectionMatrix;
 	glm::mat4 WVP;
+	
 public:
 	bool Start(Window* wnd);
 	bool Stop();
@@ -42,6 +43,8 @@ public:
 	void MultiplyWorldMatrix(glm::mat4 matrix);
 	Camera* GetCam();
 	glm::mat4 GetProjMatrix();
+
+	static Renderer* renderer;
 
 	Renderer();
 	~Renderer();

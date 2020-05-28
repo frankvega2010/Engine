@@ -41,19 +41,6 @@ vec2 prevPos;
 
 bool Game::OnUpdate()
 {
-	shad->use();
-
-	glm::mat4 projection = render->GetProjMatrix();
-	glm::mat4 view = cam->GetViewMatrix();
-	shad->setMat4("projection", projection);
-	shad->setMat4("view", view);
-
-	// render the loaded model
-	glm::mat4 model = glm::mat4(1.0f);
-	model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
-	model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
-	shad->setMat4("model", model);
-	
 
 	cam->UpdateCamera();
 

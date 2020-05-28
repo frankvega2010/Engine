@@ -4,10 +4,17 @@
 
 using namespace std;
 
+Renderer* Renderer::renderer = nullptr;
+
 bool Renderer::Start(Window* wnd) {
 	cout << "Renderer::Start()" << endl;
 	win = wnd;
 	glfwMakeContextCurrent((GLFWwindow*)wnd->GetGLFWWindowPtr());
+
+	glEnable(GL_BLEND);
+	glEnable(GL_CULL_FACE);
+	glEnable(GL_DEPTH_TEST);
+	glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 
 	if (glewInit() != GLEW_OK) {
 		cout << "Falló al inicializar GLEW\n" << endl;
@@ -26,7 +33,7 @@ bool Renderer::Start(Window* wnd) {
 
 	UpdateWVP();
 
-	glEnable(GL_DEPTH_TEST);
+	renderer = this;
 
 	return true;
 }
