@@ -30,6 +30,19 @@ bool Game::OnStart()
 
 	shad = new Shader("src/3DVertexShader.txt", "src/3DFragmentShader.txt");
 
+	shad->setVec3("viewPosition", cam->GetCameraPosition());
+	shad->setVec3("viewDirection", cam->GetCameraDirection());
+
+	glm::vec3 dir = { 0.f,0.f,1.f };
+	glm::vec3 ambient = { 1.f,1.f,1.f };
+	glm::vec3 diffuse = { 1.f,1.f,1.f };
+	glm::vec3 specular = { 1.f,1.f,1.f };
+
+	shad->setVec3("lightDirection", dir);
+	shad->setVec3("lightAmbient", ambient);
+	shad->setVec3("lightDiffuse", diffuse);
+	shad->setVec3("lightSpecular", specular);
+
 	cam->SetCameraSpeed(2.5f);
 
 	m = new Model("res/backpack/backpack.obj");
@@ -41,6 +54,16 @@ vec2 prevPos;
 
 bool Game::OnUpdate()
 {
+
+	glm::vec3 dir = { 0.f,0.5f,-1.f };
+	glm::vec3 ambient = { 0.1f,0.1f,0.1f };
+	glm::vec3 diffuse = { 0.8f,0.5f,0.5f };
+	glm::vec3 specular = { 1.f,1.f,1.f };
+
+	shad->setVec3("lightDirection", dir);
+	shad->setVec3("lightAmbient", ambient);
+	shad->setVec3("lightDiffuse", diffuse);
+	shad->setVec3("lightSpecular", specular);
 
 	cam->UpdateCamera();
 

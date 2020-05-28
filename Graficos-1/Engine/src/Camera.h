@@ -36,6 +36,7 @@ public:
 	void SetCameraSpeed(float s);
 	glm::mat4 GetViewMatrix();
 	glm::vec3 GetCameraPosition();
+	glm::vec3 GetCameraDirection();
 	void UpdateCamera();
 	static double xposs;
 	static double yposs;

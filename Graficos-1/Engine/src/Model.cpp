@@ -2,19 +2,23 @@
 
 #include "Mesh.h"
 #include "Texture.h"
-
+#include "BaseGame.h"
 #include <assimp/Importer.hpp> 
 #include <assimp/scene.h>      
 #include <assimp/postprocess.h>
 #include <gtc/type_ptr.hpp>
+#include "gtx/quaternion.hpp"
 
 #include <iostream>
 
 #include "Entity.h"
 
+float rot;
+
 Model::Model(string const &path, bool gamma) : gammaCorrection(gamma)
 {
 	loadModel(path);
+	rot = 0.0f;
 }
 
 void Model::loadModel(string const &path)
@@ -38,15 +42,17 @@ void Model::loadModel(string const &path)
 void Model::Draw(Shader shader)
 {
 	shader.use();
-
+	rot += BaseGame::GetDeltaTime()*100.0f;
 	glm::mat4 projection = Renderer::renderer->GetProjMatrix();
 	glm::mat4 view = Camera::thisCam->GetViewMatrix();
-	shader.setMat4("projection", projection);
+	shader.setMat4("proj", projection);
 	shader.setMat4("view", view);
 
 	glm::mat4 model = glm::mat4(1.0f);
 	model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
 	model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
+	glm::vec3 rotAngle(glm::radians(0.0f), glm::radians(rot), glm::radians(0.0f));
+	model = toMat4(quat(rotAngle));
 	shader.setMat4("model", model);
 
 	for (unsigned int i = 0; i < meshes.size(); i++)

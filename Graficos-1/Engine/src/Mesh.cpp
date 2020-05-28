@@ -25,7 +25,7 @@ void Mesh::Draw(Shader shader)
 	
 
 	glActiveTexture(GL_TEXTURE0);
-	shader.setInt("texture_diffuse", 0);
+	shader.setInt("texture_diffuse1", 0);
 
 	glBindTexture(GL_TEXTURE_2D, textures[0].id);
 
