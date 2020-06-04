@@ -42,7 +42,7 @@ void Model::loadModel(string const &path)
 void Model::Draw(Shader shader)
 {
 	shader.use();
-	rot += BaseGame::GetDeltaTime()*25.0f;
+	rot += BaseGame::GetDeltaTime()*0.0f;
 	glm::mat4 projection = Renderer::renderer->GetProjMatrix();
 	glm::mat4 view = Camera::thisCam->GetViewMatrix();
 	shader.setMat4("proj", projection);

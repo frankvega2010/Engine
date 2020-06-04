@@ -59,11 +59,13 @@ bool Game::OnUpdate()
 	glm::vec3 ambient = { 0.1f,0.1f,0.1f };
 	glm::vec3 diffuse = { 0.8f,0.5f,0.5f };
 	glm::vec3 specular = { 1.f,1.f,1.f };
+	glm::vec3 objColor = { 1.0f,1.0f,1.0f };
 
 	shad->setVec3("lightDirection", dir);
 	shad->setVec3("lightAmbient", ambient);
 	shad->setVec3("lightDiffuse", diffuse);
 	shad->setVec3("lightSpecular", specular);
+	shad->setVec3("objectColor", objColor);
 
 	cam->UpdateCamera();
 

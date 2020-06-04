@@ -27,6 +27,8 @@ uniform vec3 lightAmbient;
 uniform vec3 lightDiffuse;
 uniform vec3 lightSpecular;
 
+uniform vec3 objectColor;
+
 //uniform vec3 matShininess;
 //uniform vec3 matDiffuse;
 //uniform vec3 matSpecular;
@@ -82,5 +84,5 @@ vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
     vec3 ambient  = light.ambient  * vec3(texture(texture_diffuse1, TexCoord));
     vec3 diffuse  = light.diffuse  * diff * vec3(texture(texture_diffuse1, TexCoord));
     vec3 specular = light.specular * spec * vec3(texture(texture_specular1, TexCoord));
-    return (ambient + diffuse /*+ specular*/);
+    return (ambient + diffuse + specular) * objectColor;
 }
