@@ -36,7 +36,7 @@ uniform vec3 viewDirection;
 uniform sampler2D texture_diffuse1;
 uniform sampler2D texture_specular1;
 
-
+in mat4 View;
 
 //light functions forward declarations
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir);
@@ -72,7 +72,7 @@ void main()
 //light functions definitions
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
 {
-    vec3 lightDir = normalize(-light.direction);
+    vec3 lightDir = vec3(View * vec4(light.direction, 0.0));
     // diffuse shading
     float diff = max(dot(normal, lightDir), 0.0);
     // specular shading
