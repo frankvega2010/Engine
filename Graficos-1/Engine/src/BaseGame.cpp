@@ -1,6 +1,5 @@
 #include "BaseGame.h"
 #include "Input.h"
-#include "ColisionManager.h"
 
 
 double BaseGame::currentFrame = 0.0f;

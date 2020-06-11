@@ -5,8 +5,6 @@
 
 #include "Animation.h"
 
-#include "stb_image.h"
-
 class DLLEXPORT Sprite : public Shape
 {
 private:

@@ -1,13 +1,9 @@
 #include "Entity.h"
-#include "ColisionManager.h"
-
-#include "Shape.h"
 
 Renderer* Entity::renderer = nullptr;
 
 Entity::Entity(Renderer *renderPTR)
 {
-	//boundBox = NULL;
 	renderer = renderPTR;
 	WorldMatrix = mat4(1.0f);
 	TranslateMatrix = mat4(1.0f);
@@ -21,18 +17,10 @@ Entity::Entity(Renderer *renderPTR)
 
 void Entity::SetPos(float x, float y, float z)
 {
-
 	pos[0] = x;
 	pos[1] = y;
 	pos[2] = z;
 
-	//else if (!boundBox->GetCollision()) {
-	//	pos[0] = x;
-	//	pos[1] = y;
-	//	pos[2] = z;
-	//	boundBox->SetPos(pos[0], pos[1]);
-	//	boundBox->SetCollision(false);
-	//}
 	TranslateMatrix = translate(mat4(1.0f), pos);
 	UpdateWorldMatrix();
 }
@@ -81,14 +69,6 @@ void Entity::Translate(float x, float y, float z)
 	pos[0] += x;
 	pos[1] += y;
 	pos[2] += z;
-
-	//else if (!boundBox->GetCollision()) {
-	//	pos[0] += x;
-	//	pos[1] += y;
-	//	pos[2] += z;
-	//	boundBox->SetPos(pos[0], pos[1]);
-	//	boundBox->SetCollision(false);
-	//}
 	
 	TranslateMatrix = translate(mat4(1.0f), pos);
 	UpdateWorldMatrix();

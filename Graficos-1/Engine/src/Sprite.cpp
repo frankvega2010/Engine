@@ -1,5 +1,6 @@
 #include "Sprite.h"
-#include "ColisionManager.h"
+
+#include "stb_image.h"
 
 Sprite::Sprite(Renderer * render, int columns, int rows, int frames) : Shape(render) {
 	onCollision = false;

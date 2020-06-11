@@ -22,8 +22,6 @@ void Mesh::Draw(Shader shader)
 	unsigned int normalNr = 1;
 	unsigned int heightNr = 1;
 
-	
-
 	glActiveTexture(GL_TEXTURE0);
 	shader.setInt("texture_diffuse1", 0);
 

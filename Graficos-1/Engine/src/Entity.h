@@ -12,8 +12,6 @@ class DLLEXPORT Entity
 private:
 	vec3 pos;
 	vec3 rot;
-
-
 protected:
 	static Renderer* renderer;
 	mat4 WorldMatrix;

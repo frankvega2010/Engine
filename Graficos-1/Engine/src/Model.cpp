@@ -11,14 +11,14 @@
 
 #include <iostream>
 
-#include "Entity.h"
-
-float rot;
+#ifndef STB_IMAGE_IMPLEMENTATION
+#define STB_IMAGE_IMPLEMENTATION
+#endif
+#include "stb_image.h"
 
 Model::Model(string const &path, bool gamma) : gammaCorrection(gamma)
 {
 	loadModel(path);
-	rot = 0.0f;
 }
 
 void Model::loadModel(string const &path)
@@ -41,20 +41,6 @@ void Model::loadModel(string const &path)
 
 void Model::Draw(Shader shader)
 {
-	shader.use();
-	rot += BaseGame::GetDeltaTime()*0.0f;
-	glm::mat4 projection = Renderer::renderer->GetProjMatrix();
-	glm::mat4 view = Camera::thisCam->GetViewMatrix();
-	shader.setMat4("proj", projection);
-	shader.setMat4("view", view);
-
-	glm::mat4 model = glm::mat4(1.0f);
-	model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
-	model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
-	glm::vec3 rotAngle(glm::radians(0.0f), glm::radians(rot), glm::radians(0.0f));
-	model = toMat4(quat(rotAngle));
-	shader.setMat4("model", model);
-
 	for (unsigned int i = 0; i < meshes.size(); i++)
 		meshes[i].Draw(shader);
 }
@@ -186,4 +172,46 @@ vector<Texture> Model::loadMaterialTextures(aiMaterial *mat, aiTextureType type,
 		}
 	}
 	return textures;
+}
+
+unsigned int TextureFromFile(const char *path, const string &directory, bool gamma)
+{
+	string filename = string(path);
+	filename = directory + '/' + filename;
+
+	stbi_set_flip_vertically_on_load(true);
+
+	unsigned int textureID;
+	glGenTextures(1, &textureID);
+
+	int width, height, nrComponents;
+	unsigned char *data = stbi_load(filename.c_str(), &width, &height, &nrComponents, 0);
+	if (data)
+	{
+		GLenum format;
+		if (nrComponents == 1)
+			format = GL_RED;
+		else if (nrComponents == 3)
+			format = GL_RGB;
+		else if (nrComponents == 4)
+			format = GL_RGBA;
+
+		glBindTexture(GL_TEXTURE_2D, textureID);
+		glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		stbi_image_free(data);
+	}
+	else
+	{
+		std::cout << "Texture failed to load at path: " << path << std::endl;
+		stbi_image_free(data);
+	}
+
+	return textureID;
 }

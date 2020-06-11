@@ -33,9 +33,6 @@
     <ClCompile Include="src\Window.cpp">
       <Filter>Cpps</Filter>
     </ClCompile>
-    <ClCompile Include="src\ColisionManager.cpp">
-      <Filter>Cpps</Filter>
-    </ClCompile>
     <ClCompile Include="src\Animation.cpp">
       <Filter>Cpps</Filter>
     </ClCompile>
@@ -55,6 +52,12 @@
       <Filter>Cpps</Filter>
     </ClCompile>
     <ClCompile Include="src\Shader.cpp">
+      <Filter>Cpps</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Entity3D.cpp">
+      <Filter>Cpps</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CollisionManager.cpp">
       <Filter>Cpps</Filter>
     </ClCompile>
   </ItemGroup>
@@ -86,9 +89,6 @@
     <ClInclude Include="src\Window.h">
       <Filter>Hpps</Filter>
     </ClInclude>
-    <ClInclude Include="src\ColisionManager.h">
-      <Filter>Hpps</Filter>
-    </ClInclude>
     <ClInclude Include="src\Animation.h">
       <Filter>Hpps</Filter>
     </ClInclude>
@@ -108,6 +108,12 @@
       <Filter>Hpps</Filter>
     </ClInclude>
     <ClInclude Include="src\Shader.h">
+      <Filter>Hpps</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Entity3D.h">
+      <Filter>Hpps</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CollisionManager.h">
       <Filter>Hpps</Filter>
     </ClInclude>
   </ItemGroup>

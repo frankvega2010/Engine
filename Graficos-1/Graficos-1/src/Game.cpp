@@ -2,14 +2,15 @@
 #include "Shape.h"
 #include "Input.h"
 #include "Sprite.h"
-#include "ColisionManager.h"
+#include "CollisionManager.h"
 #include "Model.h"
 #include "Shader.h"
+#include "Entity3D.h"
 
 Sprite* sq;
 Sprite* spr;
 
-Model* m;
+Entity3D* m;
 Shader* shad;
 
 bool Game::OnStart()
@@ -45,12 +46,16 @@ bool Game::OnStart()
 
 	cam->SetCameraSpeed(2.5f);
 
-	m = new Model("res/backpack/backpack.obj");
+	m = new Entity3D("res/backpack/backpack.obj");
+	
 
 	return true;
 }
 
 vec2 prevPos;
+
+float xPos = 0.0f;
+float yRot = 0.0f;
 
 bool Game::OnUpdate()
 {
@@ -67,6 +72,7 @@ bool Game::OnUpdate()
 	shad->setVec3("lightSpecular", specular);
 	shad->setVec3("objectColor", objColor);
 
+	m->SetScale(vec3(1.0f, 1.0f, 1.0f));
 	cam->UpdateCamera();
 
 	if (Input::GetKeyPressed(GLFW_KEY_RIGHT))
@@ -80,7 +86,8 @@ bool Game::OnUpdate()
 			spr->SetPos(prevPos.x,prevPos.y, spr->GetPos().z);
 
 		spr->UpdAnim(1);
-		
+		yRot += 0.01f * BaseGame::GetDeltaTime();
+		m->SetRot(vec3(0.0f, yRot, 0.0f));
 	}
 	else
 	{
@@ -95,6 +102,9 @@ bool Game::OnUpdate()
 		}
 		else
 			spr->SetPos(prevPos.x, prevPos.y, spr->GetPos().z);
+
+		xPos += 0.01f * BaseGame::GetDeltaTime();
+		m->SetPos(vec3(xPos, 0.0f, 0.0f));
 	}
 	if (Input::GetKeyPressed(GLFW_KEY_UP))
 	{
@@ -123,8 +133,6 @@ bool Game::OnUpdate()
 	{
 		return false;
 	}
-
-
 
 	return true;
 }

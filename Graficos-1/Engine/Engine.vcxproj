@@ -146,9 +146,10 @@
     <ClCompile Include="src\AssimpImporter.cpp" />
     <ClCompile Include="src\BaseGame.cpp" />
     <ClCompile Include="src\Camera.cpp" />
-    <ClCompile Include="src\ColisionManager.cpp" />
+    <ClCompile Include="src\CollisionManager.cpp" />
     <ClCompile Include="src\DeltaTime.cpp" />
     <ClCompile Include="src\Entity.cpp" />
+    <ClCompile Include="src\Entity3D.cpp" />
     <ClCompile Include="src\Input.cpp" />
     <ClCompile Include="src\Material.cpp" />
     <ClCompile Include="src\Mesh.cpp" />
@@ -164,9 +165,10 @@
     <ClInclude Include="src\AssimpImporter.h" />
     <ClInclude Include="src\BaseGame.h" />
     <ClInclude Include="src\Camera.h" />
-    <ClInclude Include="src\ColisionManager.h" />
+    <ClInclude Include="src\CollisionManager.h" />
     <ClInclude Include="src\DeltaTime.h" />
     <ClInclude Include="src\Entity.h" />
+    <ClInclude Include="src\Entity3D.h" />
     <ClInclude Include="src\Input.h" />
     <ClInclude Include="src\Material.h" />
     <ClInclude Include="src\Mesh.h" />

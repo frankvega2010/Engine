@@ -1,5 +1,5 @@
-#ifndef COLISIONMANAGER_H
-#define COLISIONMANAGER_H
+#ifndef COLLISIONMANAGER_H
+#define COLLISIONMANAGER_H
 
 class Shape;
 
@@ -10,8 +10,6 @@ using namespace std;
 class DLLEXPORT CollisionManager
 {
 public:
-	CollisionManager() {};
-	~CollisionManager() {};
 	static bool CheckCollision(Shape* shape1, Shape* shape2);
 };
 
