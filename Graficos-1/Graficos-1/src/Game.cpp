@@ -35,8 +35,8 @@ bool Game::OnStart()
 	shad->setVec3("viewDirection", cam->GetCameraDirection());
 
 	glm::vec3 dir = { 0.f,0.f,1.f };
-	glm::vec3 ambient = { 1.f,1.f,1.f };
-	glm::vec3 diffuse = { 1.f,1.f,1.f };
+	glm::vec3 ambient = { 0.f,0.f,0.f };
+	glm::vec3 diffuse = { 0.5f,0.5f,0.5f };
 	glm::vec3 specular = { 1.f,1.f,1.f };
 
 	shad->setVec3("lightDirection", dir);
@@ -59,10 +59,12 @@ float yRot = 0.0f;
 
 bool Game::OnUpdate()
 {
-
-	glm::vec3 dir = { 0.f,0.5f,-1.f };
-	glm::vec3 ambient = { 0.1f,0.1f,0.1f };
-	glm::vec3 diffuse = { 0.8f,0.5f,0.5f };
+	shad->setVec3("viewPosition", cam->GetCameraPosition());
+	shad->setVec3("viewDirection", glm::normalize(cam->GetCameraDirection()));
+	
+	glm::vec3 dir = { 0.f, 0.f, 1.f };
+	glm::vec3 ambient = { 0.5f, 0.5f, 0.5f };
+	glm::vec3 diffuse = { 0.4f, 0.4f, 0.4f };
 	glm::vec3 specular = { 1.f,1.f,1.f };
 	glm::vec3 objColor = { 1.0f,1.0f,1.0f };
 
@@ -86,7 +88,11 @@ bool Game::OnUpdate()
 			spr->SetPos(prevPos.x,prevPos.y, spr->GetPos().z);
 
 		spr->UpdAnim(1);
-		yRot += 0.01f * BaseGame::GetDeltaTime();
+
+		if (yRot < 0.0f)
+			yRot = 0.0f;
+		
+		yRot = 10.0f * BaseGame::GetDeltaTime();
 		m->SetRot(vec3(0.0f, yRot, 0.0f));
 	}
 	else
@@ -103,8 +109,11 @@ bool Game::OnUpdate()
 		else
 			spr->SetPos(prevPos.x, prevPos.y, spr->GetPos().z);
 
-		xPos += 0.01f * BaseGame::GetDeltaTime();
-		m->SetPos(vec3(xPos, 0.0f, 0.0f));
+		if(yRot>0.0f)
+			yRot = 0.0f;
+		
+		yRot = -10.0f * BaseGame::GetDeltaTime();
+		m->SetRot(vec3(0.0f, yRot, 0.0f));
 	}
 	if (Input::GetKeyPressed(GLFW_KEY_UP))
 	{

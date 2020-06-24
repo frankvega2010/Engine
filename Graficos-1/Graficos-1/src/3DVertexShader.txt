@@ -12,24 +12,11 @@ uniform mat4 model;
 uniform mat4 view;
 uniform mat4 proj;
 
-mat4 mvp;
-
-out mat4 View;
-
-mat4 GetMVP();
-
 void main()
 {
-	TexCoord = aTexCoord;
-	gl_Position = GetMVP() * vec4(position, 1.0);
-	mat3 normalMatrix = mat3(GetMVP());
-	FragPos = vec3(model * vec4(position, 1.0));
-	vNormal = transpose(inverse(normalMatrix)) * aNormal;
-        View = view;
-}
-
-mat4 GetMVP()
-{
-        mvp = proj * view * model;
-        return mvp;
+	FragPos = vec3(view * model * vec4(position, 1.0));
+    vNormal = normalize(vec3(view * model * vec4(aNormal, 0.0)));  
+    TexCoord = aTexCoord;
+    
+    gl_Position = proj * view * model * vec4(position, 1.0);
 }

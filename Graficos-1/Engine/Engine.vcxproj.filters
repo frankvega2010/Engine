@@ -7,6 +7,9 @@
     <Filter Include="Cpps">
       <UniqueIdentifier>{1f95fc96-e009-4c24-99a7-3926dcc7b672}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{eab04dcd-33e3-41da-834c-800f9226e212}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BaseGame.cpp">
@@ -116,5 +119,13 @@
     <ClInclude Include="src\CollisionManager.h">
       <Filter>Hpps</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\Graficos-1\src\3DFragmentShader.txt">
+      <Filter>Shaders</Filter>
+    </Text>
+    <Text Include="..\Graficos-1\src\3DVertexShader.txt">
+      <Filter>Shaders</Filter>
+    </Text>
   </ItemGroup>
 </Project>
