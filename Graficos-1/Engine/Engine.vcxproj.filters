@@ -63,6 +63,12 @@
     <ClCompile Include="src\CollisionManager.cpp">
       <Filter>Cpps</Filter>
     </ClCompile>
+    <ClCompile Include="src\Light.cpp">
+      <Filter>Cpps</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DirectionalLight.cpp">
+      <Filter>Cpps</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\BaseGame.h">
@@ -117,6 +123,12 @@
       <Filter>Hpps</Filter>
     </ClInclude>
     <ClInclude Include="src\CollisionManager.h">
+      <Filter>Hpps</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Light.h">
+      <Filter>Hpps</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DirectionalLight.h">
       <Filter>Hpps</Filter>
     </ClInclude>
   </ItemGroup>
