@@ -69,6 +69,12 @@
     <ClCompile Include="src\DirectionalLight.cpp">
       <Filter>Cpps</Filter>
     </ClCompile>
+    <ClCompile Include="src\PointLight.cpp">
+      <Filter>Cpps</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SpotLight.cpp">
+      <Filter>Cpps</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\BaseGame.h">
@@ -129,6 +135,12 @@
       <Filter>Hpps</Filter>
     </ClInclude>
     <ClInclude Include="src\DirectionalLight.h">
+      <Filter>Hpps</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PointLight.h">
+      <Filter>Hpps</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SpotLight.h">
       <Filter>Hpps</Filter>
     </ClInclude>
   </ItemGroup>

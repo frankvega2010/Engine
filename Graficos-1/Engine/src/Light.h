@@ -14,9 +14,9 @@ class DLLEXPORT Light
 protected:
 	vec3 position;
 	vec3 direction;
-	static vec3 ambient;
-	static vec3 diffuse;
-	static vec3 specular;
+	vec3 ambient;
+	vec3 diffuse;
+	vec3 specular;
 	Shader* activeShader;
 public:
 	Light(vec3 initPos, vec3 initDir, Shader* shad);
@@ -25,9 +25,9 @@ public:
 	void SetPosition(vec3 newPosition);
 	void SetDirection(vec3 newDirection);
 	virtual void Update() = 0;
-	static void SetAmbient(vec3 amb);
-	static void SetDiffuse(vec3 dif);
-	static void SetSpecular(vec3 spec);
+	void SetAmbient(vec3 amb);
+	void SetDiffuse(vec3 dif);
+	void SetSpecular(vec3 spec);
 	void SetShader(Shader* shad);
 };
 

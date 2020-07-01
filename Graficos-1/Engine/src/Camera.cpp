@@ -73,7 +73,7 @@ glm::vec3 Camera::GetCameraPosition()
 
 glm::vec3 Camera::GetCameraDirection()
 {
-	return cameraDirection;
+	return cameraFront;
 }
 
 void Camera::SetCameraSpeed(float s)

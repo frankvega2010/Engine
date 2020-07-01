@@ -11,5 +11,7 @@ DirectionalLight::DirectionalLight(vec3 initPos, vec3 initDir, Shader* shad) : L
 void DirectionalLight::Update()
 {
 	activeShader->setVec3("lightDirection", direction);
-	Light::Update();
+	activeShader->setVec3("lightAmbient", ambient);
+	activeShader->setVec3("lightDiffuse", diffuse);
+	activeShader->setVec3("lightSpecular", specular);
 }

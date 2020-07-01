@@ -21,7 +21,7 @@ bool BaseGame::Start(int h, int w, char* name) {
 	render = new Renderer();
 	if (!render->Start(window))
 		return false;
-	render->setClearScreenColor(0.0f, 0.0f, 4.0f, 0.0f);
+	render->setClearScreenColor(1.0f, 0.0f, 1.0f, 0.0f);
 	render->ClearScreen();
 
 	Input::SetWindow(window);

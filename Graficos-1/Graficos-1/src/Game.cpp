@@ -7,6 +7,8 @@
 #include "Shader.h"
 #include "Entity3D.h"
 #include "DirectionalLight.h"
+#include "PointLight.h"
+#include "SpotLight.h"
 
 Sprite* sq;
 Sprite* spr;
@@ -14,13 +16,19 @@ Sprite* spr;
 Entity3D* m;
 Shader* shad;
 
-Light* light;
+DirectionalLight* directionalLight;
+PointLight* pointLight;
+SpotLight* spotLight;
+
+list<Light*>* lightsList;
 
 Entity3D* m2;
 
+vec3 plpos = { 3.f,0.f,0.f };
+
 bool Game::OnStart()
 {
-	render->setClearScreenColor(0.f, 0.f, 0.f,0.f);
+	render->setClearScreenColor(1.f, 0.f, 1.f,1.f);
 	
 	sq = new Sprite(render, 1, 1, 1);
 	Material* sqmat = new Material();
@@ -42,8 +50,8 @@ bool Game::OnStart()
 	shad->setVec3("viewDirection", cam->GetCameraDirection());
 
 	glm::vec3 dir = { 0.f, 0.f, -1.f };
-	glm::vec3 ambient = { 0.5f, 0.5f, 0.5f };
-	glm::vec3 diffuse = { 0.4f, 0.4f, 0.4f };
+	glm::vec3 ambient = { 0.1f, 0.1f, 0.1f };
+	glm::vec3 diffuse = { 0.5f, 0.5f, 0.5f };
 	glm::vec3 specular = { 1.f,1.f,1.f };
 
 	cam->SetCameraSpeed(2.5f);
@@ -52,13 +60,24 @@ bool Game::OnStart()
 
 	m2 = new Entity3D("res/backpack/backpack.obj");
 
+	lightsList = new list<Light*>();
+	
 	vec3 lightPos = { 0.f,0.f,0.f };
 
-	light = new DirectionalLight(lightPos, dir, shad);
-	light->SetAmbient(ambient);
-	light->SetDiffuse(diffuse);
-	light->SetSpecular(specular);
+	directionalLight = new DirectionalLight(lightPos, dir, shad);
+	pointLight = new PointLight(plpos, dir, shad);
+	spotLight = new SpotLight(cam->GetCameraPosition(), cam->GetCameraDirection(), shad);
+	
+	lightsList->push_front(directionalLight);
+	lightsList->push_front(pointLight);
+	lightsList->push_front(spotLight);
 
+	for(list<Light*>::iterator iB = lightsList->begin(); iB != lightsList->end(); ++iB)
+	{
+		(*iB)->SetAmbient(ambient);
+		(*iB)->SetDiffuse(diffuse);
+		(*iB)->SetSpecular(specular);
+	}
 
 	m2->SetPos(vec3(5.f, 0.f, 0.f));
 	return true;
@@ -66,10 +85,10 @@ bool Game::OnStart()
 
 vec2 prevPos;
 
+
 float xPos = 0.0f;
 float yRot = 0.0f;
 
-vec3 plpos = { 3.f,0.f,-1.f };
 float at = 1.0f;
 bool Game::OnUpdate()
 {
@@ -79,31 +98,24 @@ bool Game::OnUpdate()
 
 	glm::vec3 objColor = { 1.0f,1.0f,1.0f };
 
-	//light->Update();
+	pointLight->SetAttenuation(at);
+	
+	pointLight->SetPosition(plpos);
+
+	spotLight->SetPosition(cam->GetCameraPosition());
+	spotLight->SetDirection(cam->GetCameraDirection());
+	
+	for (list<Light*>::iterator iB = lightsList->begin(); iB != lightsList->end(); ++iB)
+	{
+		(*iB)->Update();
+	}
+	
 	shad->setVec3("objectColor", objColor);
-	vec3 dir = light->GetDirection();
+	
 	m->SetScale(vec3(1.0f, 1.0f, 1.0f));
 	cam->UpdateCamera();
-
-
 	
-
-
-	
-	shad->setVec3("pointLight.position", plpos);
-	shad->setVec3("pointLight.ambient", 0.5f, 0.5f, 0.5f);
-	shad->setVec3("pointLight.diffuse", 0.8f, 0.8f, 0.8f);
-	shad->setVec3("pointLight.specular", 0.f, 0.f, 0.f);
-	shad->setFloat("pointLight.constant", 1.0f);
-	shad->setFloat("pointLight.linear", 0.09f);
-	shad->setFloat("pointLight.quadratic", 0.032);
-	shad->setFloat("pointLight.attenuation", at);
-
-
-
-
-
-	
+	//point directionalLight input
 	if(Input::GetKeyPressed(GLFW_KEY_I))
 	{
 		plpos.z += BaseGame::GetDeltaTime() * 10.0f;
@@ -120,23 +132,19 @@ bool Game::OnUpdate()
 	{
 		plpos.x += BaseGame::GetDeltaTime() * 10.0f;
 	}
-
-
 	if (Input::GetKeyPressed(GLFW_KEY_4))
 	{
 		at--;
 	}
-
-
 	if (Input::GetKeyPressed(GLFW_KEY_5))
 	{
 		at++;
 	}
 	
-	
+	//model translation
 	if (Input::GetKeyPressed(GLFW_KEY_RIGHT))
 	{
-		if (!CollisionManager::CheckCollision(spr, sq))
+		/*if (!CollisionManager::CheckCollision(spr, sq))
 		{
 			prevPos = spr->GetPos();
 			spr->Translate(0.01f, 0.0f, 0.0f);
@@ -144,7 +152,7 @@ bool Game::OnUpdate()
 		else
 			spr->SetPos(prevPos.x,prevPos.y, spr->GetPos().z);
 
-		spr->UpdAnim(1);
+		spr->UpdAnim(1);*/
 
 		if (yRot < 0.0f)
 			yRot = 0.0f;
@@ -152,19 +160,19 @@ bool Game::OnUpdate()
 		yRot = 10.0f * BaseGame::GetDeltaTime();
 		m->SetRot(vec3(0.0f, yRot, 0.0f));
 	}
-	else
+	/*else
 	{
 		spr->UpdAnim(0);
-	}
+	}*/
 	if (Input::GetKeyPressed(GLFW_KEY_LEFT))
 	{
-		if (!CollisionManager::CheckCollision(spr, sq))
+		/*if (!CollisionManager::CheckCollision(spr, sq))
 		{
 			prevPos = spr->GetPos();
 			spr->Translate(-0.01f, 0.0f, 0.0f);
 		}
 		else
-			spr->SetPos(prevPos.x, prevPos.y, spr->GetPos().z);
+			spr->SetPos(prevPos.x, prevPos.y, spr->GetPos().z);*/
 
 		if(yRot>0.0f)
 			yRot = 0.0f;
@@ -172,7 +180,9 @@ bool Game::OnUpdate()
 		yRot = -10.0f * BaseGame::GetDeltaTime();
 		m->SetRot(vec3(0.0f, yRot, 0.0f));
 	}
-	if (Input::GetKeyPressed(GLFW_KEY_UP))
+
+	
+	/*if (Input::GetKeyPressed(GLFW_KEY_UP))
 	{
 		if (!CollisionManager::CheckCollision(spr, sq))
 		{
@@ -193,7 +203,7 @@ bool Game::OnUpdate()
 		}
 		else
 			spr->SetPos(prevPos.x, prevPos.y, spr->GetPos().z);
-	}
+	}*/
 	
 	if (Input::GetKeyPressed(GLFW_KEY_ESCAPE))
 	{
@@ -215,5 +225,11 @@ bool Game::OnStop()
 {
 	delete spr;
 	delete sq;
+
+	delete lightsList;
+
+	delete m;
+	delete m2;
+	
 	return true;
 }
