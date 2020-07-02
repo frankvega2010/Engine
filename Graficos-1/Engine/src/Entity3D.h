@@ -26,7 +26,7 @@ private:
 	glm::mat4 modelMatrix = glm::mat4(1.0f);
 public:
 	Entity3D();
-	Entity3D(string const &path);
+	Entity3D(string const &path, bool flipUv);
 	~Entity3D();
 	void SetParent(Entity3D* p);
 	void SetChild(Entity3D* c);

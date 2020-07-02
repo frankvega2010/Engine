@@ -12,9 +12,13 @@ struct DirLight {
     vec3 ambient;
     vec3 diffuse;
     vec3 specular;
+
+	bool isActive;
 };
 
 struct PointLight {
+	bool isActive;
+
     vec3 position;
     
     float constant;
@@ -29,6 +33,8 @@ struct PointLight {
 };
 
 struct SpotLight {
+	bool isActive;
+
     vec3 position;
     vec3 direction;
     float cutOff;
@@ -43,21 +49,22 @@ struct SpotLight {
     vec3 specular;       
 };
 
-DirLight dirLight;
-uniform PointLight pointLight;
+#define MAX_LIGHTS 8
+uniform int lightsAmount;
+
+uniform DirLight dirLight;
+uniform PointLight pointLight[MAX_LIGHTS];
 uniform SpotLight spotLight;
 
 struct Material {
     vec3 shininess;
     vec3 diffuse;
     vec3 specular;
+
 };
+
 Material material;
 
-uniform vec3 lightDirection;  
-uniform vec3 lightAmbient;
-uniform vec3 lightDiffuse;
-uniform vec3 lightSpecular;
 uniform vec3 objectColor;
 
 uniform vec3 viewPosition;
@@ -74,10 +81,6 @@ vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
 void main()
 {
 //settings
-	dirLight.direction = lightDirection;
-	dirLight.ambient = lightAmbient;
-	dirLight.diffuse = lightDiffuse;
-	dirLight.specular = lightSpecular;
 
 // properties
     vec3 viewDir = normalize(viewPosition - FragPos);
@@ -85,11 +88,21 @@ void main()
 	vec3 norm = normalize(vNormal);
 
     // phase 1: Directional lighting
-    vec3 result = CalcDirLight(dirLight, norm, viewDir);
+    vec3 result = vec3(0.f,0.f,0.f);
+	
+	if(dirLight.isActive)
+		result += CalcDirLight(dirLight, norm, viewDir);
 
-	result += CalcPointLight(pointLight, norm, FragPos, viewDir);
+	int lAmount = lightsAmount;
 
-	result += CalcSpotLight(spotLight, norm, FragPos, viewDir);
+	for(int i=0;i<lAmount;i++)
+	{
+		if(pointLight[i].isActive)
+			result += CalcPointLight(pointLight[i], norm, FragPos, viewDir);
+	}
+	
+	if(spotLight.isActive)
+		result += CalcSpotLight(spotLight, norm, FragPos, viewDir);
 
 	//FragColor = texture(texture_diffuse1, TexCoord);
 	FragColor = vec4(result, 1.0);

@@ -18,8 +18,9 @@ protected:
 	vec3 diffuse;
 	vec3 specular;
 	Shader* activeShader;
+	bool isActive;
 public:
-	Light(vec3 initPos, vec3 initDir, Shader* shad);
+	Light(vec3 initPos, vec3 initDir, Shader* shad, bool active);
 	vec3 GetPosition() { return position; };
 	vec3 GetDirection() { return direction; };
 	void SetPosition(vec3 newPosition);
@@ -29,6 +30,8 @@ public:
 	void SetDiffuse(vec3 dif);
 	void SetSpecular(vec3 spec);
 	void SetShader(Shader* shad);
+	void SetActive(bool active);
+	bool GetActive() const { return isActive; };
 };
 
 #endif

@@ -27,7 +27,7 @@ Camera::Camera(Window* w, glm::vec3 p, glm::vec3 t, glm::vec3 f, glm::vec3 u)
 
 void Camera::LookAt()
 {
-	cameraDirection = glm::normalize(cameraPos - cameraTarget);
+	cameraDirection = glm::normalize(cameraTarget - cameraPos);
 	cameraRight = glm::normalize(glm::cross(up, cameraDirection));
 	cameraUp = glm::cross(cameraDirection, cameraRight);
 	viewMatrix = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
@@ -53,12 +53,12 @@ void Camera::UpdateCamera()
 	}
 	if (Input::GetKeyPressed(GLFW_KEY_A))
 	{
-		cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * BaseGame::GetDeltaTime() * cameraSpeed;
+		cameraPos -= glm::normalize(glm::cross(cameraFront, up)) * BaseGame::GetDeltaTime() * cameraSpeed;
 		moved = true;
 	}
 	if (Input::GetKeyPressed(GLFW_KEY_D))
 	{
-		cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * BaseGame::GetDeltaTime() * cameraSpeed;
+		cameraPos += glm::normalize(glm::cross(cameraFront, up)) * BaseGame::GetDeltaTime() * cameraSpeed;
 		moved = true;
 	}
 

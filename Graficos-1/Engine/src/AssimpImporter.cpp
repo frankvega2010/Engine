@@ -40,7 +40,7 @@ bool AssimpImporter::DoTheImportThing(const std::string& pFile)
 const aiScene* AssimpImporter::ImportModel(std::string path)
 {
 	Importer import;
-	const aiScene *scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
+	const aiScene *scene = import.ReadFile(path, aiProcess_Triangulate /*| aiProcess_FlipUVs*/);
 
 	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 	{

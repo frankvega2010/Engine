@@ -21,9 +21,6 @@
     <ClCompile Include="src\Input.cpp">
       <Filter>Cpps</Filter>
     </ClCompile>
-    <ClCompile Include="src\Material.cpp">
-      <Filter>Cpps</Filter>
-    </ClCompile>
     <ClCompile Include="src\Renderer.cpp">
       <Filter>Cpps</Filter>
     </ClCompile>
@@ -75,6 +72,9 @@
     <ClCompile Include="src\SpotLight.cpp">
       <Filter>Cpps</Filter>
     </ClCompile>
+    <ClCompile Include="src\Material.cpp">
+      <Filter>Cpps</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\BaseGame.h">
@@ -84,9 +84,6 @@
       <Filter>Hpps</Filter>
     </ClInclude>
     <ClInclude Include="src\Input.h">
-      <Filter>Hpps</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Material.h">
       <Filter>Hpps</Filter>
     </ClInclude>
     <ClInclude Include="src\Renderer.h">
@@ -141,6 +138,9 @@
       <Filter>Hpps</Filter>
     </ClInclude>
     <ClInclude Include="src\SpotLight.h">
+      <Filter>Hpps</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Material.h">
       <Filter>Hpps</Filter>
     </ClInclude>
   </ItemGroup>

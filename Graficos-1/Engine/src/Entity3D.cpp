@@ -9,9 +9,9 @@ Entity3D::Entity3D()
 
 }
 
-Entity3D::Entity3D(string const &path)
+Entity3D::Entity3D(string const &path, bool flipUv)
 {
-	model = new Model(path);
+	model = new Model(path, flipUv);
 }
 
 Entity3D::~Entity3D()

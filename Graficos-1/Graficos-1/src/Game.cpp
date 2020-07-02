@@ -21,8 +21,11 @@ PointLight* pointLight;
 SpotLight* spotLight;
 
 list<Light*>* lightsList;
+list<Light*>* lightsToShowList;
 
 Entity3D* m2;
+Entity3D* m3;
+Entity3D* m4;
 
 vec3 plpos = { 3.f,0.f,0.f };
 
@@ -56,17 +59,33 @@ bool Game::OnStart()
 
 	cam->SetCameraSpeed(2.5f);
 
-	m = new Entity3D("res/backpack/backpack.obj");
+	m = new Entity3D("res/backpack/backpack.obj", true);
 
-	m2 = new Entity3D("res/backpack/backpack.obj");
+	m2 = new Entity3D("res/spider/Only_Spider_with_Animations_Export.obj", true);
 
+	m3 = new Entity3D("res/nave/E 45 Aircraft_obj.obj", false);
+
+	m4 = new Entity3D("res/nave2/Intergalactic_Spaceship-(Wavefront).obj", false);
+
+	m2->SetPos(vec3(5.f, 0.f, 0.f));
+
+	m3->SetPos(vec3(10.f, 0.f, 0.f));
+
+	m4->SetPos(vec3(15.f, 0.f, 0.f));
+	
+	m2->SetScale(vec3(0.01f));
+	
+	m4->SetScale(vec3(0.5f));
+	
 	lightsList = new list<Light*>();
 	
 	vec3 lightPos = { 0.f,0.f,0.f };
 
-	directionalLight = new DirectionalLight(lightPos, dir, shad);
-	pointLight = new PointLight(plpos, dir, shad);
-	spotLight = new SpotLight(cam->GetCameraPosition(), cam->GetCameraDirection(), shad);
+	directionalLight = new DirectionalLight(lightPos, dir, shad, true);
+	pointLight = new PointLight(plpos, dir, shad, false);
+	spotLight = new SpotLight(cam->GetCameraPosition(), cam->GetCameraDirection(), shad, true);
+
+	shad->setInt("lightsAmount", PointLight::GetPointLightCount());
 	
 	lightsList->push_front(directionalLight);
 	lightsList->push_front(pointLight);
@@ -79,7 +98,7 @@ bool Game::OnStart()
 		(*iB)->SetSpecular(specular);
 	}
 
-	m2->SetPos(vec3(5.f, 0.f, 0.f));
+	
 	return true;
 }
 
@@ -90,6 +109,9 @@ float xPos = 0.0f;
 float yRot = 0.0f;
 
 float at = 1.0f;
+
+vec3 newscale = { 1.f,1.f,1.f };
+
 bool Game::OnUpdate()
 {
 	shad->setVec3("viewPosition", cam->GetCameraPosition());
@@ -104,6 +126,8 @@ bool Game::OnUpdate()
 
 	spotLight->SetPosition(cam->GetCameraPosition());
 	spotLight->SetDirection(cam->GetCameraDirection());
+
+	shad->setInt("lightsAmount", PointLight::GetPointLightCount());
 	
 	for (list<Light*>::iterator iB = lightsList->begin(); iB != lightsList->end(); ++iB)
 	{
@@ -112,7 +136,7 @@ bool Game::OnUpdate()
 	
 	shad->setVec3("objectColor", objColor);
 	
-	m->SetScale(vec3(1.0f, 1.0f, 1.0f));
+	
 	cam->UpdateCamera();
 	
 	//point directionalLight input
@@ -139,6 +163,17 @@ bool Game::OnUpdate()
 	if (Input::GetKeyPressed(GLFW_KEY_5))
 	{
 		at++;
+	}
+	
+	if(Input::GetKeyPressed(GLFW_KEY_SPACE))
+	{
+		newscale = vec3(1.f, 1.f, 1.f) + vec3(10.f) * BaseGame::GetDeltaTime();
+		m->SetScale(newscale);
+	}
+	if (Input::GetKeyPressed(GLFW_KEY_C))
+	{
+		newscale = vec3(1.f, 1.f, 1.f) - vec3(10.f) * BaseGame::GetDeltaTime();
+		m->SetScale(newscale);
 	}
 	
 	//model translation
@@ -219,6 +254,8 @@ void Game::OnDraw()
 	spr->Draw();
 	m->Draw(*shad);
 	m2->Draw(*shad);
+	m3->Draw(*shad);
+	m4->Draw(*shad);
 }
 
 bool Game::OnStop()
@@ -230,6 +267,7 @@ bool Game::OnStop()
 
 	delete m;
 	delete m2;
+	delete m3;
 	
 	return true;
 }

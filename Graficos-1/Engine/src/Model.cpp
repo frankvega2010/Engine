@@ -16,16 +16,22 @@
 #endif
 #include "stb_image.h"
 
-Model::Model(string const &path, bool gamma) : gammaCorrection(gamma)
+Model::Model(string const &path, bool flipUv, bool gamma) : gammaCorrection(gamma)
 {
-	loadModel(path);
+	loadModel(path, flipUv);
 }
 
-void Model::loadModel(string const &path)
+void Model::loadModel(string const &path, bool flipUv)
 {
 	// read file via ASSIMP
 	Assimp::Importer importer;
-	const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
+
+	const aiScene* scene;
+	
+	if(flipUv)
+		scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
+	else
+		scene = importer.ReadFile(path, aiProcess_Triangulate /*| aiProcess_FlipUVs*/ | aiProcess_CalcTangentSpace);
 	// check for errors
 	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) // if is Not Zero
 	{
@@ -188,13 +194,6 @@ unsigned int TextureFromFile(const char *path, const string &directory, bool gam
 	unsigned char *data = stbi_load(filename.c_str(), &width, &height, &nrComponents, STBI_rgb_alpha);
 	if (data)
 	{
-		//GLenum format;
-		//if (nrComponents == 1)
-		//	format = GL_RED;
-		//else if (nrComponents == 3) //ERROR RED SPECULAR
-		//	format = GL_RGB;
-		//else if (nrComponents == 4)
-		//	format = GL_RGBA;
 
 		glBindTexture(GL_TEXTURE_2D, textureID);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
