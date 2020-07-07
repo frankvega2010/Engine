@@ -1,11 +1,14 @@
 #include "Mesh.h"
 
+
+#include "Camera.h"
 #include "glew.h"
 #include "glfw3.h"
+#include "Renderer.h"
 
 //#include "Entity.h"
 
-Mesh::Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture> textures)
+Mesh::Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture> textures, Entity3D* par) : Entity3D(par)
 {
 	this->vertices = vertices;
 	this->indices = indices;
@@ -15,8 +18,21 @@ Mesh::Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture
 	setupMesh();
 }
 
+Mesh::~Mesh()
+{
+}
+
 void Mesh::Draw(Shader shader)
 {
+	shader.use();
+
+	glm::mat4 projection = Renderer::renderer->GetProjMatrix();
+	glm::mat4 view = Camera::thisCam->GetViewMatrix();
+
+	shader.setMat4("proj", projection);
+	shader.setMat4("view", view);
+	shader.setMat4("model", worldModel);
+	
 	// bind appropriate textures
 	unsigned int diffuseNr = 1;
 	unsigned int specularNr = 1;
@@ -50,6 +66,8 @@ void Mesh::Draw(Shader shader)
 
 	// always good practice to set everything back to defaults once configured.
 	glActiveTexture(GL_TEXTURE0);
+
+	Entity3D::Draw(shader);
 }
 
 void Mesh::setupMesh()

@@ -16,9 +16,13 @@
 #endif
 #include "stb_image.h"
 
-Model::Model(string const &path, bool flipUv, bool gamma) : gammaCorrection(gamma)
+Model::Model(string const &path, bool flipUv, Entity3D* newParent, bool gamma) : gammaCorrection(gamma), Entity3D(newParent)
 {
 	loadModel(path, flipUv);
+}
+
+Model::~Model()
+{
 }
 
 void Model::loadModel(string const &path, bool flipUv)
@@ -40,36 +44,63 @@ void Model::loadModel(string const &path, bool flipUv)
 	}
 	// retrieve the directory path of the filepath
 	directory = path.substr(0, path.find_last_of('/'));
-
+	
 	// process ASSIMP's root node recursively
-	processNode(scene->mRootNode, scene);
+	processNode(scene->mRootNode, scene, this);
+
+	
 }
 
 void Model::Draw(Shader shader)
 {
-	for (unsigned int i = 0; i < meshes.size(); i++)
-		meshes[i].Draw(shader);
+	Entity3D::Draw(shader);
 }
 
-void Model::processNode(aiNode *node, const aiScene *scene)
+glm::mat4 AssimpTransformToGlm(aiMatrix4x4* from)
 {
+	glm::mat4 to;
+
+	to[0][0] = (float)from->a1; to[0][1] = (float)from->b1;  to[0][2] = (float)from->c1; to[0][3] = (float)from->d1;
+	to[1][0] = (float)from->a2; to[1][1] = (float)from->b2;  to[1][2] = (float)from->c2; to[1][3] = (float)from->d2;
+	to[2][0] = (float)from->a3; to[2][1] = (float)from->b3;  to[2][2] = (float)from->c3; to[2][3] = (float)from->d3;
+	to[3][0] = (float)from->a4; to[3][1] = (float)from->b4;  to[3][2] = (float)from->c4; to[3][3] = (float)from->d4;
+
+	return to;
+}
+
+void Model::processNode(aiNode *node, const aiScene *scene, Entity3D* par)
+{
+	Entity3D* thisNode = nullptr;
+	
 	// process each mesh located at the current node
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
 	{
 		// the node object only contains indices to index the actual objects in the scene. 
 		// the scene contains all the data, node is just to keep stuff organized (like relations between nodes).
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-		meshes.push_back(processMesh(mesh, scene));
+		thisNode = new Mesh(processMesh(mesh, scene, par));
+		thisNode->SetModelMatrix(AssimpTransformToGlm(&node->mTransformation));
+		thisNode->SetName(node->mName.C_Str());
 	}
+
+	if (!thisNode)
+	{
+		thisNode = new Entity3D(par);
+		thisNode->SetName(node->mName.C_Str());
+	}
+	
 	// after we've processed all of the meshes (if any) we then recursively process each of the children nodes
 	for (unsigned int i = 0; i < node->mNumChildren; i++)
 	{
-		processNode(node->mChildren[i], scene);
+		if (thisNode)
+			processNode(node->mChildren[i], scene, thisNode);
 	}
 
+	if(thisNode)
+		thisNode->UpdateModelMatrix();
 }
 
-Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene)
+Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene, Entity3D* par)
 {
 	// data to fill
 	vector<Vertex> vertices;
@@ -146,7 +177,7 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene)
 	textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
 
 	// return a mesh object created from the extracted mesh data
-	return Mesh(vertices, indices, textures);
+	return Mesh(vertices, indices, textures, par);
 }
 
 vector<Texture> Model::loadMaterialTextures(aiMaterial *mat, aiTextureType type, string typeName)
@@ -214,3 +245,4 @@ unsigned int TextureFromFile(const char *path, const string &directory, bool gam
 
 	return textureID;
 }
+

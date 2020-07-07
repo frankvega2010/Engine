@@ -146,6 +146,7 @@
     <ClCompile Include="src\AssimpImporter.cpp" />
     <ClCompile Include="src\BaseGame.cpp" />
     <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\CollisionBox.cpp" />
     <ClCompile Include="src\CollisionManager.cpp" />
     <ClCompile Include="src\DeltaTime.cpp" />
     <ClCompile Include="src\DirectionalLight.cpp" />
@@ -169,6 +170,7 @@
     <ClInclude Include="src\AssimpImporter.h" />
     <ClInclude Include="src\BaseGame.h" />
     <ClInclude Include="src\Camera.h" />
+    <ClInclude Include="src\CollisionBox.h" />
     <ClInclude Include="src\CollisionManager.h" />
     <ClInclude Include="src\DeltaTime.h" />
     <ClInclude Include="src\DirectionalLight.h" />

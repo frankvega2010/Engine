@@ -12,8 +12,6 @@
 
 Sprite* sq;
 Sprite* spr;
-
-Entity3D* m;
 Shader* shad;
 
 DirectionalLight* directionalLight;
@@ -23,11 +21,7 @@ SpotLight* spotLight;
 list<Light*>* lightsList;
 list<Light*>* lightsToShowList;
 
-Entity3D* m2;
-Entity3D* m3;
-Entity3D* m4;
-
-vec3 plpos = { 3.f,0.f,0.f };
+vec3 plpos = { 0.f,0.f,0.f };
 
 bool Game::OnStart()
 {
@@ -58,25 +52,31 @@ bool Game::OnStart()
 	glm::vec3 specular = { 1.f,1.f,1.f };
 
 	cam->SetCameraSpeed(2.5f);
+	
+	m = new Model("res/backpack/backpack.obj", true);
 
-	m = new Entity3D("res/backpack/backpack.obj", true);
+	m2 = new Model("res/spider/Only_Spider_with_Animations_Export.obj", true);
 
-	m2 = new Entity3D("res/spider/Only_Spider_with_Animations_Export.obj", true);
+	m3 = new Model("res/nave/E 45 Aircraft_obj.obj", false);
 
-	m3 = new Entity3D("res/nave/E 45 Aircraft_obj.obj", false);
-
-	m4 = new Entity3D("res/nave2/Intergalactic_Spaceship-(Wavefront).obj", false);
+	m4 = new Model("res/nave2/Intergalactic_Spaceship-(Wavefront).obj", false);
 
 	m2->SetPos(vec3(5.f, 0.f, 0.f));
 
 	m3->SetPos(vec3(10.f, 0.f, 0.f));
 
 	m4->SetPos(vec3(15.f, 0.f, 0.f));
-	
+
 	m2->SetScale(vec3(0.01f));
-	
+
 	m4->SetScale(vec3(0.5f));
 	
+	m2->SetParent(m);
+	
+	m3->SetParent(m2);
+	
+	m4->SetParent(m3);
+
 	lightsList = new list<Light*>();
 	
 	vec3 lightPos = { 0.f,0.f,0.f };
@@ -108,9 +108,13 @@ vec2 prevPos;
 float xPos = 0.0f;
 float yRot = 0.0f;
 
+float yRot2 = 0.f;
+
 float at = 1.0f;
 
 vec3 newscale = { 1.f,1.f,1.f };
+
+Entity3D* m5;
 
 bool Game::OnUpdate()
 {
@@ -122,7 +126,7 @@ bool Game::OnUpdate()
 
 	pointLight->SetAttenuation(at);
 	
-	pointLight->SetPosition(plpos);
+	//m->SetPos(plpos);
 
 	spotLight->SetPosition(cam->GetCameraPosition());
 	spotLight->SetDirection(cam->GetCameraDirection());
@@ -156,24 +160,21 @@ bool Game::OnUpdate()
 	{
 		plpos.x += BaseGame::GetDeltaTime() * 10.0f;
 	}
-	if (Input::GetKeyPressed(GLFW_KEY_4))
-	{
-		at--;
-	}
 	if (Input::GetKeyPressed(GLFW_KEY_5))
 	{
-		at++;
+		m5 = BaseGame::GetRootEntity()->GetChild("Cylinder.049__0");
+		//GetRootEntity()->GetChildNames();
 	}
 	
 	if(Input::GetKeyPressed(GLFW_KEY_SPACE))
 	{
 		newscale = vec3(1.f, 1.f, 1.f) + vec3(10.f) * BaseGame::GetDeltaTime();
-		m->SetScale(newscale);
+		m3->SetScale(newscale);
 	}
 	if (Input::GetKeyPressed(GLFW_KEY_C))
 	{
 		newscale = vec3(1.f, 1.f, 1.f) - vec3(10.f) * BaseGame::GetDeltaTime();
-		m->SetScale(newscale);
+		m3->SetScale(newscale);
 	}
 	
 	//model translation
@@ -192,8 +193,9 @@ bool Game::OnUpdate()
 		if (yRot < 0.0f)
 			yRot = 0.0f;
 		
-		yRot = 10.0f * BaseGame::GetDeltaTime();
-		m->SetRot(vec3(0.0f, yRot, 0.0f));
+		yRot = 100.0f * BaseGame::GetDeltaTime();
+		if(m5)
+			m5->SetRot(yRot, vec3(0.f,1.f,0.f));
 	}
 	/*else
 	{
@@ -212,12 +214,13 @@ bool Game::OnUpdate()
 		if(yRot>0.0f)
 			yRot = 0.0f;
 		
-		yRot = -10.0f * BaseGame::GetDeltaTime();
-		m->SetRot(vec3(0.0f, yRot, 0.0f));
+		yRot = -100.0f * BaseGame::GetDeltaTime();
+		if (m5)
+			m5->SetRot(yRot, vec3(0.f, 1.f, 0.f));
 	}
 
 	
-	/*if (Input::GetKeyPressed(GLFW_KEY_UP))
+	if (Input::GetKeyPressed(GLFW_KEY_UP))
 	{
 		if (!CollisionManager::CheckCollision(spr, sq))
 		{
@@ -228,6 +231,12 @@ bool Game::OnUpdate()
 
 		else
 			spr->SetPos(prevPos.x, prevPos.y, spr->GetPos().z);
+
+		if (yRot2 < 0.0f)
+			yRot2 = 0.0f;
+		
+		yRot2 = 100.0f * BaseGame::GetDeltaTime();
+		m4->SetRot(yRot2, vec3(0.f, 1.f, 0.f));
 	}
 	if (Input::GetKeyPressed(GLFW_KEY_DOWN))
 	{
@@ -238,7 +247,13 @@ bool Game::OnUpdate()
 		}
 		else
 			spr->SetPos(prevPos.x, prevPos.y, spr->GetPos().z);
-	}*/
+
+		if (yRot2 > 0.0f)
+			yRot2 = 0.0f;
+
+		yRot2 = -100.0f * BaseGame::GetDeltaTime();
+		m4->SetRot(yRot2, vec3(0.f, 1.f, 0.f));
+	}
 	
 	if (Input::GetKeyPressed(GLFW_KEY_ESCAPE))
 	{
@@ -264,10 +279,6 @@ bool Game::OnStop()
 	delete sq;
 
 	delete lightsList;
-
-	delete m;
-	delete m2;
-	delete m3;
 	
 	return true;
 }

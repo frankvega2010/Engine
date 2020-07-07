@@ -10,6 +10,8 @@
 #include <vector>
 #include "Shader.h"
 #include <glm.hpp>
+
+#include "Entity3D.h"
 //#include <gtc/matrix_transform.hpp>
 
 using namespace std;
@@ -33,7 +35,8 @@ struct Texture {
 	string path;
 };
 
-class DLLEXPORT Mesh {
+class DLLEXPORT Mesh : public Entity3D
+{
 public:
 	// mesh Data
 	vector<Vertex>       vertices;
@@ -42,8 +45,10 @@ public:
 	unsigned int VAO;
 
 	// constructor
-	Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture> textures);
+	Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture> textures, Entity3D* par);
 
+	~Mesh();
+	
 	// render the mesh
 	void Draw(Shader shader);
 

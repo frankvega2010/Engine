@@ -1,10 +1,11 @@
 #include "BaseGame.h"
 #include "Input.h"
 
-
 double BaseGame::currentFrame = 0.0f;
 double BaseGame::lastFrame = 0.0f;
 double BaseGame::deltaTime = 0.0f;
+
+Entity3D* BaseGame::rootEntity = nullptr;
 
 BaseGame::BaseGame() {
 
@@ -32,6 +33,8 @@ bool BaseGame::Start(int h, int w, char* name) {
 
 	lastFrame = 0.0f;
 
+	rootEntity = new Entity3D("root");
+	
 	return OnStart();
 }
 
@@ -56,12 +59,19 @@ float BaseGame::GetDeltaTime() {
 	return deltaTime;
 }
 
+Entity3D* BaseGame::GetRootEntity()
+{
+	return rootEntity;
+}
+
 bool BaseGame::Stop() {
 	cout << "GameBase::Stop()" << endl;
 	OnStop();
 	render->Stop();
 	window->Stop();
 
+	delete rootEntity;
+	delete rootEntity;
 	delete render;
 	delete window;
 	return true;
