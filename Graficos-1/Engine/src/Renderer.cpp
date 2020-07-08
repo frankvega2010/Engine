@@ -1,7 +1,6 @@
 #include "Renderer.h"
 #include <glew.h>
 #include <glfw3.h>
-
 using namespace std;
 
 Renderer* Renderer::renderer = nullptr;
@@ -34,7 +33,7 @@ bool Renderer::Start(Window* wnd) {
 	UpdateWVP();
 
 	renderer = this;
-
+	
 	return true;
 }
 

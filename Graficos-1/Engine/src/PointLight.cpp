@@ -1,28 +1,39 @@
 #include "PointLight.h"
 #include "Shader.h"
+#include "LightManager.h"
 
-int PointLight::pointLightCount = 0;
+using namespace std;
+
+
 
 PointLight::PointLight(vec3 initPos, vec3 initDir, Shader* shad, bool active, float att) : Light(initPos, initDir, shad, active)
 {
 	attenuation = att;
-	pointLightCount++;
+	if(LightManager::pointLightCount == 0)
+	{
+		LightManager::pointLightList = new list<PointLight>();
+	}
+	LightManager::pointLightList->push_front(*this);
+	index = LightManager::pointLightCount++;
+	LightManager::pointLightCount++;
 }
 
 void PointLight::Update()
 {
-	for (int i = 0; i < pointLightCount; i++)
-	{
-		activeShader->setBool("pointLight[" + std::to_string(i) + "].isActive", isActive);
-		activeShader->setVec3("pointLight[" + std::to_string(i) + "].position", position);
-		activeShader->setVec3("pointLight[" + std::to_string(i) + "].ambient", ambient);
-		activeShader->setVec3("pointLight[" + std::to_string(i) + "].diffuse", diffuse);
-		activeShader->setVec3("pointLight[" + std::to_string(i) + "].specular", specular);
-		activeShader->setFloat("pointLight[" + std::to_string(i) + "].constant", 1.0f);
-		activeShader->setFloat("pointLight[" + std::to_string(i) + "].linear", 0.09f);
-		activeShader->setFloat("pointLight[" + std::to_string(i) + "].quadratic", 0.032);
-		activeShader->setFloat("pointLight[" + std::to_string(i) + "].attenuation", attenuation);
-	}
+	activeShader->setBool("pointLight[" + std::to_string(index) + "].isActive", isActive);
+	activeShader->setVec3("pointLight[" + std::to_string(index) + "].position", position);
+	activeShader->setVec3("pointLight[" + std::to_string(index) + "].ambient", ambient);
+	activeShader->setVec3("pointLight[" + std::to_string(index) + "].diffuse", diffuse);
+	activeShader->setVec3("pointLight[" + std::to_string(index) + "].specular", specular);
+	activeShader->setFloat("pointLight[" + std::to_string(index) + "].constant", 1.0f);
+	activeShader->setFloat("pointLight[" + std::to_string(index) + "].linear", 0.09f);
+	activeShader->setFloat("pointLight[" + std::to_string(index) + "].quadratic", 0.032);
+	activeShader->setFloat("pointLight[" + std::to_string(index) + "].attenuation", attenuation);
+}
+
+void PointLight::SetPosition(vec3 pos)
+{
+	position = pos;
 }
 
 void PointLight::SetAttenuation(float att)
@@ -33,5 +44,5 @@ void PointLight::SetAttenuation(float att)
 
 int PointLight::GetPointLightCount()
 {
-	return pointLightCount;
+	return LightManager::pointLightCount;
 }

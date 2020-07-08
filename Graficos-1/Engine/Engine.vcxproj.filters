@@ -78,6 +78,9 @@
     <ClCompile Include="src\CollisionBox.cpp">
       <Filter>Cpps</Filter>
     </ClCompile>
+    <ClCompile Include="src\LightManager.cpp">
+      <Filter>Cpps</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\BaseGame.h">
@@ -149,12 +152,21 @@
     <ClInclude Include="src\CollisionBox.h">
       <Filter>Hpps</Filter>
     </ClInclude>
+    <ClInclude Include="src\LightManager.h">
+      <Filter>Hpps</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\Graficos-1\src\3DFragmentShader.txt">
       <Filter>Shaders</Filter>
     </Text>
     <Text Include="..\Graficos-1\src\3DVertexShader.txt">
+      <Filter>Shaders</Filter>
+    </Text>
+    <Text Include="..\Graficos-1\src\SimpleFragmentShader.txt">
+      <Filter>Shaders</Filter>
+    </Text>
+    <Text Include="..\Graficos-1\src\SimpleVertexShader.txt">
       <Filter>Shaders</Filter>
     </Text>
   </ItemGroup>

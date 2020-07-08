@@ -21,11 +21,24 @@ Entity3D::Entity3D(Entity3D* newParent)
 	{	
 		SetParent(BaseGame::GetRootEntity());
 	}
+
+	entityType = entity;
+
+	collisionBox = new CollisionBox();
 }
 
 Entity3D::Entity3D(string newName)
 {
+	entityType = entity;
+	
 	name = newName;
+
+	collisionBox = new CollisionBox();
+
+	for (int i = 0; i < TOTALVERTICES; i++)
+	{
+		collisionBox->SetBounds(i, vec3(0.f));
+	}
 }
 
 Entity3D::~Entity3D()
@@ -87,7 +100,7 @@ void Entity3D::SetPos(vec3 pos)
 {
 	position = pos;
 	modelMatrix = glm::translate(modelMatrix, position);
-	UpdateModelMatrix();
+	UpdateModelMatAndBoundingBox();
 }
 
 void Entity3D::SetRot(float angle, vec3 axis)
@@ -97,27 +110,32 @@ void Entity3D::SetRot(float angle, vec3 axis)
 	rotation.z += angle * axis.z;
 	
 	modelMatrix = glm::rotate(modelMatrix, radians(angle), axis);
-	UpdateModelMatrix();
+	UpdateModelMatAndBoundingBox();
 }
 
 void Entity3D::SetScale(vec3 sc)
 {
 	scale = sc;
 	modelMatrix = glm::scale(modelMatrix, scale);
-	UpdateModelMatrix();
+	UpdateModelMatAndBoundingBox();
 }
 
 void Entity3D::Draw(Shader shader)
-{	
+{
 	for (list<Entity3D*>::iterator itBeg = childs.begin(); itBeg != childs.end(); ++itBeg)
 	{
 		Entity3D* ent = (*itBeg);
-		Mesh* m = static_cast<Mesh*> (ent);
-		if(m)
+		if(ent->entityType == mesh)
 		{
+			Mesh* m = static_cast<Mesh*> (ent);
 			m->Draw(shader);
 		}
+		else
+		{
+			ent->Draw(shader);
+		}
 	}
+	//collisionBox->DrawCollisionBox();
 }
 
 void Entity3D::UpdateModelMatrix()
@@ -143,12 +161,46 @@ void Entity3D::SetModelMatrix(glm::mat4 newModelMatrix)
 	modelMatrix = newModelMatrix;
 }
 
-void Entity3D::GetChildNames()
+void Entity3D::GetAllChildsNames()
 {
 	cout << name << endl;
 
 	for (list<Entity3D*>::iterator itBeg = childs.begin(); itBeg != childs.end(); ++itBeg)
 	{
-		(*itBeg)->GetChildNames();
+		(*itBeg)->GetAllChildsNames();
 	}
+}
+
+void Entity3D::GetAllChildsTypes()
+{
+	cout << entityType << endl;
+
+	for (list<Entity3D*>::iterator itBeg = childs.begin(); itBeg != childs.end(); ++itBeg)
+	{
+		(*itBeg)->GetAllChildsTypes();
+	}
+}
+
+Bounds Entity3D::UpdateModelMatAndBoundingBox()
+{
+	if (parent != nullptr)
+		worldModel = parent->worldModel * modelMatrix;
+
+	for (list<Entity3D*>::iterator itBeg = childs.begin(); itBeg != childs.end(); ++itBeg)
+	{
+		CalculateBounds((*itBeg)->UpdateModelMatAndBoundingBox());
+	}
+	
+	collisionBox->GenerateBoundingBox(bounds, worldModel);
+	return bounds;
+}
+
+void Entity3D::CalculateBounds(Bounds otherBounds)
+{
+	bounds.minX = bounds.minX < otherBounds.minX ? bounds.minX : otherBounds.minX;
+	bounds.minY = bounds.minY < otherBounds.minY ? bounds.minY : otherBounds.minY;
+	bounds.minZ = bounds.minZ < otherBounds.minZ ? bounds.minZ : otherBounds.minZ;
+	bounds.maxX = bounds.maxX > otherBounds.maxX ? bounds.maxX : otherBounds.maxX;
+	bounds.maxY = bounds.maxY > otherBounds.maxY ? bounds.maxY : otherBounds.maxY;
+	bounds.maxZ = bounds.maxZ > otherBounds.maxZ ? bounds.maxZ : otherBounds.maxZ;
 }

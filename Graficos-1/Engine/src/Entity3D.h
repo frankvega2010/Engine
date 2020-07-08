@@ -3,18 +3,25 @@
 
 #include <list>
 #include <glm.hpp>
+#include <vector>
+
 #include "Shader.h"
+#include "CollisionBox.h"
 
 #ifndef DLLEXPORT
 #define DLLEXPORT __declspec(dllexport)
 #endif // !DLLEXPORT
 
-class Model;
-
-class Mesh;
-
 using namespace glm;
 using namespace std;
+
+enum EntityType
+{
+	unassigned,
+	mesh,
+	model,
+	entity
+};
 
 class DLLEXPORT Entity3D
 {
@@ -27,6 +34,10 @@ protected:
 	vec3 scale;
 	glm::mat4 modelMatrix = glm::mat4(1.0f);
 	glm::mat4 worldModel = glm::mat4(1.0f);
+	CollisionBox* collisionBox;
+	
+	vector<vec3> verticesVector;
+	
 public:
 	Entity3D(Entity3D* newParent = nullptr);
 	Entity3D(string newName);
@@ -49,8 +60,15 @@ public:
 	glm::mat4 GetModelMatrix() const { return modelMatrix; }
 	void SetModelMatrix(glm::mat4 newModelMatrix);
 	////////////////////////////
-
-	void GetChildNames();
+	EntityType entityType = unassigned;
+	Bounds bounds;
+	CollisionBox* GetCollisionBox() const { return collisionBox; }
+	Bounds UpdateModelMatAndBoundingBox();
+	void CalculateBounds(Bounds otherBounds);
+	
+	////////////////////////////
+	void GetAllChildsNames();
+	void GetAllChildsTypes();
 };
 
 #endif // !ENTITY3D

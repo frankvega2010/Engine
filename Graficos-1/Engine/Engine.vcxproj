@@ -154,6 +154,7 @@
     <ClCompile Include="src\Entity3D.cpp" />
     <ClCompile Include="src\Input.cpp" />
     <ClCompile Include="src\Light.cpp" />
+    <ClCompile Include="src\LightManager.cpp" />
     <ClCompile Include="src\Material.cpp" />
     <ClCompile Include="src\Mesh.cpp" />
     <ClCompile Include="src\Model.cpp" />
@@ -178,6 +179,7 @@
     <ClInclude Include="src\Entity3D.h" />
     <ClInclude Include="src\Input.h" />
     <ClInclude Include="src\Light.h" />
+    <ClInclude Include="src\LightManager.h" />
     <ClInclude Include="src\Material.h" />
     <ClInclude Include="src\Mesh.h" />
     <ClInclude Include="src\Model.h" />
@@ -193,6 +195,8 @@
   <ItemGroup>
     <Text Include="..\Graficos-1\src\3DFragmentShader.txt" />
     <Text Include="..\Graficos-1\src\3DVertexShader.txt" />
+    <Text Include="..\Graficos-1\src\SimpleFragmentShader.txt" />
+    <Text Include="..\Graficos-1\src\SimpleVertexShader.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

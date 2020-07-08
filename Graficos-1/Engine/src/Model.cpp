@@ -1,8 +1,6 @@
 #include "Model.h"
 
 #include "Mesh.h"
-#include "Texture.h"
-#include "BaseGame.h"
 #include <assimp/Importer.hpp> 
 #include <assimp/scene.h>      
 #include <assimp/postprocess.h>
@@ -19,6 +17,7 @@
 Model::Model(string const &path, bool flipUv, Entity3D* newParent, bool gamma) : gammaCorrection(gamma), Entity3D(newParent)
 {
 	loadModel(path, flipUv);
+	entityType = model;
 }
 
 Model::~Model()
@@ -96,8 +95,21 @@ void Model::processNode(aiNode *node, const aiScene *scene, Entity3D* par)
 			processNode(node->mChildren[i], scene, thisNode);
 	}
 
-	if(thisNode)
-		thisNode->UpdateModelMatrix();
+	if(thisNode->entityType == mesh)
+	{
+		Mesh* m = static_cast<Mesh*>(thisNode);
+		for (int i = 0; i < m->vertices.size(); i++)
+		{
+			thisNode->bounds.minX = m->vertices[i].Position.x < thisNode->bounds.minX ? m->vertices[i].Position.x : thisNode->bounds.minX;
+			thisNode->bounds.maxX = m->vertices[i].Position.x > thisNode->bounds.maxX ? m->vertices[i].Position.x : thisNode->bounds.maxX;
+			thisNode->bounds.minY = m->vertices[i].Position.y < thisNode->bounds.minY ? m->vertices[i].Position.y : thisNode->bounds.minY;
+			thisNode->bounds.maxY = m->vertices[i].Position.y > thisNode->bounds.maxY ? m->vertices[i].Position.y : thisNode->bounds.maxY;
+			thisNode->bounds.minZ = m->vertices[i].Position.z < thisNode->bounds.minZ ? m->vertices[i].Position.z : thisNode->bounds.minZ;
+			thisNode->bounds.maxZ = m->vertices[i].Position.z > thisNode->bounds.maxZ ? m->vertices[i].Position.z : thisNode->bounds.maxZ;
+		}
+	}
+	thisNode->GetCollisionBox()->Setup();
+	thisNode->UpdateModelMatAndBoundingBox();
 }
 
 Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene, Entity3D* par)

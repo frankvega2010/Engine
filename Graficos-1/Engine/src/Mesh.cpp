@@ -16,6 +16,8 @@ Mesh::Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture
 
 	// now that we have all the required data, set the vertex buffers and its attribute pointers.
 	setupMesh();
+
+	entityType = mesh;
 }
 
 Mesh::~Mesh()

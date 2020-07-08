@@ -21,10 +21,10 @@ SpotLight* spotLight;
 list<Light*>* lightsList;
 list<Light*>* lightsToShowList;
 
-vec3 plpos = { 0.f,0.f,0.f };
+vec3 plpos = { 1.5f,0.f,0.f };
 
 bool Game::OnStart()
-{
+{	
 	render->setClearScreenColor(1.f, 0.f, 1.f,1.f);
 	
 	sq = new Sprite(render, 1, 1, 1);
@@ -41,6 +41,8 @@ bool Game::OnStart()
 	spr->LoadMaterial("res/megaman.png",true);
 	spr->SetPos(-10.0f, 0.0f, -10.0f);
 
+	//////////////////////////////////////////////////////////////////////////////////////////////////////
+	
 	shad = new Shader("src/3DVertexShader.txt", "src/3DFragmentShader.txt");
 
 	shad->setVec3("viewPosition", cam->GetCameraPosition());
@@ -81,9 +83,9 @@ bool Game::OnStart()
 	
 	vec3 lightPos = { 0.f,0.f,0.f };
 
-	directionalLight = new DirectionalLight(lightPos, dir, shad, true);
-	pointLight = new PointLight(plpos, dir, shad, false);
-	spotLight = new SpotLight(cam->GetCameraPosition(), cam->GetCameraDirection(), shad, true);
+	directionalLight = new DirectionalLight(lightPos, dir, shad, false);
+	pointLight = new PointLight(plpos, dir, shad, true);
+	spotLight = new SpotLight(cam->GetCameraPosition(), cam->GetCameraDirection(), shad, false);
 
 	shad->setInt("lightsAmount", PointLight::GetPointLightCount());
 	
@@ -130,40 +132,42 @@ bool Game::OnUpdate()
 
 	spotLight->SetPosition(cam->GetCameraPosition());
 	spotLight->SetDirection(cam->GetCameraDirection());
-
+	
 	shad->setInt("lightsAmount", PointLight::GetPointLightCount());
 	
+	shad->setVec3("objectColor", objColor);
+
+	pointLight->SetPosition(plpos);
+
 	for (list<Light*>::iterator iB = lightsList->begin(); iB != lightsList->end(); ++iB)
 	{
 		(*iB)->Update();
 	}
-	
-	shad->setVec3("objectColor", objColor);
-	
 	
 	cam->UpdateCamera();
 	
 	//point directionalLight input
 	if(Input::GetKeyPressed(GLFW_KEY_I))
 	{
-		plpos.z += BaseGame::GetDeltaTime() * 10.0f;
+		plpos.z += BaseGame::GetDeltaTime() * 100.0f;
 	}
 	if (Input::GetKeyPressed(GLFW_KEY_K))
 	{
-		plpos.z -= BaseGame::GetDeltaTime() * 10.0f;
+		plpos.z -= BaseGame::GetDeltaTime() * 100.0f;
 	}
 	if (Input::GetKeyPressed(GLFW_KEY_J))
 	{
-		plpos.x -= BaseGame::GetDeltaTime() * 10.0f;
+		plpos.x -= BaseGame::GetDeltaTime() * 100.0f;
 	}
 	if (Input::GetKeyPressed(GLFW_KEY_L))
 	{
-		plpos.x += BaseGame::GetDeltaTime() * 10.0f;
+		plpos.x += BaseGame::GetDeltaTime() * 100.0f;
 	}
 	if (Input::GetKeyPressed(GLFW_KEY_5))
 	{
 		m5 = BaseGame::GetRootEntity()->GetChild("Cylinder.049__0");
-		//GetRootEntity()->GetChildNames();
+		//GetRootEntity()->GetAllChildsTypes();
+		m2->SetParent(m5);
 	}
 	
 	if(Input::GetKeyPressed(GLFW_KEY_SPACE))
@@ -267,10 +271,7 @@ void Game::OnDraw()
 {
 	sq->Draw();
 	spr->Draw();
-	m->Draw(*shad);
-	m2->Draw(*shad);
-	m3->Draw(*shad);
-	m4->Draw(*shad);
+	BaseGame::GetRootEntity()->Draw(*shad);
 }
 
 bool Game::OnStop()

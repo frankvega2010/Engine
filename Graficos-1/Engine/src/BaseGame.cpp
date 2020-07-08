@@ -1,5 +1,6 @@
 #include "BaseGame.h"
 #include "Input.h"
+#include "CollisionBox.h"
 
 double BaseGame::currentFrame = 0.0f;
 double BaseGame::lastFrame = 0.0f;
@@ -34,6 +35,8 @@ bool BaseGame::Start(int h, int w, char* name) {
 	lastFrame = 0.0f;
 
 	rootEntity = new Entity3D("root");
+
+	CollisionBox::wireframeShader = new Shader("C:/Users/Patricio/Documents/GitHub/Engine/Graficos-1/Graficos-1/src/SimpleVertexShader.txt", "C:/Users/Patricio/Documents/GitHub/Engine/Graficos-1/Graficos-1/src/SimpleFragmentShader.txt");
 	
 	return OnStart();
 }
@@ -70,7 +73,6 @@ bool BaseGame::Stop() {
 	render->Stop();
 	window->Stop();
 
-	delete rootEntity;
 	delete rootEntity;
 	delete render;
 	delete window;
