@@ -5,7 +5,7 @@ int LightManager::pointLightCount = 0;
 
 std::list<PointLight>* LightManager::pointLightList = nullptr;
 
-void LightManager::UpdatePointLights(Shader* s)
+void LightManager::UpdatePointLights()
 {
 	for (std::list<PointLight>::iterator iB = pointLightList->begin(); iB != pointLightList->end(); ++iB)
 	{

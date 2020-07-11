@@ -11,7 +11,7 @@ class DLLEXPORT LightManager
 public:
 	static std::list<PointLight>* pointLightList;
 	static int pointLightCount;
-	void UpdatePointLights(Shader* s);
+	void UpdatePointLights();
 };
 
 #endif

@@ -109,7 +109,7 @@ void Model::processNode(aiNode *node, const aiScene *scene, Entity3D* par)
 		}
 	}
 	thisNode->GetCollisionBox()->Setup();
-	thisNode->UpdateModelMatAndBoundingBox();
+	thisNode->UpdateModelMatrix();
 }
 
 Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene, Entity3D* par)

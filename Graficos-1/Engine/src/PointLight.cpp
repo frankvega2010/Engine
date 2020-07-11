@@ -14,7 +14,7 @@ PointLight::PointLight(vec3 initPos, vec3 initDir, Shader* shad, bool active, fl
 		LightManager::pointLightList = new list<PointLight>();
 	}
 	LightManager::pointLightList->push_front(*this);
-	index = LightManager::pointLightCount++;
+	index = LightManager::pointLightCount;
 	LightManager::pointLightCount++;
 }
 

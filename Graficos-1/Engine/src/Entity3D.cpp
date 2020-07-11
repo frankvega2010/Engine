@@ -100,7 +100,7 @@ void Entity3D::SetPos(vec3 pos)
 {
 	position = pos;
 	modelMatrix = glm::translate(modelMatrix, position);
-	UpdateModelMatAndBoundingBox();
+	UpdateModelMatrix();
 }
 
 void Entity3D::SetRot(float angle, vec3 axis)
@@ -110,14 +110,14 @@ void Entity3D::SetRot(float angle, vec3 axis)
 	rotation.z += angle * axis.z;
 	
 	modelMatrix = glm::rotate(modelMatrix, radians(angle), axis);
-	UpdateModelMatAndBoundingBox();
+	UpdateModelMatrix();
 }
 
 void Entity3D::SetScale(vec3 sc)
 {
 	scale = sc;
 	modelMatrix = glm::scale(modelMatrix, scale);
-	UpdateModelMatAndBoundingBox();
+	UpdateModelMatrix();
 }
 
 void Entity3D::Draw(Shader shader)

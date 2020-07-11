@@ -83,7 +83,7 @@ bool Game::OnStart()
 	
 	vec3 lightPos = { 0.f,0.f,0.f };
 
-	directionalLight = new DirectionalLight(lightPos, dir, shad, false);
+	directionalLight = new DirectionalLight(lightPos, dir, shad, true);
 	pointLight = new PointLight(plpos, dir, shad, true);
 	spotLight = new SpotLight(cam->GetCameraPosition(), cam->GetCameraDirection(), shad, false);
 
@@ -138,6 +138,7 @@ bool Game::OnUpdate()
 	shad->setVec3("objectColor", objColor);
 
 	pointLight->SetPosition(plpos);
+	pointLight->SetDiffuse(vec3(1.f, 0.f, 0.f));
 
 	for (list<Light*>::iterator iB = lightsList->begin(); iB != lightsList->end(); ++iB)
 	{
@@ -175,10 +176,16 @@ bool Game::OnUpdate()
 		newscale = vec3(1.f, 1.f, 1.f) + vec3(10.f) * BaseGame::GetDeltaTime();
 		m3->SetScale(newscale);
 	}
+	
 	if (Input::GetKeyPressed(GLFW_KEY_C))
 	{
 		newscale = vec3(1.f, 1.f, 1.f) - vec3(10.f) * BaseGame::GetDeltaTime();
 		m3->SetScale(newscale);
+	}
+
+	if(Input::GetKeyReleased(GLFW_KEY_F))
+	{
+		spotLight->SetActive(!spotLight->GetActive());
 	}
 	
 	//model translation
