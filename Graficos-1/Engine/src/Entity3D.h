@@ -33,7 +33,7 @@ protected:
 	vec3 rotation;
 	vec3 scale;
 	glm::mat4 modelMatrix = glm::mat4(1.0f);
-	glm::mat4 worldModel = glm::mat4(1.0f);
+	
 	CollisionBox* collisionBox;
 	
 	vector<vec3> verticesVector;
@@ -65,10 +65,17 @@ public:
 	CollisionBox* GetCollisionBox() const { return collisionBox; }
 	Bounds UpdateModelMatAndBoundingBox();
 	void CalculateBounds(Bounds otherBounds);
-	
+	Bounds CalculateBounds(Bounds b1, Bounds b2);
+	Bounds GenerateBounds(vec3 v[], mat4 mat);
+	Bounds GenerateBoundsByVertex(vec3 v[]);
+	Bounds GenerateBoundsByVertex(vector<vec3> v);
+	void CalculateBoundsWithChilds();
+	CollisionBox* AABB;
 	////////////////////////////
 	void GetAllChildsNames();
 	void GetAllChildsTypes();
+
+	glm::mat4 worldModel = glm::mat4(1.0f);
 };
 
 #endif // !ENTITY3D

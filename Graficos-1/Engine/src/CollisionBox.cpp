@@ -55,6 +55,20 @@ void CollisionBox::GenerateBoundingBox(Bounds b, mat4 modelMat)
 	Setup();
 }
 
+void CollisionBox::GenerateBoundingBox(Bounds b)
+{
+	SetBounds(0, vec3(b.minX, b.minY, b.minZ));
+	SetBounds(1, vec3(b.maxX, b.minY, b.minZ));
+	SetBounds(2, vec3(b.maxX, b.maxY, b.minZ));
+	SetBounds(3, vec3(b.minX, b.maxY, b.minZ));
+	SetBounds(4, vec3(b.minX, b.minY, b.maxZ));
+	SetBounds(5, vec3(b.maxX, b.minY, b.maxZ));
+	SetBounds(6, vec3(b.minX, b.maxY, b.maxZ));
+	SetBounds(7, vec3(b.maxX, b.maxY, b.maxZ));
+
+	Setup();
+}
+
 void CollisionBox::SetBounds(int boundIndex, vec3 newBoundValue)
 {
 	vertices[boundIndex] = newBoundValue;
@@ -67,16 +81,16 @@ void CollisionBox::GenerateBuffers()
 	glGenBuffers(1, &ebo);
 }
 
-void CollisionBox::DrawCollisionBox()
+void CollisionBox::DrawCollisionBox(mat4 worldMatrix)
 {
-	wireframeShader->use();
-
 	glm::mat4 projection = Renderer::renderer->GetProjMatrix();
 	glm::mat4 view = Camera::thisCam->GetViewMatrix();
-
-	mat4 MVP = projection * view * mat4(1.f);
-
-	wireframeShader->setMat4("MVP", MVP);
+	
+	wireframeShader->use();
+	wireframeShader->setMat4("projection", projection);
+	wireframeShader->setMat4("view", view);
+	wireframeShader->setMat4("model", mat4(1.f));
+	
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glBindVertexArray(vao);
 	// Draw the box

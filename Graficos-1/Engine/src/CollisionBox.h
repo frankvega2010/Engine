@@ -28,18 +28,20 @@ struct Bounds
 class DLLEXPORT CollisionBox
 {
 private:
-	vec3 vertices[TOTALVERTICES];
+	
 	unsigned int vao, vbo, ebo;
 	std::vector<unsigned int> indicesVector;
 public:
 	CollisionBox();
 	~CollisionBox();
 	void GenerateBoundingBox(Bounds b, mat4 modelMat);
+	void GenerateBoundingBox(Bounds b);
 	void SetBounds(int boundIndex, vec3 newBoundValue);
 	void GenerateBuffers();
-	void DrawCollisionBox();
+	void DrawCollisionBox(mat4 worldMatrix);
 	static Shader* wireframeShader;
 	void Setup();
+	vec3 vertices[TOTALVERTICES];
 };
 
 #endif

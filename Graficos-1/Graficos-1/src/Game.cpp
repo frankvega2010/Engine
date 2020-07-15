@@ -65,19 +65,19 @@ bool Game::OnStart()
 
 	m2->SetPos(vec3(5.f, 0.f, 0.f));
 
-	m3->SetPos(vec3(10.f, 0.f, 0.f));
+	m3->SetPos(vec3(-5.f, 0.f, 0.f));
 
-	m4->SetPos(vec3(15.f, 0.f, 0.f));
+	m4->SetPos(vec3(0.f, 0.f, 5.f));
 
 	m2->SetScale(vec3(0.01f));
 
 	m4->SetScale(vec3(0.5f));
 	
-	m2->SetParent(m);
+	/*m2->SetParent(m);
 	
-	m3->SetParent(m2);
+	m3->SetParent(m);
 	
-	m4->SetParent(m3);
+	m4->SetParent(m);*/
 
 	lightsList = new list<Light*>();
 	
@@ -120,6 +120,7 @@ Entity3D* m5;
 
 bool Game::OnUpdate()
 {
+	shad->use();
 	shad->setVec3("viewPosition", cam->GetCameraPosition());
 	shad->setVec3("viewDirection", glm::normalize(cam->GetCameraDirection()));
 	
@@ -132,7 +133,7 @@ bool Game::OnUpdate()
 
 	spotLight->SetPosition(cam->GetCameraPosition());
 	spotLight->SetDirection(cam->GetCameraDirection());
-	
+	shad->use();
 	shad->setInt("lightsAmount", PointLight::GetPointLightCount());
 	
 	shad->setVec3("objectColor", objColor);
@@ -168,7 +169,7 @@ bool Game::OnUpdate()
 	{
 		m5 = BaseGame::GetRootEntity()->GetChild("Cylinder.049__0");
 		//GetRootEntity()->GetAllChildsTypes();
-		m2->SetParent(m5);
+		//m2->SetParent(m5);
 	}
 	
 	if(Input::GetKeyPressed(GLFW_KEY_SPACE))
@@ -206,7 +207,7 @@ bool Game::OnUpdate()
 		
 		yRot = 100.0f * BaseGame::GetDeltaTime();
 		if(m5)
-			m5->SetRot(yRot, vec3(0.f,1.f,0.f));
+			m5->SetPos(vec3(yRot,0.f,0.f));
 	}
 	/*else
 	{
@@ -227,7 +228,7 @@ bool Game::OnUpdate()
 		
 		yRot = -100.0f * BaseGame::GetDeltaTime();
 		if (m5)
-			m5->SetRot(yRot, vec3(0.f, 1.f, 0.f));
+			m5->SetPos(vec3(yRot, 0.f, 0.f));
 	}
 
 	
@@ -247,7 +248,7 @@ bool Game::OnUpdate()
 			yRot2 = 0.0f;
 		
 		yRot2 = 100.0f * BaseGame::GetDeltaTime();
-		m4->SetRot(yRot2, vec3(0.f, 1.f, 0.f));
+		m->SetRot(yRot2,vec3(0.f,1.f,0.f));
 	}
 	if (Input::GetKeyPressed(GLFW_KEY_DOWN))
 	{
@@ -263,7 +264,7 @@ bool Game::OnUpdate()
 			yRot2 = 0.0f;
 
 		yRot2 = -100.0f * BaseGame::GetDeltaTime();
-		m4->SetRot(yRot2, vec3(0.f, 1.f, 0.f));
+		m->SetRot(yRot2, vec3(0.f, 1.f, 0.f));
 	}
 	
 	if (Input::GetKeyPressed(GLFW_KEY_ESCAPE))

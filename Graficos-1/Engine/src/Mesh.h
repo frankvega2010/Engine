@@ -52,6 +52,8 @@ public:
 	// render the mesh
 	void Draw(Shader shader);
 
+	void GetVerticesPositions(vector<vec3> &vertices);
+
 private:
 	// render data 
 	unsigned int VBO, EBO;

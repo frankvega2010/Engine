@@ -9,6 +9,7 @@ SpotLight::SpotLight(vec3 initPos, vec3 initDir, Shader* shad, bool active, floa
 
 void SpotLight::Update()
 {
+	activeShader->use();
 	activeShader->setBool("spotLight.isActive", isActive);
 	activeShader->setVec3("spotLight.position", position);
 	activeShader->setVec3("spotLight.direction", direction);

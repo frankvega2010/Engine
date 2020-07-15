@@ -20,6 +20,7 @@ PointLight::PointLight(vec3 initPos, vec3 initDir, Shader* shad, bool active, fl
 
 void PointLight::Update()
 {
+	activeShader->use();
 	activeShader->setBool("pointLight[" + std::to_string(index) + "].isActive", isActive);
 	activeShader->setVec3("pointLight[" + std::to_string(index) + "].position", position);
 	activeShader->setVec3("pointLight[" + std::to_string(index) + "].ambient", ambient);

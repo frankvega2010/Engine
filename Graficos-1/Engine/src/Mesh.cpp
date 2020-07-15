@@ -72,6 +72,14 @@ void Mesh::Draw(Shader shader)
 	Entity3D::Draw(shader);
 }
 
+void Mesh::GetVerticesPositions(vector<vec3>& verticesPos)
+{
+	for(int i=0;i<vertices.size();i++)
+	{
+		verticesPos.push_back(vertices[i].Position);
+	}
+}
+
 void Mesh::setupMesh()
 {
 	// create buffers/arrays

@@ -10,6 +10,7 @@ DirectionalLight::DirectionalLight(vec3 initPos, vec3 initDir, Shader* shad, boo
 
 void DirectionalLight::Update()
 {
+	activeShader->use();
 	activeShader->setBool("dirLight.isActive", isActive);
 	activeShader->setVec3("dirLight.direction", direction);
 	activeShader->setVec3("dirLight.ambient", ambient);

@@ -25,6 +25,10 @@ Entity3D::Entity3D(Entity3D* newParent)
 	entityType = entity;
 
 	collisionBox = new CollisionBox();
+	AABB = new CollisionBox();
+	
+	collisionBox->GenerateBoundingBox(bounds);
+	AABB->GenerateBoundingBox(bounds);
 }
 
 Entity3D::Entity3D(string newName)
@@ -34,11 +38,11 @@ Entity3D::Entity3D(string newName)
 	name = newName;
 
 	collisionBox = new CollisionBox();
+	AABB = new CollisionBox();
+	
+	collisionBox->GenerateBoundingBox(bounds);
+	AABB->GenerateBoundingBox(bounds);
 
-	for (int i = 0; i < TOTALVERTICES; i++)
-	{
-		collisionBox->SetBounds(i, vec3(0.f));
-	}
 }
 
 Entity3D::~Entity3D()
@@ -100,7 +104,7 @@ void Entity3D::SetPos(vec3 pos)
 {
 	position = pos;
 	modelMatrix = glm::translate(modelMatrix, position);
-	UpdateModelMatrix();
+	BaseGame::GetRootEntity()->UpdateModelMatAndBoundingBox();
 }
 
 void Entity3D::SetRot(float angle, vec3 axis)
@@ -110,14 +114,14 @@ void Entity3D::SetRot(float angle, vec3 axis)
 	rotation.z += angle * axis.z;
 	
 	modelMatrix = glm::rotate(modelMatrix, radians(angle), axis);
-	UpdateModelMatrix();
+	BaseGame::GetRootEntity()->UpdateModelMatAndBoundingBox();
 }
 
 void Entity3D::SetScale(vec3 sc)
 {
 	scale = sc;
 	modelMatrix = glm::scale(modelMatrix, scale);
-	UpdateModelMatrix();
+	BaseGame::GetRootEntity()->UpdateModelMatAndBoundingBox();
 }
 
 void Entity3D::Draw(Shader shader)
@@ -134,8 +138,9 @@ void Entity3D::Draw(Shader shader)
 		{
 			ent->Draw(shader);
 		}
+		
 	}
-	//collisionBox->DrawCollisionBox();
+	AABB->DrawCollisionBox(worldModel);
 }
 
 void Entity3D::UpdateModelMatrix()
@@ -186,13 +191,33 @@ Bounds Entity3D::UpdateModelMatAndBoundingBox()
 	if (parent != nullptr)
 		worldModel = parent->worldModel * modelMatrix;
 
+	Bounds childBounds;
+	
 	for (list<Entity3D*>::iterator itBeg = childs.begin(); itBeg != childs.end(); ++itBeg)
 	{
-		CalculateBounds((*itBeg)->UpdateModelMatAndBoundingBox());
+		childBounds = CalculateBounds(childBounds, (*itBeg)->UpdateModelMatAndBoundingBox());
+	}
+
+	bounds = GenerateBounds(collisionBox->vertices, worldModel);
+	
+	CalculateBounds(childBounds);
+	AABB->GenerateBoundingBox(bounds/*, worldModel*/);
+	
+	return bounds;
+}
+
+void Entity3D::CalculateBoundsWithChilds()
+{
+	if (parent != nullptr)
+		worldModel = parent->worldModel * modelMatrix;
+	
+	for (list<Entity3D*>::iterator itBeg = childs.begin(); itBeg != childs.end(); ++itBeg)
+	{
+		(*itBeg)->CalculateBoundsWithChilds();
+		bounds = CalculateBounds(bounds,(*itBeg)->bounds);
 	}
 	
-	collisionBox->GenerateBoundingBox(bounds, worldModel);
-	return bounds;
+	collisionBox->GenerateBoundingBox(bounds/*, worldModel*/);
 }
 
 void Entity3D::CalculateBounds(Bounds otherBounds)
@@ -203,4 +228,57 @@ void Entity3D::CalculateBounds(Bounds otherBounds)
 	bounds.maxX = bounds.maxX > otherBounds.maxX ? bounds.maxX : otherBounds.maxX;
 	bounds.maxY = bounds.maxY > otherBounds.maxY ? bounds.maxY : otherBounds.maxY;
 	bounds.maxZ = bounds.maxZ > otherBounds.maxZ ? bounds.maxZ : otherBounds.maxZ;
+}
+
+Bounds Entity3D::CalculateBounds(Bounds b1, Bounds b2)
+{
+	Bounds returnBounds;
+	returnBounds.minX = b1.minX < b2.minX ? b1.minX : b2.minX;
+	returnBounds.minY = b1.minY < b2.minY ? b1.minY : b2.minY;
+	returnBounds.minZ = b1.minZ < b2.minZ ? b1.minZ : b2.minZ;
+	returnBounds.maxX = b1.maxX > b2.maxX ? b1.maxX : b2.maxX;
+	returnBounds.maxY = b1.maxY > b2.maxY ? b1.maxY : b2.maxY;
+	returnBounds.maxZ = b1.maxZ > b2.maxZ ? b1.maxZ : b2.maxZ;
+	return returnBounds;
+}
+
+Bounds Entity3D::GenerateBounds(vec3 v[], mat4 mat)
+{
+	vec3 v2[TOTALVERTICES];
+	for(int i=0;i<TOTALVERTICES;i++)
+	{
+		v2[i] = mat * vec4(v[i],1.f);
+	}
+
+	return GenerateBoundsByVertex(v2);
+}
+
+Bounds Entity3D::GenerateBoundsByVertex(vec3 v[])
+{
+	Bounds returnBounds;
+	for(int i=0;i<TOTALVERTICES;i++)
+	{
+		returnBounds.minX = v[i].x < returnBounds.minX ? v[i].x : returnBounds.minX;
+		returnBounds.minY = v[i].y < returnBounds.minY ? v[i].y : returnBounds.minY;
+		returnBounds.minZ = v[i].z < returnBounds.minZ ? v[i].z : returnBounds.minZ;
+		returnBounds.maxX = v[i].x > returnBounds.maxX ? v[i].x : returnBounds.maxX;
+		returnBounds.maxY = v[i].y > returnBounds.maxY ? v[i].y : returnBounds.maxY;
+		returnBounds.maxZ = v[i].z > returnBounds.maxZ ? v[i].z : returnBounds.maxZ;
+	}
+	return returnBounds;
+}
+
+Bounds Entity3D::GenerateBoundsByVertex(vector<vec3> v)
+{
+	Bounds returnBounds;
+	for (int i = 0; i < v.size(); i++)
+	{
+		returnBounds.minX = v[i].x < returnBounds.minX ? v[i].x : returnBounds.minX;
+		returnBounds.minY = v[i].y < returnBounds.minY ? v[i].y : returnBounds.minY;
+		returnBounds.minZ = v[i].z < returnBounds.minZ ? v[i].z : returnBounds.minZ;
+		returnBounds.maxX = v[i].x > returnBounds.maxX ? v[i].x : returnBounds.maxX;
+		returnBounds.maxY = v[i].y > returnBounds.maxY ? v[i].y : returnBounds.maxY;
+		returnBounds.maxZ = v[i].z > returnBounds.maxZ ? v[i].z : returnBounds.maxZ;
+	}
+	return returnBounds;
 }
