@@ -29,6 +29,7 @@ Entity3D::Entity3D(Entity3D* newParent)
 	
 	collisionBox->GenerateBoundingBox(bounds);
 	AABB->GenerateBoundingBox(bounds);
+	//BaseGame::GetRootEntity()->CalculateBoundsWithChilds();
 }
 
 Entity3D::Entity3D(string newName)
@@ -201,23 +202,20 @@ Bounds Entity3D::UpdateModelMatAndBoundingBox()
 	bounds = GenerateBounds(collisionBox->vertices, worldModel);
 	
 	CalculateBounds(childBounds);
-	AABB->GenerateBoundingBox(bounds/*, worldModel*/);
+	AABB->GenerateBoundingBox(bounds);
 	
 	return bounds;
 }
 
 void Entity3D::CalculateBoundsWithChilds()
 {
-	if (parent != nullptr)
-		worldModel = parent->worldModel * modelMatrix;
-	
 	for (list<Entity3D*>::iterator itBeg = childs.begin(); itBeg != childs.end(); ++itBeg)
 	{
 		(*itBeg)->CalculateBoundsWithChilds();
 		bounds = CalculateBounds(bounds,(*itBeg)->bounds);
 	}
 	
-	collisionBox->GenerateBoundingBox(bounds/*, worldModel*/);
+	collisionBox->GenerateBoundingBox(bounds);
 }
 
 void Entity3D::CalculateBounds(Bounds otherBounds)

@@ -43,6 +43,7 @@ public:
 	Entity3D(string newName);
 	~Entity3D();
 	void SetParent(Entity3D* p);
+	Entity3D* GetParent() { return parent; }
 	void SetChild(Entity3D* c);
 	Entity3D* GetChild(string childName);
 	void UnsetChild(Entity3D* c);

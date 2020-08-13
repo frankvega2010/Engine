@@ -81,6 +81,16 @@ void Model::processNode(aiNode *node, const aiScene *scene, Entity3D* par)
 		thisNode = new Mesh(processMesh(mesh, scene, par));
 		thisNode->SetModelMatrix(AssimpTransformToGlm(&node->mTransformation));
 		thisNode->SetName(node->mName.C_Str());
+		if(thisNode->GetName()== "Cube.037__0" || thisNode->GetName() == "Cylinder.033__0")
+		{
+			Entity3D* ent = BaseGame::GetRootEntity()->GetChild("group");
+			if (!ent)
+			{
+				ent = new Entity3D(par);
+				ent->SetName("group");
+			}
+			thisNode->SetParent(ent);
+		}
 	}
 
 	if (!thisNode)

@@ -117,6 +117,11 @@ float at = 1.0f;
 vec3 newscale = { 1.f,1.f,1.f };
 
 Entity3D* m5;
+Entity3D* m6;
+
+Entity3D* grupo;
+Entity3D* gruposub1;
+Entity3D* gruposub2;
 
 bool Game::OnUpdate()
 {
@@ -167,9 +172,18 @@ bool Game::OnUpdate()
 	}
 	if (Input::GetKeyPressed(GLFW_KEY_5))
 	{
-		m5 = BaseGame::GetRootEntity()->GetChild("Cylinder.049__0");
+		m5 = BaseGame::GetRootEntity()->GetChild("Cylinder.034__0");
 		//GetRootEntity()->GetAllChildsTypes();
 		//m2->SetParent(m5);
+		m6 = BaseGame::GetRootEntity()->GetChild("Cylinder.029__0");
+		m5->SetParent(m6);
+	}
+
+	if (Input::GetKeyPressed(GLFW_KEY_6))
+	{
+		grupo = BaseGame::GetRootEntity()->GetChild("group");
+		gruposub1 = BaseGame::GetRootEntity()->GetChild("Cube.037__0");
+		gruposub2 = BaseGame::GetRootEntity()->GetChild("Cylinder.033__0");
 	}
 	
 	if(Input::GetKeyPressed(GLFW_KEY_SPACE))
@@ -187,6 +201,30 @@ bool Game::OnUpdate()
 	if(Input::GetKeyReleased(GLFW_KEY_F))
 	{
 		spotLight->SetActive(!spotLight->GetActive());
+	}
+
+	if (Input::GetKeyReleased(GLFW_KEY_T))
+	{
+		grupo->SetPos(vec3(100.f*BaseGame::GetDeltaTime(), 0.f, 0.f));
+	}
+	if (Input::GetKeyReleased(GLFW_KEY_Y))
+	{
+		gruposub1->SetPos(vec3(100.f*BaseGame::GetDeltaTime(), 0.f, 0.f));
+	}
+	if (Input::GetKeyReleased(GLFW_KEY_U))
+	{
+		gruposub2->SetPos(vec3(-100.f*BaseGame::GetDeltaTime(), 0.f, 0.f));
+	}
+
+	if (Input::GetKeyReleased(GLFW_KEY_N))
+	{
+		newscale = vec3(1.f, 1.f, 1.f) + vec3(10.f) * BaseGame::GetDeltaTime();
+		grupo->SetScale(newscale);
+	}
+	if (Input::GetKeyReleased(GLFW_KEY_M))
+	{
+		newscale = vec3(1.f, 1.f, 1.f) - vec3(10.f) * BaseGame::GetDeltaTime();
+		grupo->SetScale(newscale);
 	}
 	
 	//model translation
@@ -249,6 +287,9 @@ bool Game::OnUpdate()
 		
 		yRot2 = 100.0f * BaseGame::GetDeltaTime();
 		m->SetRot(yRot2,vec3(0.f,1.f,0.f));
+		m2->SetRot(yRot2, vec3(0.f, 1.f, 0.f));
+		m3->SetRot(yRot2, vec3(0.f, 1.f, 0.f));
+		m4->SetRot(yRot2, vec3(0.f, 1.f, 0.f));
 	}
 	if (Input::GetKeyPressed(GLFW_KEY_DOWN))
 	{
@@ -265,6 +306,9 @@ bool Game::OnUpdate()
 
 		yRot2 = -100.0f * BaseGame::GetDeltaTime();
 		m->SetRot(yRot2, vec3(0.f, 1.f, 0.f));
+		m2->SetRot(yRot2, vec3(0.f, 1.f, 0.f));
+		m3->SetRot(yRot2, vec3(0.f, 1.f, 0.f));
+		m4->SetRot(yRot2, vec3(0.f, 1.f, 0.f));
 	}
 	
 	if (Input::GetKeyPressed(GLFW_KEY_ESCAPE))
