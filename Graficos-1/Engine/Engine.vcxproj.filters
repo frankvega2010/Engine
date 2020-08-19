@@ -12,151 +12,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\BaseGame.cpp">
-      <Filter>Cpps</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Entity.cpp">
-      <Filter>Cpps</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Input.cpp">
-      <Filter>Cpps</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Renderer.cpp">
-      <Filter>Cpps</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Shape.cpp">
-      <Filter>Cpps</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Sprite.cpp">
-      <Filter>Cpps</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Window.cpp">
-      <Filter>Cpps</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Animation.cpp">
-      <Filter>Cpps</Filter>
-    </ClCompile>
-    <ClCompile Include="src\DeltaTime.cpp">
-      <Filter>Cpps</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Camera.cpp">
-      <Filter>Cpps</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Mesh.cpp">
-      <Filter>Cpps</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Model.cpp">
-      <Filter>Cpps</Filter>
-    </ClCompile>
-    <ClCompile Include="src\AssimpImporter.cpp">
-      <Filter>Cpps</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Shader.cpp">
-      <Filter>Cpps</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Entity3D.cpp">
-      <Filter>Cpps</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CollisionManager.cpp">
-      <Filter>Cpps</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Light.cpp">
-      <Filter>Cpps</Filter>
-    </ClCompile>
-    <ClCompile Include="src\DirectionalLight.cpp">
-      <Filter>Cpps</Filter>
-    </ClCompile>
-    <ClCompile Include="src\PointLight.cpp">
-      <Filter>Cpps</Filter>
-    </ClCompile>
-    <ClCompile Include="src\SpotLight.cpp">
-      <Filter>Cpps</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Material.cpp">
-      <Filter>Cpps</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CollisionBox.cpp">
-      <Filter>Cpps</Filter>
-    </ClCompile>
-    <ClCompile Include="src\LightManager.cpp">
-      <Filter>Cpps</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\BaseGame.h">
-      <Filter>Hpps</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Entity.h">
-      <Filter>Hpps</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Input.h">
-      <Filter>Hpps</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Renderer.h">
-      <Filter>Hpps</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Shape.h">
-      <Filter>Hpps</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Sprite.h">
-      <Filter>Hpps</Filter>
-    </ClInclude>
-    <ClInclude Include="src\stb_image.h">
-      <Filter>Hpps</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Window.h">
-      <Filter>Hpps</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Animation.h">
-      <Filter>Hpps</Filter>
-    </ClInclude>
-    <ClInclude Include="src\DeltaTime.h">
-      <Filter>Hpps</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Camera.h">
-      <Filter>Hpps</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Mesh.h">
-      <Filter>Hpps</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Model.h">
-      <Filter>Hpps</Filter>
-    </ClInclude>
-    <ClInclude Include="src\AssimpImporter.h">
-      <Filter>Hpps</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Shader.h">
-      <Filter>Hpps</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Entity3D.h">
-      <Filter>Hpps</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CollisionManager.h">
-      <Filter>Hpps</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Light.h">
-      <Filter>Hpps</Filter>
-    </ClInclude>
-    <ClInclude Include="src\DirectionalLight.h">
-      <Filter>Hpps</Filter>
-    </ClInclude>
-    <ClInclude Include="src\PointLight.h">
-      <Filter>Hpps</Filter>
-    </ClInclude>
-    <ClInclude Include="src\SpotLight.h">
-      <Filter>Hpps</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Material.h">
-      <Filter>Hpps</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CollisionBox.h">
-      <Filter>Hpps</Filter>
-    </ClInclude>
-    <ClInclude Include="src\LightManager.h">
-      <Filter>Hpps</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
     <Text Include="..\Graficos-1\src\3DFragmentShader.txt">
       <Filter>Shaders</Filter>
     </Text>
@@ -169,5 +24,156 @@
     <Text Include="..\Graficos-1\src\SimpleVertexShader.txt">
       <Filter>Shaders</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\Engine\CollisionManager.cpp">
+      <Filter>Cpps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Engine\DeltaTime.cpp">
+      <Filter>Cpps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Engine\DirectionalLight.cpp">
+      <Filter>Cpps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Engine\Entity.cpp">
+      <Filter>Cpps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Engine\Entity3D.cpp">
+      <Filter>Cpps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Engine\Input.cpp">
+      <Filter>Cpps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Engine\Light.cpp">
+      <Filter>Cpps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Engine\LightManager.cpp">
+      <Filter>Cpps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Engine\Material.cpp">
+      <Filter>Cpps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Engine\Material3D.cpp">
+      <Filter>Cpps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Engine\Mesh.cpp">
+      <Filter>Cpps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Engine\Model.cpp">
+      <Filter>Cpps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Engine\PointLight.cpp">
+      <Filter>Cpps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Engine\Renderer.cpp">
+      <Filter>Cpps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Engine\Shader.cpp">
+      <Filter>Cpps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Engine\Shape.cpp">
+      <Filter>Cpps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Engine\SpotLight.cpp">
+      <Filter>Cpps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Engine\Sprite.cpp">
+      <Filter>Cpps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Engine\Window.cpp">
+      <Filter>Cpps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Engine\Animation.cpp">
+      <Filter>Cpps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Engine\AssimpImporter.cpp">
+      <Filter>Cpps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Engine\BaseGame.cpp">
+      <Filter>Cpps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Engine\Camera.cpp">
+      <Filter>Cpps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Engine\CollisionBox.cpp">
+      <Filter>Cpps</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\Engine\CollisionManager.h">
+      <Filter>Hpps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Engine\DeltaTime.h">
+      <Filter>Hpps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Engine\DirectionalLight.h">
+      <Filter>Hpps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Engine\Entity.h">
+      <Filter>Hpps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Engine\Entity3D.h">
+      <Filter>Hpps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Engine\Input.h">
+      <Filter>Hpps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Engine\Light.h">
+      <Filter>Hpps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Engine\LightManager.h">
+      <Filter>Hpps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Engine\Material.h">
+      <Filter>Hpps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Engine\Material3D.h">
+      <Filter>Hpps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Engine\Mesh.h">
+      <Filter>Hpps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Engine\Model.h">
+      <Filter>Hpps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Engine\PointLight.h">
+      <Filter>Hpps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Engine\Renderer.h">
+      <Filter>Hpps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Engine\Shader.h">
+      <Filter>Hpps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Engine\Shape.h">
+      <Filter>Hpps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Engine\SpotLight.h">
+      <Filter>Hpps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Engine\Sprite.h">
+      <Filter>Hpps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Engine\stb_image.h">
+      <Filter>Hpps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Engine\Window.h">
+      <Filter>Hpps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Engine\Animation.h">
+      <Filter>Hpps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Engine\AssimpImporter.h">
+      <Filter>Hpps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Engine\BaseGame.h">
+      <Filter>Hpps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Engine\Camera.h">
+      <Filter>Hpps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Engine\CollisionBox.h">
+      <Filter>Hpps</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -19,11 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Game.cpp" />
-    <ClCompile Include="src\Graficos-1.cpp" />
+    <ClCompile Include="..\src\Game\Game.cpp" />
+    <ClCompile Include="..\src\Graficos-1.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Game.h" />
+    <ClInclude Include="..\src\Game\Game.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -77,8 +77,9 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(ProjectDir)$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>$(ProjectDir)Objs</IntDir>
+    <OutDir>$(SolutionDir)bin/$(Platform)/$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)obj/$(Platform)/$(Configuration)\</IntDir>
+    <IncludePath>$(SolutionDir)Engine;$(SolutionDir)Game;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(ProjectDir)$(Platform)\$(Configuration)\</OutDir>
@@ -90,16 +91,14 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Engine\libs\GLEW\include;$(SolutionDir)Engine\libs\glm;$(SolutionDir)Engine\libs\GLFW\include;$(SolutionDir)Engine\src;$(SolutionDir)Engine\libs\Assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src/Engine/;$(SolutionDir)src/Game/;$(SolutionDir)lib\include;$(SolutionDir)lib\glew-2.1.0\include;$(SolutionDir)lib\glm;$(SolutionDir)lib\assimp\include;$(SolutionDir)lib\freetype\include;$(SolutionDir)lib\glew-2.1.0\include/GL/;$(SolutionDir)lib\include/GLFW/;$(SolutionDir)lib\glm/glm/</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(ProjectDir)libs;$(SolutionDir)Engine\libs\GLFW\lib;$(SolutionDir)Engine\libs\GLEW\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Engine.lib;glfw3.lib;glfw3dll.lib;opengl32.lib;glew32.lib;glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Game;$(SolutionDir)Debug;$(SolutionDir)bin/$(Platform)/$(Configuration);$(SolutionDir)lib\glfw/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y "$(ProjectDir)libs\Engine.dll" "$(ProjectDir)Win32\Debug\"
-xcopy /Y "$(ProjectDir)libs\glew32.dll" "$(ProjectDir)Win32\Debug\"
-xcopy /Y "$(ProjectDir)libs\assimp-vc141-mt.dll" "$(ProjectDir)Win32\Debug\"</Command>
+      <Command>"$(SolutionDir)copyfiles.bat" "$(TargetDir)" "$(SolutionDir)" "1"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
