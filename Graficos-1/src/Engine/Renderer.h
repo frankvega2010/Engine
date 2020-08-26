@@ -17,7 +17,6 @@ class DLLEXPORT Renderer
 {
 private:
 	Window* win;
-	Camera* cam;
 	unsigned int VertexArrayID;
 	unsigned int ColorVertexArrayID;
 	glm::mat4 WorldMatrix;
@@ -46,6 +45,7 @@ public:
 	Camera* GetCam();
 	glm::mat4 GetProjMatrix();
 
+	static Camera* cam;
 	static Renderer* renderer;
 	Renderer();
 	~Renderer();

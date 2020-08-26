@@ -4,6 +4,7 @@
 #include <glm.hpp>
 #include <gtc/matrix_transform.hpp>
 #include "Window.h"
+#include "CollisionBox.h"
 
 class DLLEXPORT Camera
 {
@@ -30,14 +31,20 @@ private:
 	
 public:
 	static Camera* thisCam;
+	float cameraFOV;
+	float cameraNear;
+	float cameraFar;
 	glm::vec3 cameraFront;
+	Camera();
 	Camera(Window* w, glm::vec3 p, glm::vec3 t, glm::vec3 f, glm::vec3 u);
+	void SetCamera(Window* w, glm::vec3 p, glm::vec3 t, glm::vec3 f, glm::vec3 u);
 	void LookAt();
 	void SetCameraSpeed(float s);
 	glm::mat4 GetViewMatrix();
 	glm::vec3 GetCameraPosition();
 	glm::vec3 GetCameraDirection();
 	void UpdateCamera();
+	bool IsInFrustum(Bounds bounds);
 	static double xposs;
 	static double yposs;
 	static void mouse_callback(GLFWwindow* window, double xpos, double ypos);

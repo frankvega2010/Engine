@@ -4,6 +4,7 @@
 using namespace std;
 
 Renderer* Renderer::renderer = nullptr;
+Camera* Renderer::cam = new Camera();
 
 bool Renderer::Start(Window* wnd) {
 	cout << "Renderer::Start()" << endl;
@@ -26,7 +27,11 @@ bool Renderer::Start(Window* wnd) {
 
 	ProjectionMatrix = glm::perspectiveFov(glm::radians(45.0f), 640.0f, 480.0f, 1.0f, 100.0f);
 
-	cam = new Camera(win, glm::vec3(0, 0, 3), glm::vec3(0, 0, 0), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0, 1, 0));
+	//cam = new Camera(win, glm::vec3(0, 0, 3), glm::vec3(0, 0, 0), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0, 1, 0));
+	cam->SetCamera(win, glm::vec3(0, 0, 3), glm::vec3(0, 0, 0), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0, 1, 0));
+	cam->cameraFar = 100.0f;
+	cam->cameraNear = 1.0f;
+	cam->cameraFOV = glm::radians(45.0f);
 
 	WorldMatrix = glm::mat4(1.0f);
 

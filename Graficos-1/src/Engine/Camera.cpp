@@ -15,6 +15,10 @@ bool  Camera::firstMouse = true;
 float Camera::lastX = 0.0f;
 float Camera::lastY = 0.0f;
 
+Camera::Camera()
+{
+}
+
 Camera::Camera(Window* w, glm::vec3 p, glm::vec3 t, glm::vec3 f, glm::vec3 u)
 {
 	actualWindow = w;
@@ -23,6 +27,22 @@ Camera::Camera(Window* w, glm::vec3 p, glm::vec3 t, glm::vec3 f, glm::vec3 u)
 	cameraPos = p; up = u; cameraFront = f;
 	cameraTarget = t;
 	LookAt();
+
+	// Create frustum
+	// Calculate frustum
+}
+
+void Camera::SetCamera(Window* w, glm::vec3 p, glm::vec3 t, glm::vec3 f, glm::vec3 u)
+{
+	actualWindow = w;
+	glfwSetCursorPosCallback(w->GetGLFWWindowPtr(), &Camera::mouse_callback);
+	thisCam = this;
+	cameraPos = p; up = u; cameraFront = f;
+	cameraTarget = t;
+	LookAt();
+
+	// Create frustum
+	// Calculate frustum
 }
 
 void Camera::LookAt()
@@ -63,7 +83,18 @@ void Camera::UpdateCamera()
 	}
 
 	if (moved)
+	{
 		LookAt();
+		// Calculate frustum
+	}
+		
+}
+
+bool Camera::IsInFrustum(Bounds bounds)
+{
+	// Calculate if entity is in frustum.
+
+	return true;
 }
 
 glm::vec3 Camera::GetCameraPosition()
@@ -113,4 +144,6 @@ void Camera::mouse_callback(GLFWwindow* window, double xpos, double ypos)
 	direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
 	Camera::thisCam->cameraFront = glm::normalize(direction);
 	Camera::thisCam->LookAt();
+
+	// Calculate frustum
 }

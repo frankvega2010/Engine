@@ -6,6 +6,7 @@ double BaseGame::currentFrame = 0.0f;
 double BaseGame::lastFrame = 0.0f;
 double BaseGame::deltaTime = 0.0f;
 
+
 Entity3D* BaseGame::rootEntity = nullptr;
 
 BaseGame::BaseGame() {

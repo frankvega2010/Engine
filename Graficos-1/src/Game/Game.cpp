@@ -230,16 +230,6 @@ bool Game::OnUpdate()
 	//model translation
 	if (Input::GetKeyPressed(GLFW_KEY_RIGHT))
 	{
-		/*if (!CollisionManager::CheckCollision(spr, sq))
-		{
-			prevPos = spr->GetPos();
-			spr->Translate(0.01f, 0.0f, 0.0f);
-		}
-		else
-			spr->SetPos(prevPos.x,prevPos.y, spr->GetPos().z);
-
-		spr->UpdAnim(1);*/
-
 		if (yRot < 0.0f)
 			yRot = 0.0f;
 		
@@ -247,20 +237,9 @@ bool Game::OnUpdate()
 		if(m5)
 			m5->SetPos(vec3(yRot,0.f,0.f));
 	}
-	/*else
-	{
-		spr->UpdAnim(0);
-	}*/
+
 	if (Input::GetKeyPressed(GLFW_KEY_LEFT))
 	{
-		/*if (!CollisionManager::CheckCollision(spr, sq))
-		{
-			prevPos = spr->GetPos();
-			spr->Translate(-0.01f, 0.0f, 0.0f);
-		}
-		else
-			spr->SetPos(prevPos.x, prevPos.y, spr->GetPos().z);*/
-
 		if(yRot>0.0f)
 			yRot = 0.0f;
 		

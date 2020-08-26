@@ -130,14 +130,21 @@ void Entity3D::Draw(Shader shader)
 	for (list<Entity3D*>::iterator itBeg = childs.begin(); itBeg != childs.end(); ++itBeg)
 	{
 		Entity3D* ent = (*itBeg);
-		if(ent->entityType == mesh)
+
+		//Chequear si esta en el frustum
+		//Renderer::cam->IsInFrustum();
+
+		if (Renderer::cam->IsInFrustum(bounds))
 		{
-			Mesh* m = static_cast<Mesh*> (ent);
-			m->Draw(shader);
-		}
-		else
-		{
-			ent->Draw(shader);
+			if (ent->entityType == mesh)
+			{
+				Mesh* m = static_cast<Mesh*> (ent);
+				m->Draw(shader);
+			}
+			else
+			{
+				ent->Draw(shader);
+			}
 		}
 		
 	}
