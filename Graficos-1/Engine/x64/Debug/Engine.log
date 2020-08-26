@@ -1,0 +1,55 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(453,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
+  Animation.cpp
+C:\Users\Mariano Martinez\Desktop\Engine\Graficos-1\src\Engine\Animation.h(4,10): fatal error C1083: Cannot open include file: 'glm.hpp': No such file or directory
+  AssimpImporter.cpp
+C:\Users\Mariano Martinez\Desktop\Engine\Graficos-1\src\Engine\AssimpImporter.h(1,1): warning C4335: Mac file format detected: please convert the source file to either DOS or UNIX format
+C:\Users\Mariano Martinez\Desktop\Engine\Graficos-1\src\Engine\AssimpImporter.h(7,10): fatal error C1083: Cannot open include file: 'scene.h': No such file or directory
+  BaseGame.cpp
+C:\Users\Mariano Martinez\Desktop\Engine\Graficos-1\src\Engine\Window.h(6,10): fatal error C1083: Cannot open include file: 'glew.h': No such file or directory
+  Camera.cpp
+C:\Users\Mariano Martinez\Desktop\Engine\Graficos-1\src\Engine\Camera.h(4,10): fatal error C1083: Cannot open include file: 'glm.hpp': No such file or directory
+  CollisionBox.cpp
+C:\Users\Mariano Martinez\Desktop\Engine\Graficos-1\src\Engine\CollisionBox.h(6,10): fatal error C1083: Cannot open include file: 'glm.hpp': No such file or directory
+  CollisionManager.cpp
+C:\Users\Mariano Martinez\Desktop\Engine\Graficos-1\src\Engine\Window.h(6,10): fatal error C1083: Cannot open include file: 'glew.h': No such file or directory
+  DeltaTime.cpp
+C:\Users\Mariano Martinez\Desktop\Engine\Graficos-1\src\Engine\DeltaTime.h(3,10): fatal error C1083: Cannot open include file: 'glfw3.h': No such file or directory
+  DirectionalLight.cpp
+C:\Users\Mariano Martinez\Desktop\Engine\Graficos-1\src\Engine\light.h(4,10): fatal error C1083: Cannot open include file: 'glm.hpp': No such file or directory
+  Entity.cpp
+C:\Users\Mariano Martinez\Desktop\Engine\Graficos-1\src\Engine\Window.h(6,10): fatal error C1083: Cannot open include file: 'glew.h': No such file or directory
+  Entity3D.cpp
+C:\Users\Mariano Martinez\Desktop\Engine\Graficos-1\src\Engine\Entity3D.h(5,10): fatal error C1083: Cannot open include file: 'glm.hpp': No such file or directory
+  Input.cpp
+C:\Users\Mariano Martinez\Desktop\Engine\Graficos-1\src\Engine\Input.h(6,10): fatal error C1083: Cannot open include file: 'glew.h': No such file or directory
+  Light.cpp
+C:\Users\Mariano Martinez\Desktop\Engine\Graficos-1\src\Engine\Light.h(4,10): fatal error C1083: Cannot open include file: 'glm.hpp': No such file or directory
+  LightManager.cpp
+C:\Users\Mariano Martinez\Desktop\Engine\Graficos-1\src\Engine\Light.h(4,10): fatal error C1083: Cannot open include file: 'glm.hpp': No such file or directory
+  Material.cpp
+C:\Users\Mariano Martinez\Desktop\Engine\Graficos-1\src\Engine\Material.h(4,10): fatal error C1083: Cannot open include file: 'glew.h': No such file or directory
+  Material3D.cpp
+C:\Users\Mariano Martinez\Desktop\Engine\Graficos-1\src\Engine\Material3D.h(5,10): fatal error C1083: Cannot open include file: 'vec3.hpp': No such file or directory
+  Mesh.cpp
+C:\Users\Mariano Martinez\Desktop\Engine\Graficos-1\src\Engine\Shader.h(6,10): fatal error C1083: Cannot open include file: 'glew.h': No such file or directory
+  Model.cpp
+C:\Users\Mariano Martinez\Desktop\Engine\Graficos-1\src\Engine\Mesh.h(4,1): warning C4005: 'DLLEXPORT': macro redefinition
+C:\Users\Mariano Martinez\Desktop\Engine\Graficos-1\src\Engine\Model.h(5): message : see previous definition of 'DLLEXPORT'
+C:\Users\Mariano Martinez\Desktop\Engine\Graficos-1\src\Engine\Shader.h(6,10): fatal error C1083: Cannot open include file: 'glew.h': No such file or directory
+  PointLight.cpp
+C:\Users\Mariano Martinez\Desktop\Engine\Graficos-1\src\Engine\Light.h(4,10): fatal error C1083: Cannot open include file: 'glm.hpp': No such file or directory
+  Renderer.cpp
+C:\Users\Mariano Martinez\Desktop\Engine\Graficos-1\src\Engine\Window.h(6,10): fatal error C1083: Cannot open include file: 'glew.h': No such file or directory
+  Shader.cpp
+C:\Users\Mariano Martinez\Desktop\Engine\Graficos-1\src\Engine\Shader.h(6,10): fatal error C1083: Cannot open include file: 'glew.h': No such file or directory
+  Generating Code...
+  Compiling...
+  Shape.cpp
+C:\Users\Mariano Martinez\Desktop\Engine\Graficos-1\src\Engine\Window.h(6,10): fatal error C1083: Cannot open include file: 'glew.h': No such file or directory
+  SpotLight.cpp
+C:\Users\Mariano Martinez\Desktop\Engine\Graficos-1\src\Engine\Light.h(4,10): fatal error C1083: Cannot open include file: 'glm.hpp': No such file or directory
+  Sprite.cpp
+C:\Users\Mariano Martinez\Desktop\Engine\Graficos-1\src\Engine\Window.h(6,10): fatal error C1083: Cannot open include file: 'glew.h': No such file or directory
+  Window.cpp
+C:\Users\Mariano Martinez\Desktop\Engine\Graficos-1\src\Engine\Window.h(6,10): fatal error C1083: Cannot open include file: 'glew.h': No such file or directory
+  Generating Code...

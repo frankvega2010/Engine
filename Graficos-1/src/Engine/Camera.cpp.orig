@@ -28,7 +28,7 @@ Camera::Camera(Window* w, glm::vec3 p, glm::vec3 t, glm::vec3 f, glm::vec3 u)
 	cameraTarget = t;
 	this->frustum = new Frustum();
 
-	frustum->calculate_frustum(actualWindow, cameraRight, up, cameraFront, cameraPos, cameraFOV, cameraNear, cameraFar);
+	frustum->calculate_frustum(actualWindow, cameraRight, up, cameraFront, cameraPos, glm::radians(45.0f), 1.0f, 100.0f);
 	LookAt();
 
 	// Create frustum
@@ -42,10 +42,6 @@ void Camera::SetCamera(Window* w, glm::vec3 p, glm::vec3 t, glm::vec3 f, glm::ve
 	thisCam = this;
 	cameraPos = p; up = u; cameraFront = f;
 	cameraTarget = t;
-	this->frustum = new Frustum();
-
-	frustum->calculate_frustum(actualWindow, cameraRight, up, cameraFront, cameraPos, cameraFOV, cameraNear, cameraFar);
-
 	LookAt();
 
 	// Create frustum
@@ -89,11 +85,11 @@ void Camera::UpdateCamera()
 		moved = true;
 	}
 
-	//frustum->calculate_frustum(actualWindow, cameraRight, up, cameraFront, cameraPos, glm::radians(45.0f), 1.0f, 100.0f);
+	frustum->calculate_frustum(actualWindow, cameraRight, up, cameraFront, cameraPos, glm::radians(45.0f), 1.0f, 100.0f);
 
 	if (moved)
 	{
-		frustum->calculate_frustum(actualWindow, cameraRight, up, cameraFront, cameraPos, cameraFOV, cameraNear, cameraFar);
+<<<<<<< HEAD
 		LookAt();
 		// Calculate frustum
 	}
@@ -104,7 +100,13 @@ bool Camera::IsInFrustum(Bounds bounds)
 {
 	// Calculate if entity is in frustum.
 
-	return true;		
+	return true;
+=======
+		frustum->calculate_frustum(actualWindow, cameraRight, up, cameraFront, cameraPos, glm::radians(45.0f), 1.0f, 100.0f);
+		LookAt();
+	}
+		
+>>>>>>> e18ea887c99a64a78727966e93425eeab73ade9e
 }
 
 glm::vec3 Camera::GetCameraPosition()
@@ -154,7 +156,10 @@ void Camera::mouse_callback(GLFWwindow* window, double xpos, double ypos)
 	direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
 	Camera::thisCam->cameraFront = glm::normalize(direction);
 	Camera::thisCam->LookAt();
+<<<<<<< HEAD
 
 	// Calculate frustum
-	Camera::thisCam->frustum->calculate_frustum(thisCam->actualWindow, thisCam->cameraRight, thisCam->up, thisCam->cameraFront, thisCam->cameraPos, thisCam->cameraFOV, thisCam->cameraNear, thisCam->cameraFar);
+=======
+	Camera::thisCam->frustum->calculate_frustum(thisCam->actualWindow, thisCam->cameraRight, thisCam->up, thisCam->cameraFront, thisCam->cameraPos, glm::radians(45.0f), 1.0f, 100.0f);
+>>>>>>> e18ea887c99a64a78727966e93425eeab73ade9e
 }
