@@ -4,6 +4,7 @@
 #include <glm.hpp>
 #include <gtc/matrix_transform.hpp>
 #include "Window.h"
+#include "Frustum.h"
 
 class DLLEXPORT Camera
 {
@@ -27,7 +28,7 @@ private:
 	static float lastX;
 	static float lastY;
 
-	
+	Frustum* frustum;
 public:
 	static Camera* thisCam;
 	glm::vec3 cameraFront;

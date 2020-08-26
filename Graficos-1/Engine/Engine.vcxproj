@@ -163,6 +163,7 @@
     <ClCompile Include="..\src\Engine\DirectionalLight.cpp" />
     <ClCompile Include="..\src\Engine\Entity.cpp" />
     <ClCompile Include="..\src\Engine\Entity3D.cpp" />
+    <ClCompile Include="..\src\Engine\Frustum.cpp" />
     <ClCompile Include="..\src\Engine\Input.cpp" />
     <ClCompile Include="..\src\Engine\Light.cpp" />
     <ClCompile Include="..\src\Engine\LightManager.cpp" />
@@ -189,6 +190,7 @@
     <ClInclude Include="..\src\Engine\DirectionalLight.h" />
     <ClInclude Include="..\src\Engine\Entity.h" />
     <ClInclude Include="..\src\Engine\Entity3D.h" />
+    <ClInclude Include="..\src\Engine\Frustum.h" />
     <ClInclude Include="..\src\Engine\Input.h" />
     <ClInclude Include="..\src\Engine\Light.h" />
     <ClInclude Include="..\src\Engine\LightManager.h" />

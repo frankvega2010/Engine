@@ -22,6 +22,9 @@ Camera::Camera(Window* w, glm::vec3 p, glm::vec3 t, glm::vec3 f, glm::vec3 u)
 	thisCam = this;
 	cameraPos = p; up = u; cameraFront = f;
 	cameraTarget = t;
+	this->frustum = new Frustum();
+
+	frustum->calculate_frustum(actualWindow, cameraRight, up, cameraFront, cameraPos, glm::radians(45.0f), 1.0f, 100.0f);
 	LookAt();
 }
 
@@ -62,8 +65,14 @@ void Camera::UpdateCamera()
 		moved = true;
 	}
 
+	frustum->calculate_frustum(actualWindow, cameraRight, up, cameraFront, cameraPos, glm::radians(45.0f), 1.0f, 100.0f);
+
 	if (moved)
+	{
+		frustum->calculate_frustum(actualWindow, cameraRight, up, cameraFront, cameraPos, glm::radians(45.0f), 1.0f, 100.0f);
 		LookAt();
+	}
+		
 }
 
 glm::vec3 Camera::GetCameraPosition()
@@ -113,4 +122,5 @@ void Camera::mouse_callback(GLFWwindow* window, double xpos, double ypos)
 	direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
 	Camera::thisCam->cameraFront = glm::normalize(direction);
 	Camera::thisCam->LookAt();
+	Camera::thisCam->frustum->calculate_frustum(thisCam->actualWindow, thisCam->cameraRight, thisCam->up, thisCam->cameraFront, thisCam->cameraPos, glm::radians(45.0f), 1.0f, 100.0f);
 }

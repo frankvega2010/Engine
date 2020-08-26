@@ -33,7 +33,6 @@ bool Renderer::Start(Window* wnd) {
 	UpdateWVP();
 
 	renderer = this;
-	
 	return true;
 }
 
