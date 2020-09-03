@@ -29,9 +29,10 @@ bool Renderer::Start(Window* wnd) {
 
 	//cam = new Camera(win, glm::vec3(0, 0, 3), glm::vec3(0, 0, 0), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0, 1, 0));
 	cam->SetCamera(win, glm::vec3(0, 0, 3), glm::vec3(0, 0, 0), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0, 1, 0));
-	cam->cameraFar = 100.0f;
+	cam->cameraFar = 1000.0f;
 	cam->cameraNear = 1.0f;
-	cam->cameraFOV = glm::radians(45.0f);
+	cam->cameraFOV = 45.0f;
+	//cam->cameraFOV = 45.0f;
 
 	WorldMatrix = glm::mat4(1.0f);
 

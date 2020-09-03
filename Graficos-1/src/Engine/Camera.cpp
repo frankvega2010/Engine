@@ -24,11 +24,12 @@ Camera::Camera(Window* w, glm::vec3 p, glm::vec3 t, glm::vec3 f, glm::vec3 u)
 	actualWindow = w;
 	glfwSetCursorPosCallback(w->GetGLFWWindowPtr(), &Camera::mouse_callback);
 	thisCam = this;
-	cameraPos = p; up = u; cameraFront = f;
+	worldUp = u;
+	cameraPos = p; cameraUp = u; cameraFront = f;
 	cameraTarget = t;
 	this->frustum = new Frustum();
 
-	frustum->calculate_frustum(actualWindow, cameraRight, up, cameraFront, cameraPos, cameraFOV, cameraNear, cameraFar);
+	frustum->calculate_frustum(actualWindow, cameraRight, cameraUp, cameraFront, cameraPos, cameraFOV, cameraNear, cameraFar);
 	LookAt();
 
 	// Create frustum
@@ -40,11 +41,12 @@ void Camera::SetCamera(Window* w, glm::vec3 p, glm::vec3 t, glm::vec3 f, glm::ve
 	actualWindow = w;
 	glfwSetCursorPosCallback(w->GetGLFWWindowPtr(), &Camera::mouse_callback);
 	thisCam = this;
-	cameraPos = p; up = u; cameraFront = f;
+	worldUp = u;
+	cameraPos = p; cameraUp = u; cameraFront = f;
 	cameraTarget = t;
 	this->frustum = new Frustum();
 
-	frustum->calculate_frustum(actualWindow, cameraRight, up, cameraFront, cameraPos, cameraFOV, cameraNear, cameraFar);
+	frustum->calculate_frustum(actualWindow, cameraRight, cameraUp, cameraFront, cameraPos, cameraFOV, cameraNear, cameraFar);
 
 	LookAt();
 
@@ -54,9 +56,9 @@ void Camera::SetCamera(Window* w, glm::vec3 p, glm::vec3 t, glm::vec3 f, glm::ve
 
 void Camera::LookAt()
 {
-	cameraDirection = glm::normalize(cameraTarget - cameraPos);
-	cameraRight = glm::normalize(glm::cross(up, cameraDirection));
-	cameraUp = glm::cross(cameraDirection, cameraRight);
+	//cameraFront = glm::normalize(cameraPos - cameraTarget);
+	cameraRight = glm::normalize(glm::cross(cameraFront, worldUp));
+	cameraUp = glm::normalize(glm::cross(cameraRight, cameraFront));
 	viewMatrix = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 }
 
@@ -80,31 +82,33 @@ void Camera::UpdateCamera()
 	}
 	if (Input::GetKeyPressed(GLFW_KEY_A))
 	{
-		cameraPos -= glm::normalize(glm::cross(cameraFront, up)) * BaseGame::GetDeltaTime() * cameraSpeed;
+		cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * BaseGame::GetDeltaTime() * cameraSpeed;
 		moved = true;
 	}
 	if (Input::GetKeyPressed(GLFW_KEY_D))
 	{
-		cameraPos += glm::normalize(glm::cross(cameraFront, up)) * BaseGame::GetDeltaTime() * cameraSpeed;
+		cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * BaseGame::GetDeltaTime() * cameraSpeed;
 		moved = true;
 	}
 
 	//frustum->calculate_frustum(actualWindow, cameraRight, up, cameraFront, cameraPos, glm::radians(45.0f), 1.0f, 100.0f);
 
+	frustum->calculate_frustum(actualWindow, cameraRight, cameraUp, cameraFront, cameraPos, cameraFOV, cameraNear, cameraFar);
+
 	if (moved)
 	{
-		frustum->calculate_frustum(actualWindow, cameraRight, up, cameraFront, cameraPos, cameraFOV, cameraNear, cameraFar);
+		//frustum->calculate_frustum(actualWindow, cameraRight, up, cameraFront, cameraPos, cameraFOV, cameraNear, cameraFar + 300);
 		LookAt();
 		// Calculate frustum
 	}
 		
 }
 
-bool Camera::IsInFrustum(Bounds bounds)
+bool Camera::IsInFrustum(Bounds bounds, vec3 position, string name, const bool isInFrustum)
 {
 	// Calculate if entity is in frustum.
 
-	return true;		
+	return frustum->is_in_frustum(bounds, position, name, isInFrustum);
 }
 
 glm::vec3 Camera::GetCameraPosition()
@@ -136,7 +140,7 @@ void Camera::mouse_callback(GLFWwindow* window, double xpos, double ypos)
 	lastX = xpos;
 	lastY = ypos;
 
-	float sensitivity = 0.05;
+	float sensitivity = 0.05f;
 	xoffset *= sensitivity;
 	yoffset *= sensitivity;
 
@@ -156,5 +160,5 @@ void Camera::mouse_callback(GLFWwindow* window, double xpos, double ypos)
 	Camera::thisCam->LookAt();
 
 	// Calculate frustum
-	Camera::thisCam->frustum->calculate_frustum(thisCam->actualWindow, thisCam->cameraRight, thisCam->up, thisCam->cameraFront, thisCam->cameraPos, thisCam->cameraFOV, thisCam->cameraNear, thisCam->cameraFar);
+	Camera::thisCam->frustum->calculate_frustum(Camera::thisCam->actualWindow, Camera::thisCam->cameraRight, Camera::thisCam->cameraUp, Camera::thisCam->cameraFront, Camera::thisCam->cameraPos, Camera::thisCam->cameraFOV, Camera::thisCam->cameraNear, Camera::thisCam->cameraFar);
 }

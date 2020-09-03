@@ -32,6 +32,7 @@ protected:
 	vec3 position;
 	vec3 rotation;
 	vec3 scale;
+	bool isInFrustum;
 	glm::mat4 modelMatrix = glm::mat4(1.0f);
 	
 	CollisionBox* collisionBox;

@@ -12,6 +12,7 @@ Entity3D::Entity3D(Entity3D* newParent)
 	position = vec3(0.f);
 	rotation = vec3(0.f);
 	scale = vec3(1.f);
+	isInFrustum = true;
 	
 	if(newParent)
 	{
@@ -37,6 +38,7 @@ Entity3D::Entity3D(string newName)
 	entityType = entity;
 	
 	name = newName;
+	isInFrustum = true;
 
 	collisionBox = new CollisionBox();
 	AABB = new CollisionBox();
@@ -133,8 +135,11 @@ void Entity3D::Draw(Shader shader)
 
 		//Chequear si esta en el frustum
 		//Renderer::cam->IsInFrustum();
+		//ent->name;
+		//ent->bounds
+		ent->isInFrustum = Camera::thisCam->IsInFrustum(ent->bounds, position, ent->name,ent->isInFrustum);
 
-		if (Renderer::cam->IsInFrustum(bounds))
+		if (ent->isInFrustum)
 		{
 			if (ent->entityType == mesh)
 			{
@@ -146,6 +151,7 @@ void Entity3D::Draw(Shader shader)
 				ent->Draw(shader);
 			}
 		}
+		
 		
 	}
 	AABB->DrawCollisionBox(worldModel);

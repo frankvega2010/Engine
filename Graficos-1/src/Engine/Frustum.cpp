@@ -73,70 +73,124 @@ void Frustum::calculate_frustum(Window* w,glm::vec3 right, glm::vec3 up, glm::ve
 	planes.push_back(Plane{ n, D });
 }
 
-bool Frustum::is_in_frustum(Entity3D* e)
+bool Frustum::is_in_frustum(Bounds bounds,vec3 position,string name, const bool isInFrustum)
 {
-	//glm::vec3 min, max;
-	//if (e->get_component(COLLIDER) != NULL) {
-	//	min = ((Collider*)e->get_component(COLLIDER))->get_obb_min();
-	//	max = ((Collider*)e->get_component(COLLIDER))->get_obb_max();
-	//}
-	//else  if (e->get_component(MESH) != NULL) {
-	//	min = ((Mesh*)e->get_component(MESH))->get_min();
-	//	max = ((Mesh*)e->get_component(MESH))->get_max();
-	//}
-	//else {
-	//	return true;
-	//}
-	//glm::vec3 pos = ((Transform*)e->get_component(TRANSFORM))->position;
-	//glm::vec3 boxnearbottomleft = min + pos;
-	//glm::vec3 boxnearbottomright = glm::vec3(-min.x, min.y, min.z) + pos;
-	//glm::vec3 boxneartopright = glm::vec3(-min.x, -min.y, min.z) + pos;
-	//glm::vec3 boxneartopleft = glm::vec3(min.x, -min.y, min.z) + pos;
-	//glm::vec3 boxfartopright = max + pos;
-	//glm::vec3 boxfartopleft = glm::vec3(-max.x, max.y, max.z) + pos;
-	//glm::vec3 boxfarbottomleft = glm::vec3(-max.x, -max.y, max.z) + pos;
-	//glm::vec3 boxfarbottomright = glm::vec3(max.x, -max.y, max.z) + pos;
+	bool isEntityCurrentlyInFrustum = false;
+	glm::vec3 min, max;
 
-	//if (planes[0].n.x * boxnearbottomleft.x + planes[0].n.y * boxnearbottomleft.y + planes[0].n.z * boxnearbottomleft.z + planes[0].D > 0 && planes[0].n.x * boxnearbottomright.x + planes[0].n.y * boxnearbottomright.y + planes[0].n.z * boxnearbottomright.z + planes[0].D > 0 &&
-	//	planes[0].n.x * boxneartopright.x + planes[0].n.y * boxneartopright.y + planes[0].n.z * boxneartopright.z + planes[0].D > 0 && planes[0].n.x * boxneartopleft.x + planes[0].n.y * boxneartopleft.y + planes[0].n.z * boxneartopleft.z + planes[0].D > 0 &&
-	//	planes[0].n.x * boxfarbottomleft.x + planes[0].n.y * boxfarbottomleft.y + planes[0].n.z * boxfarbottomleft.z + planes[0].D > 0 && planes[0].n.x * boxfarbottomright.x + planes[0].n.y * boxfarbottomright.y + planes[0].n.z * boxfarbottomright.z + planes[0].D > 0 &&
-	//	planes[0].n.x * boxfartopright.x + planes[0].n.y * boxfartopright.y + planes[0].n.z * boxfartopright.z + planes[0].D > 0 && planes[0].n.x * boxfartopleft.x + planes[0].n.y * boxfartopleft.y + planes[0].n.z * boxfartopleft.z + planes[0].D > 0)
-	//	return false;
+	min.x = bounds.minX;
+	min.y = bounds.minY;
+	min.z = bounds.minZ;
 
-	//// NEAR
-	//if (planes[1].n.x * boxnearbottomleft.x + planes[1].n.y * boxnearbottomleft.y + planes[1].n.z * boxnearbottomleft.z + planes[1].D < 0 && planes[1].n.x * boxnearbottomright.x + planes[1].n.y * boxnearbottomright.y + planes[1].n.z * boxnearbottomright.z + planes[1].D < 0 &&
-	//	planes[1].n.x * boxneartopright.x + planes[1].n.y * boxneartopright.y + planes[1].n.z * boxneartopright.z + planes[1].D < 0 && planes[1].n.x * boxneartopleft.x + planes[1].n.y * boxneartopleft.y + planes[1].n.z * boxneartopleft.z + planes[1].D < 0 &&
-	//	planes[1].n.x * boxfarbottomleft.x + planes[1].n.y * boxfarbottomleft.y + planes[1].n.z * boxfarbottomleft.z + planes[1].D < 0 && planes[1].n.x * boxfarbottomright.x + planes[1].n.y * boxfarbottomright.y + planes[1].n.z * boxfarbottomright.z + planes[1].D < 0 &&
-	//	planes[1].n.x * boxfartopright.x + planes[1].n.y * boxfartopright.y + planes[1].n.z * boxfartopright.z + planes[1].D < 0 && planes[1].n.x * boxfartopleft.x + planes[1].n.y * boxfartopleft.y + planes[1].n.z * boxfartopleft.z + planes[1].D < 0)
-	//	return false;
+	max.x = bounds.maxX;
+	max.y = bounds.maxY;
+	max.z = bounds.maxZ;
 
-	//// TOP
-	//if (planes[2].n.x * boxnearbottomleft.x + planes[2].n.y * boxnearbottomleft.y + planes[2].n.z * boxnearbottomleft.z + planes[2].D < 0 && planes[2].n.x * boxnearbottomright.x + planes[2].n.y * boxnearbottomright.y + planes[2].n.z * boxnearbottomright.z + planes[2].D < 0 &&
-	//	planes[2].n.x * boxneartopright.x + planes[2].n.y * boxneartopright.y + planes[2].n.z * boxneartopright.z + planes[2].D < 0 && planes[2].n.x * boxneartopleft.x + planes[2].n.y * boxneartopleft.y + planes[2].n.z * boxneartopleft.z + planes[2].D < 0 &&
-	//	planes[2].n.x * boxfarbottomleft.x + planes[2].n.y * boxfarbottomleft.y + planes[2].n.z * boxfarbottomleft.z + planes[2].D < 0 && planes[2].n.x * boxfarbottomright.x + planes[2].n.y * boxfarbottomright.y + planes[2].n.z * boxfarbottomright.z + planes[2].D < 0 &&
-	//	planes[2].n.x * boxfartopright.x + planes[2].n.y * boxfartopright.y + planes[2].n.z * boxfartopright.z + planes[2].D < 0 && planes[2].n.x * boxfartopleft.x + planes[2].n.y * boxfartopleft.y + planes[2].n.z * boxfartopleft.z + planes[2].D < 0)
-	//	return false;
+	glm::vec3 pos = position;
+	glm::vec3 boxnearbottomleft = min + pos;
+	glm::vec3 boxnearbottomright = glm::vec3(-min.x, min.y, min.z) + pos;
+	glm::vec3 boxneartopright = glm::vec3(-min.x, -min.y, min.z) + pos;
+	glm::vec3 boxneartopleft = glm::vec3(min.x, -min.y, min.z) + pos;
+	glm::vec3 boxfartopright = max + pos;
+	glm::vec3 boxfartopleft = glm::vec3(-max.x, max.y, max.z) + pos;
+	glm::vec3 boxfarbottomleft = glm::vec3(-max.x, -max.y, max.z) + pos;
+	glm::vec3 boxfarbottomright = glm::vec3(max.x, -max.y, max.z) + pos;
 
-	//// BOTTOM
-	//if (planes[3].n.x * boxnearbottomleft.x + planes[3].n.y * boxnearbottomleft.y + planes[3].n.z * boxnearbottomleft.z + planes[3].D > 0 && planes[3].n.x * boxnearbottomright.x + planes[3].n.y * boxnearbottomright.y + planes[3].n.z * boxnearbottomright.z + planes[3].D > 0 &&
-	//	planes[3].n.x * boxneartopright.x + planes[3].n.y * boxneartopright.y + planes[3].n.z * boxneartopright.z + planes[3].D > 0 && planes[3].n.x * boxneartopleft.x + planes[3].n.y * boxneartopleft.y + planes[3].n.z * boxneartopleft.z + planes[3].D > 0 &&
-	//	planes[3].n.x * boxfarbottomleft.x + planes[3].n.y * boxfarbottomleft.y + planes[3].n.z * boxfarbottomleft.z + planes[3].D > 0 && planes[3].n.x * boxfarbottomright.x + planes[3].n.y * boxfarbottomright.y + planes[3].n.z * boxfarbottomright.z + planes[3].D > 0 &&
-	//	planes[3].n.x * boxfartopright.x + planes[3].n.y * boxfartopright.y + planes[3].n.z * boxfartopright.z + planes[3].D > 0 && planes[3].n.x * boxfartopleft.x + planes[3].n.y * boxfartopleft.y + planes[3].n.z * boxfartopleft.z + planes[3].D > 0)
-	//	return false;
+	if (planes[0].n.x * boxnearbottomleft.x + planes[0].n.y * boxnearbottomleft.y + planes[0].n.z * boxnearbottomleft.z + planes[0].D > 0 && planes[0].n.x * boxnearbottomright.x + planes[0].n.y * boxnearbottomright.y + planes[0].n.z * boxnearbottomright.z + planes[0].D > 0 &&
+		planes[0].n.x * boxneartopright.x + planes[0].n.y * boxneartopright.y + planes[0].n.z * boxneartopright.z + planes[0].D > 0 && planes[0].n.x * boxneartopleft.x + planes[0].n.y * boxneartopleft.y + planes[0].n.z * boxneartopleft.z + planes[0].D > 0 &&
+		planes[0].n.x * boxfarbottomleft.x + planes[0].n.y * boxfarbottomleft.y + planes[0].n.z * boxfarbottomleft.z + planes[0].D > 0 && planes[0].n.x * boxfarbottomright.x + planes[0].n.y * boxfarbottomright.y + planes[0].n.z * boxfarbottomright.z + planes[0].D > 0 &&
+		planes[0].n.x * boxfartopright.x + planes[0].n.y * boxfartopright.y + planes[0].n.z * boxfartopright.z + planes[0].D > 0 && planes[0].n.x * boxfartopleft.x + planes[0].n.y * boxfartopleft.y + planes[0].n.z * boxfartopleft.z + planes[0].D > 0)
+	{
+		isEntityCurrentlyInFrustum = false;
+		if (isEntityCurrentlyInFrustum != isInFrustum)
+		{
+			cout << name << " is not in frustum" << endl;
+		}
 
-	//// RIGHT
-	//if (planes[4].n.x * boxnearbottomleft.x + planes[4].n.y * boxnearbottomleft.y + planes[4].n.z * boxnearbottomleft.z + planes[4].D > 0 && planes[4].n.x * boxnearbottomright.x + planes[4].n.y * boxnearbottomright.y + planes[4].n.z * boxnearbottomright.z + planes[4].D > 0 &&
-	//	planes[4].n.x * boxneartopright.x + planes[4].n.y * boxneartopright.y + planes[4].n.z * boxneartopright.z + planes[4].D > 0 && planes[4].n.x * boxneartopleft.x + planes[4].n.y * boxneartopleft.y + planes[4].n.z * boxneartopleft.z + planes[4].D > 0 &&
-	//	planes[4].n.x * boxfarbottomleft.x + planes[4].n.y * boxfarbottomleft.y + planes[4].n.z * boxfarbottomleft.z + planes[4].D > 0 && planes[4].n.x * boxfarbottomright.x + planes[4].n.y * boxfarbottomright.y + planes[4].n.z * boxfarbottomright.z + planes[4].D > 0 &&
-	//	planes[4].n.x * boxfartopright.x + planes[4].n.y * boxfartopright.y + planes[4].n.z * boxfartopright.z + planes[4].D > 0 && planes[4].n.x * boxfartopleft.x + planes[4].n.y * boxfartopleft.y + planes[4].n.z * boxfartopleft.z + planes[4].D > 0)
-	//	return false;
+		return isEntityCurrentlyInFrustum;
+	}
+		
 
-	//// LEFT
-	//if (planes[5].n.x * boxnearbottomleft.x + planes[5].n.y * boxnearbottomleft.y + planes[5].n.z * boxnearbottomleft.z + planes[5].D < 0 && planes[5].n.x * boxnearbottomright.x + planes[5].n.y * boxnearbottomright.y + planes[5].n.z * boxnearbottomright.z + planes[5].D < 0 &&
-	//	planes[5].n.x * boxneartopright.x + planes[5].n.y * boxneartopright.y + planes[5].n.z * boxneartopright.z + planes[5].D < 0 && planes[5].n.x * boxneartopleft.x + planes[5].n.y * boxneartopleft.y + planes[5].n.z * boxneartopleft.z + planes[5].D < 0 &&
-	//	planes[5].n.x * boxfarbottomleft.x + planes[5].n.y * boxfarbottomleft.y + planes[5].n.z * boxfarbottomleft.z + planes[5].D < 0 && planes[5].n.x * boxfarbottomright.x + planes[5].n.y * boxfarbottomright.y + planes[5].n.z * boxfarbottomright.z + planes[5].D < 0 &&
-	//	planes[5].n.x * boxfartopright.x + planes[5].n.y * boxfartopright.y + planes[5].n.z * boxfartopright.z + planes[5].D < 0 && planes[5].n.x * boxfartopleft.x + planes[5].n.y * boxfartopleft.y + planes[5].n.z * boxfartopleft.z + planes[5].D < 0)
-	//	return false;
+	// NEAR
+	if (planes[1].n.x * boxnearbottomleft.x + planes[1].n.y * boxnearbottomleft.y + planes[1].n.z * boxnearbottomleft.z + planes[1].D < 0 && planes[1].n.x * boxnearbottomright.x + planes[1].n.y * boxnearbottomright.y + planes[1].n.z * boxnearbottomright.z + planes[1].D < 0 &&
+		planes[1].n.x * boxneartopright.x + planes[1].n.y * boxneartopright.y + planes[1].n.z * boxneartopright.z + planes[1].D < 0 && planes[1].n.x * boxneartopleft.x + planes[1].n.y * boxneartopleft.y + planes[1].n.z * boxneartopleft.z + planes[1].D < 0 &&
+		planes[1].n.x * boxfarbottomleft.x + planes[1].n.y * boxfarbottomleft.y + planes[1].n.z * boxfarbottomleft.z + planes[1].D < 0 && planes[1].n.x * boxfarbottomright.x + planes[1].n.y * boxfarbottomright.y + planes[1].n.z * boxfarbottomright.z + planes[1].D < 0 &&
+		planes[1].n.x * boxfartopright.x + planes[1].n.y * boxfartopright.y + planes[1].n.z * boxfartopright.z + planes[1].D < 0 && planes[1].n.x * boxfartopleft.x + planes[1].n.y * boxfartopleft.y + planes[1].n.z * boxfartopleft.z + planes[1].D < 0)
+	{
+		isEntityCurrentlyInFrustum = false;
+		if (isEntityCurrentlyInFrustum != isInFrustum)
+		{
+			cout << name << " is not in frustum" << endl;
+		}
 
-	return true;
+		return isEntityCurrentlyInFrustum;
+	}
+
+	// TOP
+	if (planes[2].n.x * boxnearbottomleft.x + planes[2].n.y * boxnearbottomleft.y + planes[2].n.z * boxnearbottomleft.z + planes[2].D < 0 && planes[2].n.x * boxnearbottomright.x + planes[2].n.y * boxnearbottomright.y + planes[2].n.z * boxnearbottomright.z + planes[2].D < 0 &&
+		planes[2].n.x * boxneartopright.x + planes[2].n.y * boxneartopright.y + planes[2].n.z * boxneartopright.z + planes[2].D < 0 && planes[2].n.x * boxneartopleft.x + planes[2].n.y * boxneartopleft.y + planes[2].n.z * boxneartopleft.z + planes[2].D < 0 &&
+		planes[2].n.x * boxfarbottomleft.x + planes[2].n.y * boxfarbottomleft.y + planes[2].n.z * boxfarbottomleft.z + planes[2].D < 0 && planes[2].n.x * boxfarbottomright.x + planes[2].n.y * boxfarbottomright.y + planes[2].n.z * boxfarbottomright.z + planes[2].D < 0 &&
+		planes[2].n.x * boxfartopright.x + planes[2].n.y * boxfartopright.y + planes[2].n.z * boxfartopright.z + planes[2].D < 0 && planes[2].n.x * boxfartopleft.x + planes[2].n.y * boxfartopleft.y + planes[2].n.z * boxfartopleft.z + planes[2].D < 0)
+	{
+		isEntityCurrentlyInFrustum = false;
+		if (isEntityCurrentlyInFrustum != isInFrustum)
+		{
+			cout << name << " is not in frustum" << endl;
+		}
+
+		return isEntityCurrentlyInFrustum;
+	}
+
+	// BOTTOM
+	if (planes[3].n.x * boxnearbottomleft.x + planes[3].n.y * boxnearbottomleft.y + planes[3].n.z * boxnearbottomleft.z + planes[3].D > 0 && planes[3].n.x * boxnearbottomright.x + planes[3].n.y * boxnearbottomright.y + planes[3].n.z * boxnearbottomright.z + planes[3].D > 0 &&
+		planes[3].n.x * boxneartopright.x + planes[3].n.y * boxneartopright.y + planes[3].n.z * boxneartopright.z + planes[3].D > 0 && planes[3].n.x * boxneartopleft.x + planes[3].n.y * boxneartopleft.y + planes[3].n.z * boxneartopleft.z + planes[3].D > 0 &&
+		planes[3].n.x * boxfarbottomleft.x + planes[3].n.y * boxfarbottomleft.y + planes[3].n.z * boxfarbottomleft.z + planes[3].D > 0 && planes[3].n.x * boxfarbottomright.x + planes[3].n.y * boxfarbottomright.y + planes[3].n.z * boxfarbottomright.z + planes[3].D > 0 &&
+		planes[3].n.x * boxfartopright.x + planes[3].n.y * boxfartopright.y + planes[3].n.z * boxfartopright.z + planes[3].D > 0 && planes[3].n.x * boxfartopleft.x + planes[3].n.y * boxfartopleft.y + planes[3].n.z * boxfartopleft.z + planes[3].D > 0)
+	{
+		isEntityCurrentlyInFrustum = false;
+		if (isEntityCurrentlyInFrustum != isInFrustum)
+		{
+			cout << name << " is not in frustum" << endl;
+		}
+
+		return isEntityCurrentlyInFrustum;
+	}
+
+	// RIGHT
+	if (planes[4].n.x * boxnearbottomleft.x + planes[4].n.y * boxnearbottomleft.y + planes[4].n.z * boxnearbottomleft.z + planes[4].D > 0 && planes[4].n.x * boxnearbottomright.x + planes[4].n.y * boxnearbottomright.y + planes[4].n.z * boxnearbottomright.z + planes[4].D > 0 &&
+		planes[4].n.x * boxneartopright.x + planes[4].n.y * boxneartopright.y + planes[4].n.z * boxneartopright.z + planes[4].D > 0 && planes[4].n.x * boxneartopleft.x + planes[4].n.y * boxneartopleft.y + planes[4].n.z * boxneartopleft.z + planes[4].D > 0 &&
+		planes[4].n.x * boxfarbottomleft.x + planes[4].n.y * boxfarbottomleft.y + planes[4].n.z * boxfarbottomleft.z + planes[4].D > 0 && planes[4].n.x * boxfarbottomright.x + planes[4].n.y * boxfarbottomright.y + planes[4].n.z * boxfarbottomright.z + planes[4].D > 0 &&
+		planes[4].n.x * boxfartopright.x + planes[4].n.y * boxfartopright.y + planes[4].n.z * boxfartopright.z + planes[4].D > 0 && planes[4].n.x * boxfartopleft.x + planes[4].n.y * boxfartopleft.y + planes[4].n.z * boxfartopleft.z + planes[4].D > 0)
+	{
+		isEntityCurrentlyInFrustum = false;
+		if (isEntityCurrentlyInFrustum != isInFrustum)
+		{
+			cout << name << " is not in frustum" << endl;
+		}
+
+		return isEntityCurrentlyInFrustum;
+	}
+
+	// LEFT
+	if (planes[5].n.x * boxnearbottomleft.x + planes[5].n.y * boxnearbottomleft.y + planes[5].n.z * boxnearbottomleft.z + planes[5].D < 0 && planes[5].n.x * boxnearbottomright.x + planes[5].n.y * boxnearbottomright.y + planes[5].n.z * boxnearbottomright.z + planes[5].D < 0 &&
+		planes[5].n.x * boxneartopright.x + planes[5].n.y * boxneartopright.y + planes[5].n.z * boxneartopright.z + planes[5].D < 0 && planes[5].n.x * boxneartopleft.x + planes[5].n.y * boxneartopleft.y + planes[5].n.z * boxneartopleft.z + planes[5].D < 0 &&
+		planes[5].n.x * boxfarbottomleft.x + planes[5].n.y * boxfarbottomleft.y + planes[5].n.z * boxfarbottomleft.z + planes[5].D < 0 && planes[5].n.x * boxfarbottomright.x + planes[5].n.y * boxfarbottomright.y + planes[5].n.z * boxfarbottomright.z + planes[5].D < 0 &&
+		planes[5].n.x * boxfartopright.x + planes[5].n.y * boxfartopright.y + planes[5].n.z * boxfartopright.z + planes[5].D < 0 && planes[5].n.x * boxfartopleft.x + planes[5].n.y * boxfartopleft.y + planes[5].n.z * boxfartopleft.z + planes[5].D < 0)
+	{
+		isEntityCurrentlyInFrustum = false;
+		if (isEntityCurrentlyInFrustum != isInFrustum)
+		{
+			cout << name << " is not in frustum" << endl;
+		}
+
+		return isEntityCurrentlyInFrustum;
+	}
+
+	isEntityCurrentlyInFrustum = true;
+	if (isEntityCurrentlyInFrustum != isInFrustum)
+	{
+		cout << name << " is in frustum" << endl;
+	}
+
+	return isEntityCurrentlyInFrustum;
 }

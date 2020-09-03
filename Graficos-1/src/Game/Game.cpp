@@ -55,23 +55,23 @@ bool Game::OnStart()
 
 	cam->SetCameraSpeed(2.5f);
 	
-	m = new Model("res/model/backpack/backpack.obj", true);
+	//m = new Model("res/model/backpack/backpack.obj", true);
 
-	m2 = new Model("res/model/spider/Only_Spider_with_Animations_Export.obj", true);
+	//m2 = new Model("res/model/spider/Only_Spider_with_Animations_Export.obj", true);
 
-	m3 = new Model("res/model/nave/E 45 Aircraft_obj.obj", false);
+	m3 = new Model("res/model/nanosuit.obj", true);
 
-	m4 = new Model("res/model/nave2/Intergalactic_Spaceship-(Wavefront).obj", false);
+	//m4 = new Model("res/model/nave2/Intergalactic_Spaceship-(Wavefront).obj", false);
 
-	m2->SetPos(vec3(5.f, 0.f, 0.f));
+	//m2->SetPos(vec3(5.f, 0.f, 0.f));
 
 	m3->SetPos(vec3(-5.f, 0.f, 0.f));
 
-	m4->SetPos(vec3(0.f, 0.f, 5.f));
+	//m4->SetPos(vec3(0.f, 0.f, 5.f));
 
-	m2->SetScale(vec3(0.01f));
+	//m2->SetScale(vec3(0.01f));
 
-	m4->SetScale(vec3(0.5f));
+	//m4->SetScale(vec3(0.5f));
 	
 	/*m2->SetParent(m);
 	
@@ -116,12 +116,12 @@ float at = 1.0f;
 
 vec3 newscale = { 1.f,1.f,1.f };
 
-Entity3D* m5;
-Entity3D* m6;
+//Entity3D* m5;
+//Entity3D* m6;
 
-Entity3D* grupo;
-Entity3D* gruposub1;
-Entity3D* gruposub2;
+//Entity3D* grupo;
+//Entity3D* gruposub1;
+//Entity3D* gruposub2;
 
 bool Game::OnUpdate()
 {
@@ -172,18 +172,18 @@ bool Game::OnUpdate()
 	}
 	if (Input::GetKeyPressed(GLFW_KEY_5))
 	{
-		m5 = BaseGame::GetRootEntity()->GetChild("Cylinder.034__0");
+		//m5 = BaseGame::GetRootEntity()->GetChild("Cylinder.034__0");
 		//GetRootEntity()->GetAllChildsTypes();
 		//m2->SetParent(m5);
-		m6 = BaseGame::GetRootEntity()->GetChild("Cylinder.029__0");
-		m5->SetParent(m6);
+		//m6 = BaseGame::GetRootEntity()->GetChild("Cylinder.029__0");
+		//m5->SetParent(m6);
 	}
 
 	if (Input::GetKeyPressed(GLFW_KEY_6))
 	{
-		grupo = BaseGame::GetRootEntity()->GetChild("group");
+		/*grupo = BaseGame::GetRootEntity()->GetChild("group");
 		gruposub1 = BaseGame::GetRootEntity()->GetChild("Cube.037__0");
-		gruposub2 = BaseGame::GetRootEntity()->GetChild("Cylinder.033__0");
+		gruposub2 = BaseGame::GetRootEntity()->GetChild("Cylinder.033__0");*/
 	}
 	
 	if(Input::GetKeyPressed(GLFW_KEY_SPACE))
@@ -205,26 +205,26 @@ bool Game::OnUpdate()
 
 	if (Input::GetKeyReleased(GLFW_KEY_T))
 	{
-		grupo->SetPos(vec3(100.f*BaseGame::GetDeltaTime(), 0.f, 0.f));
+		//grupo->SetPos(vec3(100.f*BaseGame::GetDeltaTime(), 0.f, 0.f));
 	}
 	if (Input::GetKeyReleased(GLFW_KEY_Y))
 	{
-		gruposub1->SetPos(vec3(100.f*BaseGame::GetDeltaTime(), 0.f, 0.f));
+		//gruposub1->SetPos(vec3(100.f*BaseGame::GetDeltaTime(), 0.f, 0.f));
 	}
 	if (Input::GetKeyReleased(GLFW_KEY_U))
 	{
-		gruposub2->SetPos(vec3(-100.f*BaseGame::GetDeltaTime(), 0.f, 0.f));
+		//gruposub2->SetPos(vec3(-100.f*BaseGame::GetDeltaTime(), 0.f, 0.f));
 	}
 
 	if (Input::GetKeyReleased(GLFW_KEY_N))
 	{
 		newscale = vec3(1.f, 1.f, 1.f) + vec3(10.f) * BaseGame::GetDeltaTime();
-		grupo->SetScale(newscale);
+		//grupo->SetScale(newscale);
 	}
 	if (Input::GetKeyReleased(GLFW_KEY_M))
 	{
 		newscale = vec3(1.f, 1.f, 1.f) - vec3(10.f) * BaseGame::GetDeltaTime();
-		grupo->SetScale(newscale);
+		//grupo->SetScale(newscale);
 	}
 	
 	//model translation
@@ -234,8 +234,8 @@ bool Game::OnUpdate()
 			yRot = 0.0f;
 		
 		yRot = 100.0f * BaseGame::GetDeltaTime();
-		if(m5)
-			m5->SetPos(vec3(yRot,0.f,0.f));
+		/*if(m5)
+			m5->SetPos(vec3(yRot,0.f,0.f));*/
 	}
 
 	if (Input::GetKeyPressed(GLFW_KEY_LEFT))
@@ -244,8 +244,8 @@ bool Game::OnUpdate()
 			yRot = 0.0f;
 		
 		yRot = -100.0f * BaseGame::GetDeltaTime();
-		if (m5)
-			m5->SetPos(vec3(yRot, 0.f, 0.f));
+		/*if (m5)
+			m5->SetPos(vec3(yRot, 0.f, 0.f));*/
 	}
 
 	
@@ -265,10 +265,10 @@ bool Game::OnUpdate()
 			yRot2 = 0.0f;
 		
 		yRot2 = 100.0f * BaseGame::GetDeltaTime();
-		m->SetRot(yRot2,vec3(0.f,1.f,0.f));
-		m2->SetRot(yRot2, vec3(0.f, 1.f, 0.f));
+		//m->SetRot(yRot2,vec3(0.f,1.f,0.f));
+		//m2->SetRot(yRot2, vec3(0.f, 1.f, 0.f));
 		m3->SetRot(yRot2, vec3(0.f, 1.f, 0.f));
-		m4->SetRot(yRot2, vec3(0.f, 1.f, 0.f));
+		//m4->SetRot(yRot2, vec3(0.f, 1.f, 0.f));
 	}
 	if (Input::GetKeyPressed(GLFW_KEY_DOWN))
 	{
@@ -284,10 +284,10 @@ bool Game::OnUpdate()
 			yRot2 = 0.0f;
 
 		yRot2 = -100.0f * BaseGame::GetDeltaTime();
-		m->SetRot(yRot2, vec3(0.f, 1.f, 0.f));
-		m2->SetRot(yRot2, vec3(0.f, 1.f, 0.f));
+	//	m->SetRot(yRot2, vec3(0.f, 1.f, 0.f));
+		//m2->SetRot(yRot2, vec3(0.f, 1.f, 0.f));
 		m3->SetRot(yRot2, vec3(0.f, 1.f, 0.f));
-		m4->SetRot(yRot2, vec3(0.f, 1.f, 0.f));
+		//m4->SetRot(yRot2, vec3(0.f, 1.f, 0.f));
 	}
 	
 	if (Input::GetKeyPressed(GLFW_KEY_ESCAPE))

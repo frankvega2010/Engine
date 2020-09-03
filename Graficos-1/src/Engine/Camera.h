@@ -4,7 +4,6 @@
 #include <glm.hpp>
 #include <gtc/matrix_transform.hpp>
 #include "Window.h"
-#include "CollisionBox.h"
 #include "Frustum.h"
 
 class DLLEXPORT Camera
@@ -12,8 +11,9 @@ class DLLEXPORT Camera
 private:
 	glm::vec3 cameraPos;
 	glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
-	glm::vec3 up;
-	glm::vec3 cameraDirection;
+	glm::vec3 worldUp;
+	//glm::vec3 up;
+	//glm::vec3 cameraDirection;
 	glm::vec3 cameraRight;
 	glm::vec3 cameraUp;
 
@@ -45,7 +45,7 @@ public:
 	glm::vec3 GetCameraPosition();
 	glm::vec3 GetCameraDirection();
 	void UpdateCamera();
-	bool IsInFrustum(Bounds bounds);
+	bool IsInFrustum(Bounds bounds, vec3 position, string name, const bool isInFrustum);
 	static double xposs;
 	static double yposs;
 	static void mouse_callback(GLFWwindow* window, double xpos, double ypos);
