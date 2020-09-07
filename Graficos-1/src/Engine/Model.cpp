@@ -14,8 +14,10 @@
 #endif
 #include "stb_image.h"
 
-Model::Model(string const &path, bool flipUv, Entity3D* newParent, bool gamma) : gammaCorrection(gamma), Entity3D(newParent)
+Model::Model(string const &path, bool flipUv, bool isBSP, Entity3D* newParent, bool gamma) : gammaCorrection(gamma), Entity3D(newParent)
 {
+	this->isBSP = false;
+	this->isBSP = isBSP;
 	entityType = model;
 	loadModel(path, flipUv);
 }
@@ -81,6 +83,12 @@ void Model::processNode(aiNode *node, const aiScene *scene, Entity3D* par)
 		thisNode = new Mesh(processMesh(mesh, scene, par));
 		thisNode->SetModelMatrix(AssimpTransformToGlm(&node->mTransformation));
 		thisNode->SetName(node->mName.C_Str());
+
+		if (GetBSP())
+		{
+			thisNode->SetBSP(true);
+		}
+
 		if(thisNode->GetName()== "Cube.037__0" || thisNode->GetName() == "Cylinder.033__0")
 		{
 			Entity3D* ent = BaseGame::GetRootEntity()->GetChild("group");
@@ -112,6 +120,10 @@ void Model::processNode(aiNode *node, const aiScene *scene, Entity3D* par)
 		if (thisNode)
 			processNode(node->mChildren[i], scene, thisNode);
 	}
+
+	/*vector<glm::vec3> vertices;
+	thisNode->GetVerticesPositions(vertices);*/
+	
 	
 	if(thisNode->entityType == mesh)
 	{
@@ -119,6 +131,8 @@ void Model::processNode(aiNode *node, const aiScene *scene, Entity3D* par)
 		vector<vec3> verticesPositions;
 		m->GetVerticesPositions(verticesPositions);
 		thisNode->bounds = thisNode->GenerateBoundsByVertex(verticesPositions);
+		if (thisNode->GetBSP())
+			Renderer::AddBSPPlane(BSP(verticesPositions[0], verticesPositions[1], verticesPositions[2]));
 	}
 	thisNode->GetCollisionBox()->Setup();
 }

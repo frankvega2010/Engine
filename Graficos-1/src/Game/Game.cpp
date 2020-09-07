@@ -55,17 +55,17 @@ bool Game::OnStart()
 
 	cam->SetCameraSpeed(2.5f);
 	
-	//m = new Model("res/model/backpack/backpack.obj", true);
+	m = new Model("res/model/backpack/backpack.obj", true, false);
 
 	//m2 = new Model("res/model/spider/Only_Spider_with_Animations_Export.obj", true);
 
-	m3 = new Model("res/model/nanosuit.obj", true);
+	m3 = new Model("res/model/Planes.fbx", true, true);
 
 	//m4 = new Model("res/model/nave2/Intergalactic_Spaceship-(Wavefront).obj", false);
 
 	//m2->SetPos(vec3(5.f, 0.f, 0.f));
 
-	m3->SetPos(vec3(-5.f, 0.f, 0.f));
+	/////m3->SetPos(vec3(-5.f, 0.f, 0.f));
 
 	//m4->SetPos(vec3(0.f, 0.f, 5.f));
 
@@ -186,7 +186,7 @@ bool Game::OnUpdate()
 		gruposub2 = BaseGame::GetRootEntity()->GetChild("Cylinder.033__0");*/
 	}
 	
-	if(Input::GetKeyPressed(GLFW_KEY_SPACE))
+	/*if(Input::GetKeyPressed(GLFW_KEY_SPACE))
 	{
 		newscale = vec3(1.f, 1.f, 1.f) + vec3(10.f) * BaseGame::GetDeltaTime();
 		m3->SetScale(newscale);
@@ -196,7 +196,7 @@ bool Game::OnUpdate()
 	{
 		newscale = vec3(1.f, 1.f, 1.f) - vec3(10.f) * BaseGame::GetDeltaTime();
 		m3->SetScale(newscale);
-	}
+	}*/
 
 	if(Input::GetKeyReleased(GLFW_KEY_F))
 	{
@@ -230,64 +230,22 @@ bool Game::OnUpdate()
 	//model translation
 	if (Input::GetKeyPressed(GLFW_KEY_RIGHT))
 	{
-		if (yRot < 0.0f)
-			yRot = 0.0f;
-		
-		yRot = 100.0f * BaseGame::GetDeltaTime();
-		/*if(m5)
-			m5->SetPos(vec3(yRot,0.f,0.f));*/
+		m->SetPos(vec3(25.f * BaseGame::GetDeltaTime(), 0.f, 0.f));
 	}
 
 	if (Input::GetKeyPressed(GLFW_KEY_LEFT))
 	{
-		if(yRot>0.0f)
-			yRot = 0.0f;
-		
-		yRot = -100.0f * BaseGame::GetDeltaTime();
-		/*if (m5)
-			m5->SetPos(vec3(yRot, 0.f, 0.f));*/
+		m->SetPos(vec3(-25.f * BaseGame::GetDeltaTime(), 0.f, 0.f));
 	}
 
 	
 	if (Input::GetKeyPressed(GLFW_KEY_UP))
 	{
-		if (!CollisionManager::CheckCollision(spr, sq))
-		{
-			prevPos = spr->GetPos();
-			spr->Translate(0.0f, 0.01f, 0.0f);
-
-		}
-
-		else
-			spr->SetPos(prevPos.x, prevPos.y, spr->GetPos().z);
-
-		if (yRot2 < 0.0f)
-			yRot2 = 0.0f;
-		
-		yRot2 = 100.0f * BaseGame::GetDeltaTime();
-		//m->SetRot(yRot2,vec3(0.f,1.f,0.f));
-		//m2->SetRot(yRot2, vec3(0.f, 1.f, 0.f));
-		m3->SetRot(yRot2, vec3(0.f, 1.f, 0.f));
-		//m4->SetRot(yRot2, vec3(0.f, 1.f, 0.f));
+		m->SetPos(vec3(0.0f, 0.f, 25.f * BaseGame::GetDeltaTime()));
 	}
 	if (Input::GetKeyPressed(GLFW_KEY_DOWN))
 	{
-		if (!CollisionManager::CheckCollision(spr, sq))
-		{
-			prevPos = spr->GetPos();
-			spr->Translate(0.0f, -0.01f, 0.0f);
-		}
-		else
-			spr->SetPos(prevPos.x, prevPos.y, spr->GetPos().z);
-
-		if (yRot2 > 0.0f)
-			yRot2 = 0.0f;
-
-		yRot2 = -100.0f * BaseGame::GetDeltaTime();
-	//	m->SetRot(yRot2, vec3(0.f, 1.f, 0.f));
-		//m2->SetRot(yRot2, vec3(0.f, 1.f, 0.f));
-		m3->SetRot(yRot2, vec3(0.f, 1.f, 0.f));
-		//m4->SetRot(yRot2, vec3(0.f, 1.f, 0.f));
+		m->SetPos(vec3(0.0f, 0.f, -25.f * BaseGame::GetDeltaTime()));
 	}
 	
 	if (Input::GetKeyPressed(GLFW_KEY_ESCAPE))

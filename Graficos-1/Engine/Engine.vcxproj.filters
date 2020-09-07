@@ -101,6 +101,9 @@
     <ClCompile Include="..\src\Engine\Frustum.cpp">
       <Filter>Cpps</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\Engine\BSP.cpp">
+      <Filter>Cpps</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Engine\CollisionManager.h">
@@ -179,6 +182,9 @@
       <Filter>Hpps</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Engine\Frustum.h">
+      <Filter>Hpps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Engine\BSP.h">
       <Filter>Hpps</Filter>
     </ClInclude>
   </ItemGroup>

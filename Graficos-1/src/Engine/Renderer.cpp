@@ -5,6 +5,7 @@ using namespace std;
 
 Renderer* Renderer::renderer = nullptr;
 Camera* Renderer::cam = new Camera();
+vector<BSP> Renderer::bspPlanes;
 
 bool Renderer::Start(Window* wnd) {
 	cout << "Renderer::Start()" << endl;
@@ -166,6 +167,123 @@ Camera* Renderer::GetCam()
 glm::mat4 Renderer::GetProjMatrix()
 {
 	return ProjectionMatrix;
+}
+
+void Renderer::AddBSPPlane(BSP newPlane)
+{
+	bspPlanes.push_back(newPlane);
+}
+
+bool Renderer::IsVisibleForBSP(glm::vec3 pos)
+{
+	vec3 CameraPos = Camera::thisCam->GetCameraPosition();
+
+	for (int i = 0; i < bspPlanes.size(); i++)
+	{
+		if (!bspPlanes[i].AreInSameSide(pos, CameraPos))
+			return false;
+	}
+	return true;
+}
+
+void Renderer::CollectAllEntityTree(list<Entity3D*>& entities, Entity3D* entity)
+{
+	entities.push_back(entity);
+	for (list<Entity3D*>::iterator itBeg = entity->GetChilds().begin(); itBeg != entity->GetChilds().end(); ++itBeg)
+	{
+		Entity3D* ent = (*itBeg);
+
+		for (list<Entity3D*>::iterator itBeg2 = ent->GetChilds().begin(); itBeg2 != ent->GetChilds().end(); ++itBeg2)
+		{
+			Entity3D* ent2 = (*itBeg2);
+			CollectAllEntityTree(entities, ent2);
+			//CollectAllEntityTree(entities, ent->GetChilds());
+		}
+		
+	}
+
+	/*for (int i = 0; i < entity->GetChilds().size(); i++)
+		CollectAllEntityTree(entities, entity->GetChilds()[i]);*/
+}
+
+bool Renderer::IsVisibleForBSP(glm::vec3 boxMin, glm::vec3 boxMax)
+{
+	vec3 CameraPos = Camera::thisCam->GetCameraPosition();
+
+	for (int i = 0; i < bspPlanes.size(); i++)
+	{
+		if (bspPlanes[i].AreInSameSide({ boxMin.x, boxMin.y, boxMin.z }, CameraPos))
+			continue;
+		if (bspPlanes[i].AreInSameSide({ boxMax.x, boxMin.y, boxMin.z }, CameraPos))
+			continue;
+		if (bspPlanes[i].AreInSameSide({ boxMin.x, boxMax.y, boxMin.z }, CameraPos))
+			continue;
+		if (bspPlanes[i].AreInSameSide({ boxMax.x, boxMax.y, boxMin.z }, CameraPos))
+			continue;
+		if (bspPlanes[i].AreInSameSide({ boxMin.x, boxMin.y, boxMax.z }, CameraPos))
+			continue;
+		if (bspPlanes[i].AreInSameSide({ boxMax.x, boxMin.y, boxMax.z }, CameraPos))
+			continue;
+		if (bspPlanes[i].AreInSameSide({ boxMin.x, boxMax.y, boxMax.z }, CameraPos))
+			continue;
+		if (bspPlanes[i].AreInSameSide({ boxMax.x, boxMax.y, boxMax.z }, CameraPos))
+			continue;
+
+		return false;
+	}
+
+
+	return true;
+}
+
+void Renderer::CheckSceneVisibility(Entity3D* root)
+{
+	if (isBSPEnabled)
+	{
+		list<Entity3D*> entities;
+		CollectAllEntityTree(entities, root);
+		for (int i = 0; i < bspPlanes.size(); i++)
+		{
+			bspPlanes[i].SetCameraSide(bspPlanes[i].CalculateSide(Camera::thisCam->GetCameraPosition()));
+			entities.erase(remove_if(entities.begin(), entities.end(), [i](Entity3D* entity)
+			{
+				glm::vec3 min, max;
+
+				min.x = entity->bounds.minX;
+				min.y = entity->bounds.minY;
+				min.z = entity->bounds.minZ;
+
+				max.x = entity->bounds.maxX;
+				max.y = entity->bounds.maxY;
+				max.z = entity->bounds.maxZ;
+
+				const bool toRemove = !bspPlanes[i].IsBoxInCameraSide(min, max);
+				if (toRemove)
+					entity->SetVisibility(false);
+				return toRemove;
+			}), entities.end());
+		}
+	}
+
+	if (isFrustumCullingEnabled)
+		CheckEntityVisibility(root);
+}
+
+void Renderer::CheckEntityVisibility(Entity3D* toRender)
+{
+	toRender->isInFrustum = Camera::thisCam->IsInFrustum(toRender->bounds, toRender->GetPos(), toRender->GetName(), toRender->isInFrustum);
+
+	for (list<Entity3D*>::iterator itBeg = toRender->GetChilds().begin(); itBeg != toRender->GetChilds().end(); ++itBeg)
+	{
+		Entity3D* ent = (*itBeg);
+
+		for (list<Entity3D*>::iterator itBeg2 = ent->GetChilds().begin(); itBeg2 != ent->GetChilds().end(); ++itBeg2)
+		{
+			Entity3D* ent2 = (*itBeg2);
+			CheckEntityVisibility(ent2);
+		}
+
+	}
 }
 
 Renderer::Renderer() {

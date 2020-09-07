@@ -7,6 +7,7 @@
 #include <glfw3.h>
 #include <iostream>
 #include "Camera.h"
+#include "BSP.h"
 
 using namespace std;
 using namespace glm;
@@ -22,6 +23,7 @@ private:
 	glm::mat4 WorldMatrix;
 	glm::mat4 ProjectionMatrix;
 	glm::mat4 WVP;
+	static vector<class BSP> bspPlanes;
 	
 public:
 	bool Start(Window* wnd);
@@ -44,6 +46,14 @@ public:
 	void MultiplyWorldMatrix(glm::mat4 matrix);
 	Camera* GetCam();
 	glm::mat4 GetProjMatrix();
+	static void AddBSPPlane(class BSP newPlane);
+	static bool IsVisibleForBSP(glm::vec3 pos);
+	static bool IsVisibleForBSP(glm::vec3 boxMin, glm::vec3 boxMax);
+	void CheckSceneVisibility(Entity3D* root);
+	void CollectAllEntityTree(list<Entity3D*>& entities, Entity3D* entity);
+	void CheckEntityVisibility(Entity3D* toRender);
+	bool isBSPEnabled = true;
+	bool isFrustumCullingEnabled = true;
 
 	static Camera* cam;
 	static Renderer* renderer;

@@ -12,6 +12,7 @@ Entity3D::Entity3D(Entity3D* newParent)
 	position = vec3(0.f);
 	rotation = vec3(0.f);
 	scale = vec3(1.f);
+	isVisible = true;
 	isInFrustum = true;
 	
 	if(newParent)
@@ -38,6 +39,7 @@ Entity3D::Entity3D(string newName)
 	entityType = entity;
 	
 	name = newName;
+	isVisible = true;
 	isInFrustum = true;
 
 	collisionBox = new CollisionBox();
@@ -91,6 +93,11 @@ Entity3D* Entity3D::GetChild(string childName)
 	return toGet;
 }
 
+list<Entity3D*>& Entity3D::GetChilds()
+{
+	return childs;
+}
+
 void Entity3D::UnsetChild(Entity3D* c)
 {
 	for (list<Entity3D*>::iterator itBeg = childs.begin(); itBeg != childs.end(); ++itBeg)
@@ -129,17 +136,16 @@ void Entity3D::SetScale(vec3 sc)
 
 void Entity3D::Draw(Shader shader)
 {
+	if (name == "root")
+	{
+		Renderer::renderer->CheckSceneVisibility(this);
+	}
+
 	for (list<Entity3D*>::iterator itBeg = childs.begin(); itBeg != childs.end(); ++itBeg)
 	{
 		Entity3D* ent = (*itBeg);
 
-		//Chequear si esta en el frustum
-		//Renderer::cam->IsInFrustum();
-		//ent->name;
-		//ent->bounds
-		ent->isInFrustum = Camera::thisCam->IsInFrustum(ent->bounds, position, ent->name,ent->isInFrustum);
-
-		if (ent->isInFrustum)
+		if (isBSP || (ent->isVisible && ent->isInFrustum))
 		{
 			if (ent->entityType == mesh)
 			{
@@ -152,8 +158,10 @@ void Entity3D::Draw(Shader shader)
 			}
 		}
 		
-		
+		ent->SetVisibility(true);
 	}
+	
+	//isVisible = true;
 	AABB->DrawCollisionBox(worldModel);
 }
 
@@ -229,6 +237,39 @@ void Entity3D::CalculateBoundsWithChilds()
 	}
 	
 	collisionBox->GenerateBoundingBox(bounds);
+}
+
+bool Entity3D::GetBSP()
+{
+	return isBSP;
+}
+
+void Entity3D::SetBSP(bool bspState)
+{
+	isBSP = bspState;
+}
+
+void Entity3D::SetVisibility(bool visState)
+{
+	/*if (visState != isVisible)
+	{
+		if (visState)
+		{
+			cout << name << " is visible" << endl;
+		}
+		else
+		{
+			cout << name << " is not visible" << endl;
+		}
+		
+	}*/
+
+	isVisible = visState;
+}
+
+bool Entity3D::GetVisibility()
+{
+	return isVisible;
 }
 
 void Entity3D::CalculateBounds(Bounds otherBounds)

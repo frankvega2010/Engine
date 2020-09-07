@@ -19,6 +19,8 @@
 
 #include "BaseGame.h"
 
+#include "BSP.h"
+
 #include <iostream>
 
 using namespace std;
@@ -34,7 +36,7 @@ public:
 	bool gammaCorrection;
 
 	// constructor, expects a filepath to a 3D model.
-	Model(string const &path, bool flipUv, Entity3D* newParent = BaseGame::GetRootEntity(), bool gamma = false);
+	Model(string const &path, bool flipUv,bool isBSP, Entity3D* newParent = BaseGame::GetRootEntity(), bool gamma = false);
 	~Model();
 
 	// draws the model, and thus all its meshes

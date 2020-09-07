@@ -32,7 +32,9 @@ protected:
 	vec3 position;
 	vec3 rotation;
 	vec3 scale;
-	bool isInFrustum;
+	
+	bool isVisible;
+	bool isBSP;
 	glm::mat4 modelMatrix = glm::mat4(1.0f);
 	
 	CollisionBox* collisionBox;
@@ -47,6 +49,7 @@ public:
 	Entity3D* GetParent() { return parent; }
 	void SetChild(Entity3D* c);
 	Entity3D* GetChild(string childName);
+	list<Entity3D*>& GetChilds();
 	void UnsetChild(Entity3D* c);
 	void SetPos(vec3 pos);
 	vec3 GetPos(){ return position; };
@@ -73,9 +76,14 @@ public:
 	Bounds GenerateBoundsByVertex(vector<vec3> v);
 	void CalculateBoundsWithChilds();
 	CollisionBox* AABB;
+	bool GetBSP();
+	void SetBSP(bool bspState);
+	void SetVisibility(bool visState);
+	bool GetVisibility();
 	////////////////////////////
 	void GetAllChildsNames();
 	void GetAllChildsTypes();
+	bool isInFrustum;
 
 	glm::mat4 worldModel = glm::mat4(1.0f);
 };

@@ -30,6 +30,7 @@ void Mesh::Draw(Shader shader)
 
 	glm::mat4 projection = Renderer::renderer->GetProjMatrix();
 	glm::mat4 view = Camera::thisCam->GetViewMatrix();
+	//Camera::thisCam->GetCameraPosition();
 
 	shader.setMat4("proj", projection);
 	shader.setMat4("view", view);
