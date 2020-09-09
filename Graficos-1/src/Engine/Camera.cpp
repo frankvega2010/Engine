@@ -27,9 +27,7 @@ Camera::Camera(Window* w, glm::vec3 p, glm::vec3 t, glm::vec3 f, glm::vec3 u)
 	worldUp = u;
 	cameraPos = p; cameraUp = u; cameraFront = f;
 	cameraTarget = t;
-	this->frustum = new Frustum();
 
-	frustum->calculate_frustum(actualWindow, cameraRight, cameraUp, cameraFront, cameraPos, cameraFOV, cameraNear, cameraFar);
 	LookAt();
 
 	// Create frustum
@@ -44,9 +42,7 @@ void Camera::SetCamera(Window* w, glm::vec3 p, glm::vec3 t, glm::vec3 f, glm::ve
 	worldUp = u;
 	cameraPos = p; cameraUp = u; cameraFront = f;
 	cameraTarget = t;
-	this->frustum = new Frustum();
 
-	frustum->calculate_frustum(actualWindow, cameraRight, cameraUp, cameraFront, cameraPos, cameraFOV, cameraNear, cameraFar);
 
 	LookAt();
 
@@ -93,7 +89,6 @@ void Camera::UpdateCamera()
 
 	//frustum->calculate_frustum(actualWindow, cameraRight, up, cameraFront, cameraPos, glm::radians(45.0f), 1.0f, 100.0f);
 
-	frustum->calculate_frustum(actualWindow, cameraRight, cameraUp, cameraFront, cameraPos, cameraFOV, cameraNear, cameraFar);
 
 	if (moved)
 	{
@@ -104,12 +99,6 @@ void Camera::UpdateCamera()
 		
 }
 
-bool Camera::IsInFrustum(Bounds bounds, vec3 position, string name, const bool isInFrustum)
-{
-	// Calculate if entity is in frustum.
-
-	return frustum->is_in_frustum(bounds, position, name, isInFrustum);
-}
 
 glm::vec3 Camera::GetCameraPosition()
 {
@@ -159,6 +148,5 @@ void Camera::mouse_callback(GLFWwindow* window, double xpos, double ypos)
 	Camera::thisCam->cameraFront = glm::normalize(direction);
 	Camera::thisCam->LookAt();
 
-	// Calculate frustum
-	Camera::thisCam->frustum->calculate_frustum(Camera::thisCam->actualWindow, Camera::thisCam->cameraRight, Camera::thisCam->cameraUp, Camera::thisCam->cameraFront, Camera::thisCam->cameraPos, Camera::thisCam->cameraFOV, Camera::thisCam->cameraNear, Camera::thisCam->cameraFar);
+	
 }

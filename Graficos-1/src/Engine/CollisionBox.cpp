@@ -66,6 +66,14 @@ void CollisionBox::GenerateBoundingBox(Bounds b)
 	SetBounds(6, vec3(b.minX, b.maxY, b.maxZ));
 	SetBounds(7, vec3(b.maxX, b.maxY, b.maxZ));
 
+	min.x = b.minX;
+	min.y = b.minY;
+	min.z = b.minZ;
+
+	max.x = b.maxX;
+	max.y = b.maxY;
+	max.z = b.maxZ;
+
 	Setup();
 }
 
@@ -119,4 +127,12 @@ void CollisionBox::Setup()
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (void*)0);
 
 	glBindVertexArray(0);
+}
+
+vec3 CollisionBox::GetMin() {
+	return min;
+}
+
+vec3 CollisionBox::GetMax() {
+	return max;
 }

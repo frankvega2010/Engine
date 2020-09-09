@@ -24,7 +24,7 @@ bool BaseGame::Start(int h, int w, char* name) {
 	render = new Renderer();
 	if (!render->Start(window))
 		return false;
-	render->setClearScreenColor(1.0f, 0.0f, 1.0f, 0.0f);
+	render->setClearScreenColor(0.0f, 1.0f, 0.0f, 1.0f);
 	render->ClearScreen();
 
 	Input::SetWindow(window);
@@ -51,6 +51,7 @@ void BaseGame::Loop() {
 		lastFrame = currentFrame;
 		//------------------------------
 		loop = OnUpdate();
+		render->f->UpdateFrustum(render->GetProjMatrix() * cam->GetViewMatrix());
 		render->ClearScreen();
 		OnDraw();
 		render->SwapBuffer();

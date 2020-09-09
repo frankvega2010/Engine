@@ -25,7 +25,7 @@ vec3 plpos = { 1.5f,0.f,0.f };
 
 bool Game::OnStart()
 {	
-	render->setClearScreenColor(1.f, 0.f, 1.f,1.f);
+	render->setClearScreenColor(0.8f, 1.f, 0.8f,1.f);
 	
 	sq = new Sprite(render, 1, 1, 1);
 	Material* sqmat = new Material();

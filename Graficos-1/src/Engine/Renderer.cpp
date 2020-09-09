@@ -1,6 +1,6 @@
 #include "Renderer.h"
 #include <glew.h>
-#include <glfw3.h>
+
 using namespace std;
 
 Renderer* Renderer::renderer = nullptr;
@@ -38,6 +38,8 @@ bool Renderer::Start(Window* wnd) {
 	WorldMatrix = glm::mat4(1.0f);
 
 	UpdateWVP();
+
+	f = new Frustum(cam->GetViewMatrix() * GetProjMatrix());
 
 	renderer = this;
 	return true;
@@ -271,7 +273,7 @@ void Renderer::CheckSceneVisibility(Entity3D* root)
 
 void Renderer::CheckEntityVisibility(Entity3D* toRender)
 {
-	toRender->isInFrustum = Camera::thisCam->IsInFrustum(toRender->bounds, toRender->GetPos(), toRender->GetName(), toRender->isInFrustum);
+	toRender->isInFrustum = f->IsBoxVisible(toRender->AABB->GetMin(), toRender->AABB->GetMax(),toRender,toRender->isInFrustum);
 
 	for (list<Entity3D*>::iterator itBeg = toRender->GetChilds().begin(); itBeg != toRender->GetChilds().end(); ++itBeg)
 	{
