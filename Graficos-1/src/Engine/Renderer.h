@@ -2,12 +2,14 @@
 #define RENDERER_H
 
 #include "Window.h"
-#include <glm.hpp>
 #include <gtc/matrix_transform.hpp>
 #include <glfw3.h>
 #include <iostream>
+#include "Entity3D.h"
 #include "Camera.h"
+#include "Frustum.h"
 #include "BSP.h"
+
 
 using namespace std;
 using namespace glm;
@@ -57,6 +59,9 @@ public:
 
 	static Camera* cam;
 	static Renderer* renderer;
+
+	Frustum* f;
+
 	Renderer();
 	~Renderer();
 };

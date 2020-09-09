@@ -1,28 +1,47 @@
 #ifndef FRUSTUM_H
 #define FRUSTUM_H
 
-#include <glm/glm.hpp>
-#include <iostream>
-
+#include "matrix.hpp"
 #include "Entity3D.h"
-#include "Window.h"
-#include "CollisionBox.h"
 
-struct Plane {
-	glm::vec3 n;
-	float D;
-};
+#define DLLEXPORT __declspec(dllexport)
 
-class Frustum
+class DLLEXPORT Frustum
 {
 public:
-	Frustum();
-	~Frustum();
+	//Frustum() {}
 
-	void calculate_frustum(Window* w, glm::vec3 right, glm::vec3 up, glm::vec3 front, glm::vec3 pos, float fov, float near, float far);
-	bool is_in_frustum(Bounds bounds,vec3 position,string name,const bool isInFrustum);
+	// m = ProjectionMatrix * ViewMatrix 
+	Frustum(glm::mat4 m);
+
+	// http://iquilezles.org/www/articles/frustumcorrect/frustumcorrect.htm
+	bool IsBoxVisible(const glm::vec3& minp, const glm::vec3& maxp, Entity3D* ent, const bool isInFrustum) const;
+
+	void UpdateFrustum(glm::mat4 m);
+
 private:
-	std::vector<Plane> planes;
-};
+	enum Planes
+	{
+		Left = 0,
+		Right,
+		Bottom,
+		Top,
+		Near,
+		Far,
+		Count,
+		Combinations = Count * (Count - 1) / 2
+	};
 
-#endif FRUSTUM_H
+	template<Planes i, Planes j>
+	struct ij2k
+	{
+		enum { k = i * (9 - i) / 2 + j - 1 };
+	};
+
+	template<Planes a, Planes b, Planes c>
+	glm::vec3 intersection(const glm::vec3* crosses) const;
+
+	glm::vec4   m_planes[Count];
+	glm::vec3   m_points[8];
+};
+#endif

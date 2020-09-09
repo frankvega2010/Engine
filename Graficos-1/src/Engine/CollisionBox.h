@@ -39,9 +39,13 @@ public:
 	void SetBounds(int boundIndex, vec3 newBoundValue);
 	void GenerateBuffers();
 	void DrawCollisionBox(mat4 worldMatrix);
+	vec3 GetMin();
+	vec3 GetMax();
 	static Shader* wireframeShader;
 	void Setup();
 	vec3 vertices[TOTALVERTICES];
+	vec3 min;
+	vec3 max;
 };
 
 #endif

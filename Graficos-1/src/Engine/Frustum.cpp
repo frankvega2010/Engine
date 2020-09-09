@@ -1,196 +1,95 @@
 #include "Frustum.h"
 
-Frustum::Frustum()
+Frustum::Frustum(glm::mat4 m)
 {
-
+	UpdateFrustum(m);
 }
 
-Frustum::~Frustum()
+// http://iquilezles.org/www/articles/frustumcorrect/frustumcorrect.htm
+bool Frustum::IsBoxVisible(const glm::vec3& minp, const glm::vec3& maxp, Entity3D* ent,const bool isInFrustum) const
 {
+	bool isCurrentlyInFrustum = false;
+	// check box outside/inside of frustum
+	for (int i = 0; i < Count; i++)
+	{
+		if ((glm::dot(m_planes[i], glm::vec4(minp.x, minp.y, minp.z, 1.0f)) < 0.0) &&
+			(glm::dot(m_planes[i], glm::vec4(maxp.x, minp.y, minp.z, 1.0f)) < 0.0) &&
+			(glm::dot(m_planes[i], glm::vec4(minp.x, maxp.y, minp.z, 1.0f)) < 0.0) &&
+			(glm::dot(m_planes[i], glm::vec4(maxp.x, maxp.y, minp.z, 1.0f)) < 0.0) &&
+			(glm::dot(m_planes[i], glm::vec4(minp.x, minp.y, maxp.z, 1.0f)) < 0.0) &&
+			(glm::dot(m_planes[i], glm::vec4(maxp.x, minp.y, maxp.z, 1.0f)) < 0.0) &&
+			(glm::dot(m_planes[i], glm::vec4(minp.x, maxp.y, maxp.z, 1.0f)) < 0.0) &&
+			(glm::dot(m_planes[i], glm::vec4(maxp.x, maxp.y, maxp.z, 1.0f)) < 0.0))
+		{
+			isCurrentlyInFrustum = false;
+			if (isCurrentlyInFrustum != isInFrustum)
+			{
+				cout << ent->GetName() << " is NOT in frustum" << endl;
+			}
+			return isCurrentlyInFrustum;
+		}
+	}
 
+	// check frustum outside/inside box
+	int out;
+	out = 0; for (int i = 0; i < 8; i++) out += ((m_points[i].x > maxp.x) ? 1 : 0); if (out == 8) return false;
+	out = 0; for (int i = 0; i < 8; i++) out += ((m_points[i].x < minp.x) ? 1 : 0); if (out == 8) return false;
+	out = 0; for (int i = 0; i < 8; i++) out += ((m_points[i].y > maxp.y) ? 1 : 0); if (out == 8) return false;
+	out = 0; for (int i = 0; i < 8; i++) out += ((m_points[i].y < minp.y) ? 1 : 0); if (out == 8) return false;
+	out = 0; for (int i = 0; i < 8; i++) out += ((m_points[i].z > maxp.z) ? 1 : 0); if (out == 8) return false;
+	out = 0; for (int i = 0; i < 8; i++) out += ((m_points[i].z < minp.z) ? 1 : 0); if (out == 8) return false;
+
+	isCurrentlyInFrustum = true;
+	if (isCurrentlyInFrustum != isInFrustum)
+	{
+		cout << ent->GetName() << " is IN frustum" << endl;
+	}
+	return isCurrentlyInFrustum;
 }
 
-void Frustum::calculate_frustum(Window* w,glm::vec3 right, glm::vec3 up, glm::vec3 front, glm::vec3 pos, float fov, float near, float far)
+void Frustum::UpdateFrustum(glm::mat4 m)
 {
-	float fovy = fov;
-	float nr = near;
-	float fr = far;
+	m = glm::transpose(m);
+	m_planes[Left] = m[3] + m[0];
+	m_planes[Right] = m[3] - m[0];
+	m_planes[Bottom] = m[3] + m[1];
+	m_planes[Top] = m[3] - m[1];
+	m_planes[Near] = m[3] + m[2];
+	m_planes[Far] = m[3] - m[2];
 
-	float hheight = tan(fovy / 2.0f);
-	float hwidth = hheight * 1.0f;
+	glm::vec3 crosses[Combinations] = {
+		glm::cross(glm::vec3(m_planes[Left]),   glm::vec3(m_planes[Right])),
+		glm::cross(glm::vec3(m_planes[Left]),   glm::vec3(m_planes[Bottom])),
+		glm::cross(glm::vec3(m_planes[Left]),   glm::vec3(m_planes[Top])),
+		glm::cross(glm::vec3(m_planes[Left]),   glm::vec3(m_planes[Near])),
+		glm::cross(glm::vec3(m_planes[Left]),   glm::vec3(m_planes[Far])),
+		glm::cross(glm::vec3(m_planes[Right]),  glm::vec3(m_planes[Bottom])),
+		glm::cross(glm::vec3(m_planes[Right]),  glm::vec3(m_planes[Top])),
+		glm::cross(glm::vec3(m_planes[Right]),  glm::vec3(m_planes[Near])),
+		glm::cross(glm::vec3(m_planes[Right]),  glm::vec3(m_planes[Far])),
+		glm::cross(glm::vec3(m_planes[Bottom]), glm::vec3(m_planes[Top])),
+		glm::cross(glm::vec3(m_planes[Bottom]), glm::vec3(m_planes[Near])),
+		glm::cross(glm::vec3(m_planes[Bottom]), glm::vec3(m_planes[Far])),
+		glm::cross(glm::vec3(m_planes[Top]),    glm::vec3(m_planes[Near])),
+		glm::cross(glm::vec3(m_planes[Top]),    glm::vec3(m_planes[Far])),
+		glm::cross(glm::vec3(m_planes[Near]),   glm::vec3(m_planes[Far]))
+	};
 
-	glm::vec3 farright = (hwidth * fr * right) * (float)w->GetWidth() / (float)w->GetHeigth();
-	glm::vec3 fartop = (hheight * fr * up);
-	glm::vec3 nearright = (hwidth * nr * right) * (float)w->GetWidth() / (float)w->GetHeigth();
-	glm::vec3 neartop = (hheight * nr * up);
-	glm::vec3 center = pos + fr * front;
-	glm::vec3 nearcenter = pos + nr * -front;
-
-	glm::vec3 ftl = center - farright + fartop; //far top left
-	glm::vec3 fbr = center + farright - fartop; //far bottom right
-	glm::vec3 ftr = center + farright + fartop; //far bottom right
-	glm::vec3 fbl = center - farright - fartop; //far bottom right
-	glm::vec3 ntl = nearcenter - nearright + neartop; //far top left
-	glm::vec3 nbr = nearcenter + nearright - neartop; //far bottom right
-	glm::vec3 ntr = nearcenter + nearright + neartop; //far bottom right
-	glm::vec3 nbl = nearcenter - nearright - neartop; //far bottom right
-	planes.clear();
-	// FAR
-	glm::vec3 v = ftr - ftl;
-	glm::vec3 u = fbr - ftl;
-	glm::vec3 n = glm::cross(v, u);
-	float D = -glm::dot(n, ftl);
-	planes.push_back(Plane{ n, D });
-	// NEAR
-	v = ntr - ntl;
-	u = nbr - ntl;
-	n = glm::cross(v, u);
-	D = -glm::dot(n, ntl);
-	planes.push_back(Plane{ n, D });
-	// TOP
-	v = ftr - ftl;
-	u = ntr - ftl;
-	n = glm::cross(v, u);
-	D = -glm::dot(n, ftl);
-	planes.push_back(Plane{ n, D });
-	// BOTTOM
-	v = fbr - fbl;
-	u = nbr - fbl;
-	n = glm::cross(v, u);
-	D = -glm::dot(n, fbl) * 0.8f;
-	planes.push_back(Plane{ n, D });
-	// RIGHT
-	v = fbr - nbr;
-	u = ntr - nbr;
-	n = glm::cross(v, u);
-	D = -glm::dot(n, nbr);
-	planes.push_back(Plane{ n, D });
-	// LEFT
-	v = fbl - nbl;
-	u = ntl - nbl;
-	n = glm::cross(v, u);
-	D = -glm::dot(n, nbl);
-	planes.push_back(Plane{ n, D });
+	m_points[0] = intersection<Left, Bottom, Near>(crosses);
+	m_points[1] = intersection<Left, Top, Near>(crosses);
+	m_points[2] = intersection<Right, Bottom, Near>(crosses);
+	m_points[3] = intersection<Right, Top, Near>(crosses);
+	m_points[4] = intersection<Left, Bottom, Far>(crosses);
+	m_points[5] = intersection<Left, Top, Far>(crosses);
+	m_points[6] = intersection<Right, Bottom, Far>(crosses);
+	m_points[7] = intersection<Right, Top, Far>(crosses);
 }
 
-bool Frustum::is_in_frustum(Bounds bounds,vec3 position,string name, const bool isInFrustum)
+template<Frustum::Planes a, Frustum::Planes b, Frustum::Planes c>
+glm::vec3 Frustum::intersection(const glm::vec3* crosses) const
 {
-	bool isEntityCurrentlyInFrustum = false;
-	glm::vec3 min, max;
-
-	min.x = bounds.minX;
-	min.y = bounds.minY;
-	min.z = bounds.minZ;
-
-	max.x = bounds.maxX;
-	max.y = bounds.maxY;
-	max.z = bounds.maxZ;
-
-	glm::vec3 pos = position;
-	glm::vec3 boxnearbottomleft = min + pos;
-	glm::vec3 boxnearbottomright = glm::vec3(-min.x, min.y, min.z) + pos;
-	glm::vec3 boxneartopright = glm::vec3(-min.x, -min.y, min.z) + pos;
-	glm::vec3 boxneartopleft = glm::vec3(min.x, -min.y, min.z) + pos;
-	glm::vec3 boxfartopright = max + pos;
-	glm::vec3 boxfartopleft = glm::vec3(-max.x, max.y, max.z) + pos;
-	glm::vec3 boxfarbottomleft = glm::vec3(-max.x, -max.y, max.z) + pos;
-	glm::vec3 boxfarbottomright = glm::vec3(max.x, -max.y, max.z) + pos;
-
-	if (planes[0].n.x * boxnearbottomleft.x + planes[0].n.y * boxnearbottomleft.y + planes[0].n.z * boxnearbottomleft.z + planes[0].D > 0 && planes[0].n.x * boxnearbottomright.x + planes[0].n.y * boxnearbottomright.y + planes[0].n.z * boxnearbottomright.z + planes[0].D > 0 &&
-		planes[0].n.x * boxneartopright.x + planes[0].n.y * boxneartopright.y + planes[0].n.z * boxneartopright.z + planes[0].D > 0 && planes[0].n.x * boxneartopleft.x + planes[0].n.y * boxneartopleft.y + planes[0].n.z * boxneartopleft.z + planes[0].D > 0 &&
-		planes[0].n.x * boxfarbottomleft.x + planes[0].n.y * boxfarbottomleft.y + planes[0].n.z * boxfarbottomleft.z + planes[0].D > 0 && planes[0].n.x * boxfarbottomright.x + planes[0].n.y * boxfarbottomright.y + planes[0].n.z * boxfarbottomright.z + planes[0].D > 0 &&
-		planes[0].n.x * boxfartopright.x + planes[0].n.y * boxfartopright.y + planes[0].n.z * boxfartopright.z + planes[0].D > 0 && planes[0].n.x * boxfartopleft.x + planes[0].n.y * boxfartopleft.y + planes[0].n.z * boxfartopleft.z + planes[0].D > 0)
-	{
-		isEntityCurrentlyInFrustum = false;
-		if (isEntityCurrentlyInFrustum != isInFrustum)
-		{
-			cout << name << " is not in frustum" << endl;
-		}
-
-		return isEntityCurrentlyInFrustum;
-	}
-		
-
-	// NEAR
-	if (planes[1].n.x * boxnearbottomleft.x + planes[1].n.y * boxnearbottomleft.y + planes[1].n.z * boxnearbottomleft.z + planes[1].D < 0 && planes[1].n.x * boxnearbottomright.x + planes[1].n.y * boxnearbottomright.y + planes[1].n.z * boxnearbottomright.z + planes[1].D < 0 &&
-		planes[1].n.x * boxneartopright.x + planes[1].n.y * boxneartopright.y + planes[1].n.z * boxneartopright.z + planes[1].D < 0 && planes[1].n.x * boxneartopleft.x + planes[1].n.y * boxneartopleft.y + planes[1].n.z * boxneartopleft.z + planes[1].D < 0 &&
-		planes[1].n.x * boxfarbottomleft.x + planes[1].n.y * boxfarbottomleft.y + planes[1].n.z * boxfarbottomleft.z + planes[1].D < 0 && planes[1].n.x * boxfarbottomright.x + planes[1].n.y * boxfarbottomright.y + planes[1].n.z * boxfarbottomright.z + planes[1].D < 0 &&
-		planes[1].n.x * boxfartopright.x + planes[1].n.y * boxfartopright.y + planes[1].n.z * boxfartopright.z + planes[1].D < 0 && planes[1].n.x * boxfartopleft.x + planes[1].n.y * boxfartopleft.y + planes[1].n.z * boxfartopleft.z + planes[1].D < 0)
-	{
-		isEntityCurrentlyInFrustum = false;
-		if (isEntityCurrentlyInFrustum != isInFrustum)
-		{
-			cout << name << " is not in frustum" << endl;
-		}
-
-		return isEntityCurrentlyInFrustum;
-	}
-
-	// TOP
-	if (planes[2].n.x * boxnearbottomleft.x + planes[2].n.y * boxnearbottomleft.y + planes[2].n.z * boxnearbottomleft.z + planes[2].D < 0 && planes[2].n.x * boxnearbottomright.x + planes[2].n.y * boxnearbottomright.y + planes[2].n.z * boxnearbottomright.z + planes[2].D < 0 &&
-		planes[2].n.x * boxneartopright.x + planes[2].n.y * boxneartopright.y + planes[2].n.z * boxneartopright.z + planes[2].D < 0 && planes[2].n.x * boxneartopleft.x + planes[2].n.y * boxneartopleft.y + planes[2].n.z * boxneartopleft.z + planes[2].D < 0 &&
-		planes[2].n.x * boxfarbottomleft.x + planes[2].n.y * boxfarbottomleft.y + planes[2].n.z * boxfarbottomleft.z + planes[2].D < 0 && planes[2].n.x * boxfarbottomright.x + planes[2].n.y * boxfarbottomright.y + planes[2].n.z * boxfarbottomright.z + planes[2].D < 0 &&
-		planes[2].n.x * boxfartopright.x + planes[2].n.y * boxfartopright.y + planes[2].n.z * boxfartopright.z + planes[2].D < 0 && planes[2].n.x * boxfartopleft.x + planes[2].n.y * boxfartopleft.y + planes[2].n.z * boxfartopleft.z + planes[2].D < 0)
-	{
-		isEntityCurrentlyInFrustum = false;
-		if (isEntityCurrentlyInFrustum != isInFrustum)
-		{
-			cout << name << " is not in frustum" << endl;
-		}
-
-		return isEntityCurrentlyInFrustum;
-	}
-
-	// BOTTOM
-	if (planes[3].n.x * boxnearbottomleft.x + planes[3].n.y * boxnearbottomleft.y + planes[3].n.z * boxnearbottomleft.z + planes[3].D > 0 && planes[3].n.x * boxnearbottomright.x + planes[3].n.y * boxnearbottomright.y + planes[3].n.z * boxnearbottomright.z + planes[3].D > 0 &&
-		planes[3].n.x * boxneartopright.x + planes[3].n.y * boxneartopright.y + planes[3].n.z * boxneartopright.z + planes[3].D > 0 && planes[3].n.x * boxneartopleft.x + planes[3].n.y * boxneartopleft.y + planes[3].n.z * boxneartopleft.z + planes[3].D > 0 &&
-		planes[3].n.x * boxfarbottomleft.x + planes[3].n.y * boxfarbottomleft.y + planes[3].n.z * boxfarbottomleft.z + planes[3].D > 0 && planes[3].n.x * boxfarbottomright.x + planes[3].n.y * boxfarbottomright.y + planes[3].n.z * boxfarbottomright.z + planes[3].D > 0 &&
-		planes[3].n.x * boxfartopright.x + planes[3].n.y * boxfartopright.y + planes[3].n.z * boxfartopright.z + planes[3].D > 0 && planes[3].n.x * boxfartopleft.x + planes[3].n.y * boxfartopleft.y + planes[3].n.z * boxfartopleft.z + planes[3].D > 0)
-	{
-		isEntityCurrentlyInFrustum = false;
-		if (isEntityCurrentlyInFrustum != isInFrustum)
-		{
-			cout << name << " is not in frustum" << endl;
-		}
-
-		return isEntityCurrentlyInFrustum;
-	}
-
-	// RIGHT
-	if (planes[4].n.x * boxnearbottomleft.x + planes[4].n.y * boxnearbottomleft.y + planes[4].n.z * boxnearbottomleft.z + planes[4].D > 0 && planes[4].n.x * boxnearbottomright.x + planes[4].n.y * boxnearbottomright.y + planes[4].n.z * boxnearbottomright.z + planes[4].D > 0 &&
-		planes[4].n.x * boxneartopright.x + planes[4].n.y * boxneartopright.y + planes[4].n.z * boxneartopright.z + planes[4].D > 0 && planes[4].n.x * boxneartopleft.x + planes[4].n.y * boxneartopleft.y + planes[4].n.z * boxneartopleft.z + planes[4].D > 0 &&
-		planes[4].n.x * boxfarbottomleft.x + planes[4].n.y * boxfarbottomleft.y + planes[4].n.z * boxfarbottomleft.z + planes[4].D > 0 && planes[4].n.x * boxfarbottomright.x + planes[4].n.y * boxfarbottomright.y + planes[4].n.z * boxfarbottomright.z + planes[4].D > 0 &&
-		planes[4].n.x * boxfartopright.x + planes[4].n.y * boxfartopright.y + planes[4].n.z * boxfartopright.z + planes[4].D > 0 && planes[4].n.x * boxfartopleft.x + planes[4].n.y * boxfartopleft.y + planes[4].n.z * boxfartopleft.z + planes[4].D > 0)
-	{
-		isEntityCurrentlyInFrustum = false;
-		if (isEntityCurrentlyInFrustum != isInFrustum)
-		{
-			cout << name << " is not in frustum" << endl;
-		}
-
-		return isEntityCurrentlyInFrustum;
-	}
-
-	// LEFT
-	if (planes[5].n.x * boxnearbottomleft.x + planes[5].n.y * boxnearbottomleft.y + planes[5].n.z * boxnearbottomleft.z + planes[5].D < 0 && planes[5].n.x * boxnearbottomright.x + planes[5].n.y * boxnearbottomright.y + planes[5].n.z * boxnearbottomright.z + planes[5].D < 0 &&
-		planes[5].n.x * boxneartopright.x + planes[5].n.y * boxneartopright.y + planes[5].n.z * boxneartopright.z + planes[5].D < 0 && planes[5].n.x * boxneartopleft.x + planes[5].n.y * boxneartopleft.y + planes[5].n.z * boxneartopleft.z + planes[5].D < 0 &&
-		planes[5].n.x * boxfarbottomleft.x + planes[5].n.y * boxfarbottomleft.y + planes[5].n.z * boxfarbottomleft.z + planes[5].D < 0 && planes[5].n.x * boxfarbottomright.x + planes[5].n.y * boxfarbottomright.y + planes[5].n.z * boxfarbottomright.z + planes[5].D < 0 &&
-		planes[5].n.x * boxfartopright.x + planes[5].n.y * boxfartopright.y + planes[5].n.z * boxfartopright.z + planes[5].D < 0 && planes[5].n.x * boxfartopleft.x + planes[5].n.y * boxfartopleft.y + planes[5].n.z * boxfartopleft.z + planes[5].D < 0)
-	{
-		isEntityCurrentlyInFrustum = false;
-		if (isEntityCurrentlyInFrustum != isInFrustum)
-		{
-			cout << name << " is not in frustum" << endl;
-		}
-
-		return isEntityCurrentlyInFrustum;
-	}
-
-	isEntityCurrentlyInFrustum = true;
-	if (isEntityCurrentlyInFrustum != isInFrustum)
-	{
-		cout << name << " is in frustum" << endl;
-	}
-
-	return isEntityCurrentlyInFrustum;
+	float D = glm::dot(glm::vec3(m_planes[a]), crosses[ij2k<b, c>::k]);
+	glm::vec3 res = glm::mat3(crosses[ij2k<b, c>::k], -crosses[ij2k<a, c>::k], crosses[ij2k<a, b>::k]) *
+		glm::vec3(m_planes[a].w, m_planes[b].w, m_planes[c].w);
+	return res * (-1.0f / D);
 }
