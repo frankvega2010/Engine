@@ -56,10 +56,11 @@ bool Game::OnStart()
 	cam->SetCameraSpeed(2.5f);
 	
 	m = new Model("res/model/backpack/backpack.obj", true, false);
+	m->SetName("BACKPACK");
 
 	//m2 = new Model("res/model/spider/Only_Spider_with_Animations_Export.obj", true);
 
-	m3 = new Model("res/model/Planes.fbx", true, true);
+	m3 = new Model("res/model/Planes.fbx", true, false);
 
 	//m4 = new Model("res/model/nave2/Intergalactic_Spaceship-(Wavefront).obj", false);
 

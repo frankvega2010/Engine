@@ -138,6 +138,7 @@ void Entity3D::Draw(Shader shader)
 {
 	if (name == "root")
 	{
+		// inicio de chequeo BSP
 		Renderer::renderer->CheckSceneVisibility(this);
 	}
 

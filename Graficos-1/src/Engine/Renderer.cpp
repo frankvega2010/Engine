@@ -174,7 +174,7 @@ void Renderer::AddBSPPlane(BSP newPlane)
 	bspPlanes.push_back(newPlane);
 }
 
-bool Renderer::IsVisibleForBSP(glm::vec3 pos)
+/*bool Renderer::IsVisibleForBSP(glm::vec3 pos)
 {
 	vec3 CameraPos = Camera::thisCam->GetCameraPosition();
 
@@ -184,7 +184,7 @@ bool Renderer::IsVisibleForBSP(glm::vec3 pos)
 			return false;
 	}
 	return true;
-}
+}*/
 
 void Renderer::CollectAllEntityTree(list<Entity3D*>& entities, Entity3D* entity)
 {
@@ -197,16 +197,12 @@ void Renderer::CollectAllEntityTree(list<Entity3D*>& entities, Entity3D* entity)
 		{
 			Entity3D* ent2 = (*itBeg2);
 			CollectAllEntityTree(entities, ent2);
-			//CollectAllEntityTree(entities, ent->GetChilds());
 		}
 		
 	}
-
-	/*for (int i = 0; i < entity->GetChilds().size(); i++)
-		CollectAllEntityTree(entities, entity->GetChilds()[i]);*/
 }
 
-bool Renderer::IsVisibleForBSP(glm::vec3 boxMin, glm::vec3 boxMax)
+/*bool Renderer::IsVisibleForBSP(glm::vec3 boxMin, glm::vec3 boxMax)
 {
 	vec3 CameraPos = Camera::thisCam->GetCameraPosition();
 
@@ -234,18 +230,19 @@ bool Renderer::IsVisibleForBSP(glm::vec3 boxMin, glm::vec3 boxMax)
 
 
 	return true;
-}
+}*/
 
 void Renderer::CheckSceneVisibility(Entity3D* root)
 {
 	if (isBSPEnabled)
 	{
 		list<Entity3D*> entities;
-		CollectAllEntityTree(entities, root);
+		CollectAllEntityTree(entities, root); // Agarra todas las entities (incluyendo los hijos)
 		for (int i = 0; i < bspPlanes.size(); i++)
 		{
+
 			bspPlanes[i].SetCameraSide(bspPlanes[i].CalculateSide(Camera::thisCam->GetCameraPosition()));
-			entities.erase(remove_if(entities.begin(), entities.end(), [i](Entity3D* entity)
+			entities.erase(remove_if(entities.begin(), entities.end(), [i](Entity3D* entity) // borra los elementos de la lista (planos) que devuelvan TRUE.
 			{
 				glm::vec3 min, max;
 
@@ -282,7 +279,6 @@ void Renderer::CheckEntityVisibility(Entity3D* toRender)
 			Entity3D* ent2 = (*itBeg2);
 			CheckEntityVisibility(ent2);
 		}
-
 	}
 }
 
