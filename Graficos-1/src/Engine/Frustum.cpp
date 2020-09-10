@@ -5,7 +5,6 @@ Frustum::Frustum(glm::mat4 m)
 	UpdateFrustum(m);
 }
 
-// http://iquilezles.org/www/articles/frustumcorrect/frustumcorrect.htm
 bool Frustum::IsBoxVisible(const glm::vec3& minp, const glm::vec3& maxp, Entity3D* ent,const bool isInFrustum) const
 {
 	bool isCurrentlyInFrustum = false;

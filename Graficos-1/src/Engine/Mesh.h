@@ -51,6 +51,7 @@ public:
 	
 	// render the mesh
 	void Draw(Shader shader);
+	void DrawBSP(Shader shader);
 
 	void GetVerticesPositions(vector<vec3> &vertices);
 

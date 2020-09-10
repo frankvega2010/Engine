@@ -10,8 +10,6 @@
 #include "PointLight.h"
 #include "SpotLight.h"
 
-Sprite* sq;
-Sprite* spr;
 Shader* shad;
 
 DirectionalLight* directionalLight;
@@ -26,22 +24,6 @@ vec3 plpos = { 1.5f,0.f,0.f };
 bool Game::OnStart()
 {	
 	render->setClearScreenColor(0.8f, 1.f, 0.8f,1.f);
-	
-	sq = new Sprite(render, 1, 1, 1);
-	Material* sqmat = new Material();
-	sqmat->LoadShaders("res/shaders/TextureVertexShader.txt", "res/shaders/TextureFragmentShader.txt");
-	sq->SetMaterial(sqmat);
-	sq->LoadMaterial("res/model/alien.jpg", false);
-	sq->SetPos(5.0f, 0.0f, -10.0f);
-
-	spr = new Sprite(render,2,1,2);
-	Material* sprmat = new Material();
-	sprmat->LoadShaders("res/shaders/TextureVertexShader.txt", "res/shaders/TextureFragmentShader.txt");
-	spr->SetMaterial(sprmat);
-	spr->LoadMaterial("res/model/megaman.png",true);
-	spr->SetPos(-10.0f, 0.0f, -10.0f);
-
-	//////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	shad = new Shader("res/shaders/3DVertexShader.txt", "res/shaders/3DFragmentShader.txt");
 
@@ -259,16 +241,11 @@ bool Game::OnUpdate()
 
 void Game::OnDraw()
 {
-	sq->Draw();
-	spr->Draw();
 	BaseGame::GetRootEntity()->Draw(*shad);
 }
 
 bool Game::OnStop()
 {
-	delete spr;
-	delete sq;
-
 	delete lightsList;
 	
 	return true;

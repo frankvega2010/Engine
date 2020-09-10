@@ -14,7 +14,6 @@ public:
 	// m = ProjectionMatrix * ViewMatrix 
 	Frustum(glm::mat4 m);
 
-	// http://iquilezles.org/www/articles/frustumcorrect/frustumcorrect.htm
 	bool IsBoxVisible(const glm::vec3& minp, const glm::vec3& maxp, Entity3D* ent, const bool isInFrustum) const;
 
 	void UpdateFrustum(glm::mat4 m);
