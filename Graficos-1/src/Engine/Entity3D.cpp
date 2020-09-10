@@ -150,19 +150,28 @@ void Entity3D::Draw(Shader shader)
 			if (ent->entityType == mesh)
 			{
 				Mesh* m = static_cast<Mesh*> (ent);
-				m->Draw(shader);
+				if (ent->isBSP)
+				{
+					m->DrawBSP(shader);
+				}
+				else
+				{
+					m->Draw(shader);
+				}
+				
 			}
 			else
 			{
 				ent->Draw(shader);
 			}
 		}
+
 		
 		ent->SetVisibility(true);
 	}
 	
 	//isVisible = true;
-	AABB->DrawCollisionBox(worldModel);
+	//AABB->DrawCollisionBox(worldModel);
 }
 
 void Entity3D::UpdateModelMatrix()
