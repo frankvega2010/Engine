@@ -50,14 +50,15 @@ public:
 	glm::mat4 GetProjMatrix();
 	static void AddBSPPlane(class BSP newPlane);
 	void CheckSceneVisibility(Entity3D* root);
-	void CollectAllEntityTree(list<Entity3D*>& entities, Entity3D* entity);
+	void CollectAllRootEntities(list<Entity3D*>& entities, Entity3D* entity);
 	void CheckEntityVisibility(Entity3D* toRender);
 	bool isBSPEnabled = true;
 	bool isFrustumCullingEnabled = true;
 	bool IsEntityInCameraSide(Entity3D* entity, BSP currentPlane);
 	static Camera* cam;
+	
 	static Renderer* renderer;
-
+	
 	Frustum* f;
 
 	Renderer();

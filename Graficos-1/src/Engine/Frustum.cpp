@@ -23,7 +23,14 @@ bool Frustum::IsBoxVisible(const glm::vec3& minp, const glm::vec3& maxp, Entity3
 			isCurrentlyInFrustum = false;
 			if (isCurrentlyInFrustum != isInFrustum)
 			{
-				cout << ent->GetName() << " is NOT in frustum" << endl;
+				if (Entity3D::entitiesInScreen.size() > 0)
+				{
+					Entity3D::entitiesInScreen.pop_back();
+				}
+				
+				//system("cls");
+				cout << "Entities In Screen: " << Entity3D::entitiesInScreen.size() << endl;
+				//cout << ent->GetName() << " is NOT in frustum" << endl;
 			}
 			return isCurrentlyInFrustum;
 		}
@@ -41,7 +48,10 @@ bool Frustum::IsBoxVisible(const glm::vec3& minp, const glm::vec3& maxp, Entity3
 	isCurrentlyInFrustum = true;
 	if (isCurrentlyInFrustum != isInFrustum)
 	{
-		cout << ent->GetName() << " is IN frustum" << endl;
+		Entity3D::entitiesInScreen.push_back(ent);
+		//system("cls");
+		cout << "Entities In Screen: " << Entity3D::entitiesInScreen.size() << endl;
+		//cout << ent->GetName() << " is IN frustum" << endl;
 	}
 	return isCurrentlyInFrustum;
 }

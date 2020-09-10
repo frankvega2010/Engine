@@ -7,6 +7,7 @@ Renderer* Renderer::renderer = nullptr;
 Camera* Renderer::cam = new Camera();
 vector<BSP> Renderer::bspPlanes;
 
+
 bool Renderer::Start(Window* wnd) {
 	cout << "Renderer::Start()" << endl;
 	win = wnd;
@@ -176,12 +177,16 @@ void Renderer::AddBSPPlane(BSP newPlane)
 	bspPlanes.push_back(newPlane);
 }
 
-void Renderer::CollectAllEntityTree(list<Entity3D*>& entities, Entity3D* entity)
+void Renderer::CollectAllRootEntities(list<Entity3D*>& entities, Entity3D* entity)
 {
 	for (list<Entity3D*>::iterator itBeg = entity->GetChilds().begin(); itBeg != entity->GetChilds().end(); ++itBeg)
 	{
 		Entity3D* ent = (*itBeg);
-		entities.push_back(ent);		
+		if (!ent->GetBSP())
+		{
+			entities.push_back(ent);
+		}
+				
 	}
 }
 
@@ -190,7 +195,7 @@ void Renderer::CheckSceneVisibility(Entity3D* root)
 	if (isBSPEnabled)
 	{
 		list<Entity3D*> entities;
-		CollectAllEntityTree(entities, root); // Agarra todas las entities principales (root de modelos)
+		CollectAllRootEntities(entities, root); // Agarra todas las entities principales (root de modelos)
 		for (int i = 0; i < bspPlanes.size(); i++)
 		{
 			bspPlanes[i].SetCameraSide(bspPlanes[i].CalculateSide(Camera::thisCam->GetCameraPosition()));
@@ -245,14 +250,17 @@ bool Renderer::IsEntityInCameraSide(Entity3D* entity, BSP currentPlane)
 
 void Renderer::CheckEntityVisibility(Entity3D* toRender)
 {
-	toRender->isInFrustum = f->IsBoxVisible(toRender->AABB->GetMin(), toRender->AABB->GetMax(),toRender,toRender->isInFrustum);
-
-	if (toRender->isInFrustum)
+	if (!toRender->GetBSP())
 	{
-		for (list<Entity3D*>::iterator itBeg = toRender->GetChilds().begin(); itBeg != toRender->GetChilds().end(); ++itBeg)
+		toRender->isInFrustum = f->IsBoxVisible(toRender->AABB->GetMin(), toRender->AABB->GetMax(), toRender, toRender->isInFrustum);
+
+		if (toRender->isInFrustum)
 		{
-			Entity3D* ent = (*itBeg);
-			CheckEntityVisibility(ent);
+			for (list<Entity3D*>::iterator itBeg = toRender->GetChilds().begin(); itBeg != toRender->GetChilds().end(); ++itBeg)
+			{
+				Entity3D* ent = (*itBeg);
+				CheckEntityVisibility(ent);
+			}
 		}
 	}
 	

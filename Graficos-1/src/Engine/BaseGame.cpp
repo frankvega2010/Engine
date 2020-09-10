@@ -9,6 +9,7 @@ double BaseGame::deltaTime = 0.0f;
 
 Entity3D* BaseGame::rootEntity = nullptr;
 
+
 BaseGame::BaseGame() {
 
 }
@@ -57,6 +58,7 @@ void BaseGame::Loop() {
 		OnDraw();
 		render->SwapBuffer();
 		window->PollEvents();
+		//system("cls");
 	}
 }
 

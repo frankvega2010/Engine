@@ -6,6 +6,8 @@
 #include "Camera.h"
 #include "Model.h"
 
+vector<Entity3D*> Entity3D::entitiesInScreen;
+
 Entity3D::Entity3D(Entity3D* newParent)
 {
 	parent = nullptr;
@@ -24,6 +26,7 @@ Entity3D::Entity3D(Entity3D* newParent)
 	else if(name != "root" || this != BaseGame::GetRootEntity())
 	{	
 		SetParent(BaseGame::GetRootEntity());
+		
 	}
 
 	entityType = entity;
@@ -261,6 +264,12 @@ bool Entity3D::GetBSP()
 void Entity3D::SetBSP(bool bspState)
 {
 	isBSP = bspState;
+
+	for (list<Entity3D*>::iterator itBeg = childs.begin(); itBeg != childs.end(); ++itBeg)
+	{
+		Entity3D* ent = (*itBeg);
+		ent->SetBSP(isBSP);
+	}
 }
 
 bool Entity3D::IsRootEntity()
@@ -275,21 +284,78 @@ void Entity3D::SetIsRoot(bool rootState)
 
 void Entity3D::SetVisibilityAll(bool visState)
 {
+	bool canChange = false;
+	if (isVisible != visState)
+	{
+		canChange = true;
+	}
+
+
 	isVisible = visState;
 
-	if (!isVisible)
+	if (canChange)
 	{
-		for (list<Entity3D*>::iterator itBeg = childs.begin(); itBeg != childs.end(); ++itBeg)
+		if (isVisible)
 		{
-			Entity3D* ent = (*itBeg);
-			ent->SetVisibility(isVisible);
+			//Entity3D::entitiesInScreen.insert(Entity3D::entitiesInScreen.begin(), this);
+			Entity3D::entitiesInScreen.push_back(this);
 		}
+		else
+		{
+			if (Entity3D::entitiesInScreen.size() > 0)
+			{
+				Entity3D::entitiesInScreen.pop_back();
+			}
+			/*Entity3D::entitiesInScreen.erase(remove_if(Entity3D::entitiesInScreen.begin(), Entity3D::entitiesInScreen.end(), [this](Entity3D* entity)
+			{
+				if (this == entity)
+				{
+					return true;
+				}
+			}), Entity3D::entitiesInScreen.end());*/
+
+		}
+		//system("cls");
+		cout << "Entities In Screen: " << Entity3D::entitiesInScreen.size() << endl;
+	}
+	
+
+	for (list<Entity3D*>::iterator itBeg = childs.begin(); itBeg != childs.end(); ++itBeg)
+	{
+		Entity3D* ent = (*itBeg);
+		ent->SetVisibilityAll(isVisible);
 	}
 }
 
 void Entity3D::SetVisibility(bool visState)
 {
-	isVisible = visState;	
+	bool canChange = false;
+	if (isVisible != visState)
+	{
+		canChange = true;
+	}
+
+	isVisible = visState;
+
+	if (canChange)
+	{
+		if (isVisible)
+		{
+			Entity3D::entitiesInScreen.push_back(this);
+		}
+		else
+		{
+			if (Entity3D::entitiesInScreen.size() > 0)
+			{
+				Entity3D::entitiesInScreen.pop_back();
+			}
+		}
+
+		//system("cls");
+		//Entity3D::entitiesInScreen.max_size
+		cout << "Entities In Screen: " << Entity3D::entitiesInScreen.size() << endl;
+	}
+
 }
 
 bool Entity3D::GetVisibility()

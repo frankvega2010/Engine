@@ -29,6 +29,7 @@ public:
 	void Loop();
 	static float GetDeltaTime();
 	static Entity3D* GetRootEntity();
+	
 	BaseGame();
 	~BaseGame();
 };
