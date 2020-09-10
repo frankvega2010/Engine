@@ -138,6 +138,8 @@ void Entity3D::SetScale(vec3 sc)
 
 void Entity3D::Draw(Shader shader)
 {
+	//SetVisibility(true);
+
 	if (name == "root")
 	{
 		// inicio de chequeo BSP
@@ -170,10 +172,10 @@ void Entity3D::Draw(Shader shader)
 		}
 
 		
-		ent->SetVisibility(true);
+		//ent->SetVisibility(true);
+		//ent->isVisible = true;
 	}
 	
-	//isVisible = true;
 	//AABB->DrawCollisionBox(worldModel);
 }
 
@@ -271,22 +273,23 @@ void Entity3D::SetIsRoot(bool rootState)
 	isRoot = rootState;
 }
 
+void Entity3D::SetVisibilityAll(bool visState)
+{
+	isVisible = visState;
+
+	if (!isVisible)
+	{
+		for (list<Entity3D*>::iterator itBeg = childs.begin(); itBeg != childs.end(); ++itBeg)
+		{
+			Entity3D* ent = (*itBeg);
+			ent->SetVisibility(isVisible);
+		}
+	}
+}
+
 void Entity3D::SetVisibility(bool visState)
 {
-	/*if (visState != isVisible)
-	{
-		if (visState)
-		{
-			cout << name << " is visible" << endl;
-		}
-		else
-		{
-			cout << name << " is not visible" << endl;
-		}
-		
-	}*/
-
-	isVisible = visState;
+	isVisible = visState;	
 }
 
 bool Entity3D::GetVisibility()

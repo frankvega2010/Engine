@@ -81,6 +81,7 @@ public:
 	void SetBSP(bool bspState);
 	bool IsRootEntity();
 	void SetIsRoot(bool rootState);
+	void SetVisibilityAll(bool visState);
 	void SetVisibility(bool visState);
 	bool GetVisibility();
 	////////////////////////////

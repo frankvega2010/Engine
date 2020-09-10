@@ -42,7 +42,9 @@ bool Game::OnStart()
 
 	//m2 = new Model("res/model/spider/Only_Spider_with_Animations_Export.obj", true);
 
-	m3 = new Model("res/model/Planes.fbx", true, false);
+	m3 = new Model("res/model/Planes.fbx", true, true);
+
+	
 
 	//m4 = new Model("res/model/nave2/Intergalactic_Spaceship-(Wavefront).obj", false);
 
@@ -83,7 +85,10 @@ bool Game::OnStart()
 		(*iB)->SetSpecular(specular);
 	}
 
+	//rootEntity;
 	
+	BaseGame::GetRootEntity();
+
 	return true;
 }
 
