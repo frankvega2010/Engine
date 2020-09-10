@@ -33,6 +33,7 @@ protected:
 	vec3 rotation;
 	vec3 scale;
 	
+	bool isRoot;
 	bool isVisible;
 	bool isBSP;
 	glm::mat4 modelMatrix = glm::mat4(1.0f);
@@ -78,6 +79,8 @@ public:
 	CollisionBox* AABB;
 	bool GetBSP();
 	void SetBSP(bool bspState);
+	bool IsRootEntity();
+	void SetIsRoot(bool rootState);
 	void SetVisibility(bool visState);
 	bool GetVisibility();
 	////////////////////////////

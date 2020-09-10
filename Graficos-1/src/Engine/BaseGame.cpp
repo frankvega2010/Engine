@@ -36,6 +36,7 @@ bool BaseGame::Start(int h, int w, char* name) {
 	lastFrame = 0.0f;
 
 	rootEntity = new Entity3D("root");
+	rootEntity->SetIsRoot(true);
 
 	CollisionBox::wireframeShader = new Shader("res/shaders/SimpleVertexShader.txt", "res/shaders/SimpleFragmentShader.txt");
 	

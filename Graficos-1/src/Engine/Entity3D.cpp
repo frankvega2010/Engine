@@ -14,10 +14,12 @@ Entity3D::Entity3D(Entity3D* newParent)
 	scale = vec3(1.f);
 	isVisible = true;
 	isInFrustum = true;
+	isRoot = false;
 	
 	if(newParent)
 	{
 		SetParent(newParent);
+		
 	}
 	else if(name != "root" || this != BaseGame::GetRootEntity())
 	{	
@@ -248,6 +250,16 @@ bool Entity3D::GetBSP()
 void Entity3D::SetBSP(bool bspState)
 {
 	isBSP = bspState;
+}
+
+bool Entity3D::IsRootEntity()
+{
+	return isRoot;
+}
+
+void Entity3D::SetIsRoot(bool rootState)
+{
+	isRoot = rootState;
 }
 
 void Entity3D::SetVisibility(bool visState)
