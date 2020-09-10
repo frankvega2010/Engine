@@ -23,14 +23,12 @@ bool Frustum::IsBoxVisible(const glm::vec3& minp, const glm::vec3& maxp, Entity3
 			isCurrentlyInFrustum = false;
 			if (isCurrentlyInFrustum != isInFrustum)
 			{
-				if (Entity3D::entitiesInScreen.size() > 0)
+				/*Entity3D::entitiesInScreen--;
+				if (Entity3D::entitiesInScreen < 0)
 				{
-					Entity3D::entitiesInScreen.pop_back();
+					Entity3D::entitiesInScreen = 0;
 				}
-				
-				//system("cls");
-				cout << "Entities In Screen: " << Entity3D::entitiesInScreen.size() << endl;
-				//cout << ent->GetName() << " is NOT in frustum" << endl;
+				cout << "Entities In Screen: " << Entity3D::entitiesInScreen << endl;*/
 			}
 			return isCurrentlyInFrustum;
 		}
@@ -48,9 +46,16 @@ bool Frustum::IsBoxVisible(const glm::vec3& minp, const glm::vec3& maxp, Entity3
 	isCurrentlyInFrustum = true;
 	if (isCurrentlyInFrustum != isInFrustum)
 	{
-		Entity3D::entitiesInScreen.push_back(ent);
+		if (ent->entityType == mesh)
+		{
+			/*if()
+
+			Entity3D::entitiesInScreen++;
+			cout << "Entities In Screen: " << Entity3D::entitiesInScreen << endl;*/
+		}
+		
 		//system("cls");
-		cout << "Entities In Screen: " << Entity3D::entitiesInScreen.size() << endl;
+		
 		//cout << ent->GetName() << " is IN frustum" << endl;
 	}
 	return isCurrentlyInFrustum;

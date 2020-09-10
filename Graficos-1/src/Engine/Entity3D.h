@@ -88,7 +88,10 @@ public:
 	void GetAllChildsNames();
 	void GetAllChildsTypes();
 	bool isInFrustum;
-	static vector<Entity3D*> entitiesInScreen;
+	int lastVisibilityState = -1;
+	void SetIsInFrustumAll(bool frustumState);
+	bool alreadyDraw;
+	static int entitiesInScreen;
 	glm::mat4 worldModel = glm::mat4(1.0f);
 };
 

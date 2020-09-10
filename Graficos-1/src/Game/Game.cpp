@@ -37,7 +37,7 @@ bool Game::OnStart()
 
 	cam->SetCameraSpeed(2.5f);
 	
-	m = new Model("res/model/backpack/backpack.obj", true, false);
+	m = new Model("res/model/excalibur.fbx", true, false);
 	m->SetName("BACKPACK");
 
 	//m2 = new Model("res/model/spider/Only_Spider_with_Animations_Export.obj", true);

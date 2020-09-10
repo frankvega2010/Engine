@@ -6,7 +6,7 @@
 #include "Camera.h"
 #include "Model.h"
 
-vector<Entity3D*> Entity3D::entitiesInScreen;
+int Entity3D::entitiesInScreen;
 
 Entity3D::Entity3D(Entity3D* newParent)
 {
@@ -153,6 +153,16 @@ void Entity3D::Draw(Shader shader)
 	{
 		Entity3D* ent = (*itBeg);
 
+		if (!Renderer::renderer->isBSPEnabled)
+		{
+			ent->isVisible = true;
+		}
+
+		if (!Renderer::renderer->isFrustumCullingEnabled)
+		{
+			ent->isInFrustum = true;
+		}
+
 		if (isBSP || (ent->isVisible && ent->isInFrustum))
 		{
 			if (ent->entityType == mesh)
@@ -174,7 +184,7 @@ void Entity3D::Draw(Shader shader)
 			}
 		}
 
-		
+		//ent->isInFrustum = false;
 		//ent->SetVisibility(true);
 		//ent->isVisible = true;
 	}
@@ -222,6 +232,26 @@ void Entity3D::GetAllChildsTypes()
 	for (list<Entity3D*>::iterator itBeg = childs.begin(); itBeg != childs.end(); ++itBeg)
 	{
 		(*itBeg)->GetAllChildsTypes();
+	}
+}
+
+void Entity3D::SetIsInFrustumAll(bool frustumState)
+{
+	bool canChange = false;
+	if (isInFrustum != frustumState)
+	{
+		canChange = true;
+	}
+
+	isInFrustum = frustumState;
+
+	if (GetChilds().size() > 0)
+	{
+		for (list<Entity3D*>::iterator itBeg = childs.begin(); itBeg != childs.end(); ++itBeg)
+		{
+			Entity3D* ent = (*itBeg);
+			ent->SetIsInFrustumAll(isInFrustum);
+		}
 	}
 }
 
@@ -284,76 +314,94 @@ void Entity3D::SetIsRoot(bool rootState)
 
 void Entity3D::SetVisibilityAll(bool visState)
 {
-	bool canChange = false;
-	if (isVisible != visState)
-	{
-		canChange = true;
-	}
+	bool initialState = isVisible;
 
-
+	lastVisibilityState = isVisible;
 	isVisible = visState;
 
-	if (canChange)
+	if (initialState != isVisible)
 	{
+		//lastVisibilityState = initialState;
 		if (isVisible)
 		{
-			//Entity3D::entitiesInScreen.insert(Entity3D::entitiesInScreen.begin(), this);
-			Entity3D::entitiesInScreen.push_back(this);
+			if (isInFrustum)
+			{
+				if (entityType == mesh)
+				{
+					Entity3D::entitiesInScreen++;
+					//alreadyDraw = true;
+				}
+			}
+
 		}
 		else
 		{
-			if (Entity3D::entitiesInScreen.size() > 0)
+			if (entityType == mesh)
 			{
-				Entity3D::entitiesInScreen.pop_back();
-			}
-			/*Entity3D::entitiesInScreen.erase(remove_if(Entity3D::entitiesInScreen.begin(), Entity3D::entitiesInScreen.end(), [this](Entity3D* entity)
-			{
-				if (this == entity)
+				Entity3D::entitiesInScreen--;
+				//alreadyDraw = false;
+				if (Entity3D::entitiesInScreen < 0)
 				{
-					return true;
+					Entity3D::entitiesInScreen = 0;
 				}
-			}), Entity3D::entitiesInScreen.end());*/
+			}
 
 		}
-		//system("cls");
-		cout << "Entities In Screen: " << Entity3D::entitiesInScreen.size() << endl;
+
+		cout << "Entities In Screen: " << Entity3D::entitiesInScreen << endl;
 	}
 	
-
-	for (list<Entity3D*>::iterator itBeg = childs.begin(); itBeg != childs.end(); ++itBeg)
+	if (GetChilds().size() > 0)
 	{
-		Entity3D* ent = (*itBeg);
-		ent->SetVisibilityAll(isVisible);
+		for (list<Entity3D*>::iterator itBeg = childs.begin(); itBeg != childs.end(); ++itBeg)
+		{
+			Entity3D* ent = (*itBeg);
+			ent->SetVisibilityAll(isVisible);
+		}
 	}
+
+	
 }
 
 void Entity3D::SetVisibility(bool visState)
 {
-	bool canChange = false;
-	if (isVisible != visState)
-	{
-		canChange = true;
-	}
+	bool initialState = isVisible;
 
+	lastVisibilityState = isVisible;
 	isVisible = visState;
 
-	if (canChange)
+	if (initialState != isVisible)
 	{
+		//lastVisibilityState = initialState;
+
 		if (isVisible)
 		{
-			Entity3D::entitiesInScreen.push_back(this);
+			if (isInFrustum)
+			{
+				if (entityType == mesh)
+				{
+					Entity3D::entitiesInScreen++;
+					//alreadyDraw = true;
+				}
+				
+			}
+
 		}
 		else
 		{
-			if (Entity3D::entitiesInScreen.size() > 0)
+			if (entityType == mesh)
 			{
-				Entity3D::entitiesInScreen.pop_back();
+				Entity3D::entitiesInScreen--;
+				//alreadyDraw = false;
+				if (Entity3D::entitiesInScreen < 0)
+				{
+					Entity3D::entitiesInScreen = 0;
+				}
 			}
+
 		}
 
-		//system("cls");
-		//Entity3D::entitiesInScreen.max_size
-		cout << "Entities In Screen: " << Entity3D::entitiesInScreen.size() << endl;
+		cout << "Entities In Screen: " << Entity3D::entitiesInScreen << endl;
 	}
 
 }

@@ -182,7 +182,7 @@ void Renderer::CollectAllRootEntities(list<Entity3D*>& entities, Entity3D* entit
 	for (list<Entity3D*>::iterator itBeg = entity->GetChilds().begin(); itBeg != entity->GetChilds().end(); ++itBeg)
 	{
 		Entity3D* ent = (*itBeg);
-		if (!ent->GetBSP())
+		if (!ent->GetBSP() && !ent->IsRootEntity())
 		{
 			entities.push_back(ent);
 		}
@@ -192,10 +192,12 @@ void Renderer::CollectAllRootEntities(list<Entity3D*>& entities, Entity3D* entit
 
 void Renderer::CheckSceneVisibility(Entity3D* root)
 {
+	list<Entity3D*> entities;
+	CollectAllRootEntities(entities, root); // Agarra todas las entities principales (root de modelos)
+
 	if (isBSPEnabled)
 	{
-		list<Entity3D*> entities;
-		CollectAllRootEntities(entities, root); // Agarra todas las entities principales (root de modelos)
+		
 		for (int i = 0; i < bspPlanes.size(); i++)
 		{
 			bspPlanes[i].SetCameraSide(bspPlanes[i].CalculateSide(Camera::thisCam->GetCameraPosition()));
@@ -212,7 +214,17 @@ void Renderer::CheckSceneVisibility(Entity3D* root)
 	}
 
 	if (isFrustumCullingEnabled)
-		CheckEntityVisibility(root);
+	{
+		if (entities.size() > 0)
+		{
+			for (list<Entity3D*>::iterator itBeg = entities.begin(); itBeg != entities.end(); ++itBeg)
+			{
+				Entity3D* ent = (*itBeg);
+				CheckEntityVisibility(ent);
+			}
+		}
+	}
+		
 }
 
 bool Renderer::IsEntityInCameraSide(Entity3D* entity, BSP currentPlane)
@@ -250,20 +262,106 @@ bool Renderer::IsEntityInCameraSide(Entity3D* entity, BSP currentPlane)
 
 void Renderer::CheckEntityVisibility(Entity3D* toRender)
 {
-	if (!toRender->GetBSP())
+	bool initialBoolState = toRender->isInFrustum;
+
+	if (!toRender->GetBSP() && !toRender->IsRootEntity())
 	{
 		toRender->isInFrustum = f->IsBoxVisible(toRender->AABB->GetMin(), toRender->AABB->GetMax(), toRender, toRender->isInFrustum);
 
-		if (toRender->isInFrustum)
+		if (isBSPEnabled)
 		{
-			for (list<Entity3D*>::iterator itBeg = toRender->GetChilds().begin(); itBeg != toRender->GetChilds().end(); ++itBeg)
+			if (initialBoolState != toRender->isInFrustum)
 			{
-				Entity3D* ent = (*itBeg);
-				CheckEntityVisibility(ent);
+				if (toRender->GetVisibility() == toRender->lastVisibilityState)
+				{
+					if (toRender->GetVisibility() && toRender->isInFrustum)
+					{
+						if (toRender->entityType == mesh)
+						{
+							Entity3D::entitiesInScreen++;
+						}
+
+					}
+					else
+					{
+						Entity3D::entitiesInScreen--;
+						if (Entity3D::entitiesInScreen < 0)
+						{
+							Entity3D::entitiesInScreen = 0;
+						}
+					}
+
+					cout << "1 Entities In Screen: " << Entity3D::entitiesInScreen << endl;
+				}
+
+				
+			}
+
+			//cout << "VIS " << toRender->GetVisibility() << endl;
+
+			/*if (!toRender->GetVisibility() != toRender->lastVisibilityState)
+			{
+				if ((toRender->GetVisibility() && toRender->isInFrustum) == true)
+				{
+					if (toRender->entityType == mesh)
+					{
+						Entity3D::entitiesInScreen++;
+					}
+				}
+				else
+				{
+					Entity3D::entitiesInScreen--;
+					if (Entity3D::entitiesInScreen < 0)
+					{
+						Entity3D::entitiesInScreen = 0;
+					}
+				}
+
+				cout << "2 Entities In Screen: " << Entity3D::entitiesInScreen << endl;
+			}*/
+		}
+		else
+		{
+			if (initialBoolState != toRender->isInFrustum)
+			{
+				if (toRender->isInFrustum)
+				{
+					if (toRender->entityType == mesh)
+					{
+						Entity3D::entitiesInScreen++;
+					}
+				}
+				else
+				{
+
+					Entity3D::entitiesInScreen--;
+					if (Entity3D::entitiesInScreen < 0)
+					{
+						Entity3D::entitiesInScreen = 0;
+					}
+				}
+
+				cout << "3 Entities In Screen: " << Entity3D::entitiesInScreen << endl;
 			}
 		}
+
+		if (toRender->isInFrustum)
+		{
+			if (toRender->GetChilds().size() > 0)
+			{
+				for (list<Entity3D*>::iterator itBeg = toRender->GetChilds().begin(); itBeg != toRender->GetChilds().end(); ++itBeg)
+				{
+					Entity3D* ent = (*itBeg);
+					CheckEntityVisibility(ent);
+				}
+			}
+		}
+		else
+		{
+			toRender->SetIsInFrustumAll(false);
+		}
 	}
-	
+
 }
 
 Renderer::Renderer() {
