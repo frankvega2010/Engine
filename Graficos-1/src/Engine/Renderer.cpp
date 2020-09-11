@@ -210,6 +210,12 @@ void Renderer::CheckSceneVisibility(Entity3D* root)
 
 				return toRemove;
 			}), entities.end());
+
+			if (showBSPCulledEntities)
+			{
+				cout << "BSP Entities In Screen: " << Entity3D::entitiesInScreen << endl;
+			}
+			
 		}
 	}
 
@@ -253,7 +259,7 @@ bool Renderer::IsEntityInCameraSide(Entity3D* entity, BSP currentPlane)
 		{
 			Entity3D* ent = (*itBeg);
 
-			IsEntityInCameraSide(ent, currentPlane);
+			toRemove = IsEntityInCameraSide(ent, currentPlane);
 		}
 	}
 
@@ -262,19 +268,19 @@ bool Renderer::IsEntityInCameraSide(Entity3D* entity, BSP currentPlane)
 
 void Renderer::CheckEntityVisibility(Entity3D* toRender)
 {
-	bool initialBoolState = toRender->isInFrustum;
+	bool initialFrustumState = toRender->GetIsInFrustum();
 
 	if (!toRender->GetBSP() && !toRender->IsRootEntity())
 	{
-		toRender->isInFrustum = f->IsBoxVisible(toRender->AABB->GetMin(), toRender->AABB->GetMax(), toRender, toRender->isInFrustum);
+		toRender->SetIsInFrustum(f->IsBoxVisible(toRender->AABB->GetMin(), toRender->AABB->GetMax(), toRender, toRender->GetIsInFrustum()));
 
 		if (isBSPEnabled)
 		{
-			if (initialBoolState != toRender->isInFrustum)
+			if (initialFrustumState != toRender->GetIsInFrustum())
 			{
-				if (toRender->GetVisibility() == toRender->lastVisibilityState)
+				if (toRender->GetVisibility() == toRender->GetLastVisibilityState())
 				{
-					if (toRender->GetVisibility() && toRender->isInFrustum)
+					if (toRender->GetVisibility() && toRender->GetIsInFrustum())
 					{
 						if (toRender->entityType == mesh)
 						{
@@ -291,40 +297,15 @@ void Renderer::CheckEntityVisibility(Entity3D* toRender)
 						}
 					}
 
-					cout << "1 Entities In Screen: " << Entity3D::entitiesInScreen << endl;
+					cout << "FRUSTUM Entities In Screen: " << Entity3D::entitiesInScreen << endl;
 				}
-
-				
 			}
-
-			//cout << "VIS " << toRender->GetVisibility() << endl;
-
-			/*if (!toRender->GetVisibility() != toRender->lastVisibilityState)
-			{
-				if ((toRender->GetVisibility() && toRender->isInFrustum) == true)
-				{
-					if (toRender->entityType == mesh)
-					{
-						Entity3D::entitiesInScreen++;
-					}
-				}
-				else
-				{
-					Entity3D::entitiesInScreen--;
-					if (Entity3D::entitiesInScreen < 0)
-					{
-						Entity3D::entitiesInScreen = 0;
-					}
-				}
-
-				cout << "2 Entities In Screen: " << Entity3D::entitiesInScreen << endl;
-			}*/
 		}
 		else
 		{
-			if (initialBoolState != toRender->isInFrustum)
+			if (initialFrustumState != toRender->GetIsInFrustum())
 			{
-				if (toRender->isInFrustum)
+				if (toRender->GetIsInFrustum())
 				{
 					if (toRender->entityType == mesh)
 					{
@@ -341,11 +322,11 @@ void Renderer::CheckEntityVisibility(Entity3D* toRender)
 					}
 				}
 
-				cout << "3 Entities In Screen: " << Entity3D::entitiesInScreen << endl;
+				cout << "Entities In Screen: " << Entity3D::entitiesInScreen << endl;
 			}
 		}
 
-		if (toRender->isInFrustum)
+		if (toRender->GetIsInFrustum())
 		{
 			if (toRender->GetChilds().size() > 0)
 			{

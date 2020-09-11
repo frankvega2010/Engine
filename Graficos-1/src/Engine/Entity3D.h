@@ -32,10 +32,11 @@ protected:
 	vec3 position;
 	vec3 rotation;
 	vec3 scale;
-	
+	bool isInFrustum;
 	bool isRoot;
-	bool isVisible;
+	int isVisible = -1;
 	bool isBSP;
+	int lastVisibilityState = -1;
 	glm::mat4 modelMatrix = glm::mat4(1.0f);
 	
 	CollisionBox* collisionBox;
@@ -81,16 +82,18 @@ public:
 	void SetBSP(bool bspState);
 	bool IsRootEntity();
 	void SetIsRoot(bool rootState);
-	void SetVisibilityAll(bool visState);
-	void SetVisibility(bool visState);
+	void SetVisibilityAll(int visState);
+	void SetVisibility(int visState);
 	bool GetVisibility();
+	int GetLastVisibilityState();
+	bool GetIsInFrustum();
+	void SetIsInFrustum(bool frustumState);
 	////////////////////////////
 	void GetAllChildsNames();
 	void GetAllChildsTypes();
-	bool isInFrustum;
-	int lastVisibilityState = -1;
+	int lastPlaneIndex = 0;
+	int lastPlaneBool = -1;
 	void SetIsInFrustumAll(bool frustumState);
-	bool alreadyDraw;
 	static int entitiesInScreen;
 	glm::mat4 worldModel = glm::mat4(1.0f);
 };

@@ -54,6 +54,7 @@ public:
 	void CheckEntityVisibility(Entity3D* toRender);
 	bool isBSPEnabled = true;
 	bool isFrustumCullingEnabled = true;
+	bool showBSPCulledEntities = false;
 	bool IsEntityInCameraSide(Entity3D* entity, BSP currentPlane);
 	static Camera* cam;
 	
