@@ -62,6 +62,7 @@ public:
 	static Renderer* renderer;
 	
 	Frustum* f;
+	list<Entity3D*> entitiesRendered;
 
 	Renderer();
 	~Renderer();

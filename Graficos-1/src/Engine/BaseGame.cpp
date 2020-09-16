@@ -73,7 +73,6 @@ Entity3D* BaseGame::GetRootEntity()
 }
 
 bool BaseGame::Stop() {
-	cout << "GameBase::Stop()" << endl;
 	OnStop();
 	render->Stop();
 	window->Stop();
