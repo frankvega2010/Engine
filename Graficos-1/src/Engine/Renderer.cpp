@@ -266,6 +266,11 @@ bool Renderer::IsEntityInCameraSide(Entity3D* entity, BSP currentPlane)
 	return toRemove;
 }
 
+void Renderer::TurnOffEntityCounter()
+{
+	Entity3D::entitiesInScreen = 0;
+}
+
 void Renderer::CheckEntityVisibility(Entity3D* toRender)
 {
 	bool initialFrustumState = toRender->GetIsInFrustum();

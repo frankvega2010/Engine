@@ -37,18 +37,15 @@ bool Game::OnStart()
 
 	cam->SetCameraSpeed(2.5f);
 	
-	m = new Model("res/model/nanosuit.obj", true, false);
+	m = new Model("res/model/nanosuit.obj", false, false);
 	m->SetName("Nanosuit");
 
-	m2 = new Model("res/model/nanosuit.obj", true, false);
+	m2 = new Model("res/model/nanosuit.obj", false, false);
 	
-	m3 = new Model("res/model/nanosuit.obj", true, false);
-	m4 = new Model("res/model/nanosuit.obj", true, false);
+	m3 = new Model("res/model/nanosuit.obj", false, false);
+	m4 = new Model("res/model/nanosuit.obj", false, false);
 
-
-	//m2 = new Model("res/model/spider/Only_Spider_with_Animations_Export.obj", true);
-
-	planes = new Model("res/model/Planes.fbx", true, true);
+	planes = new Model("res/model/Planes.fbx", false, true);
 
 	m->SetPos(vec3(0.f, -1.f, 0.f));
 	m2->SetPos(vec3(-12.f, -1.f, 0.f));
@@ -58,12 +55,6 @@ bool Game::OnStart()
 	m2->SetScale(vec3(0.5f, 0.5f, 0.5f));
 	m3->SetScale(vec3(0.5f, 0.5f, 0.5f));
 	m4->SetScale(vec3(0.5f, 0.5f, 0.5f));
-	
-	/*m2->SetParent(m);
-	
-	m3->SetParent(m);
-	
-	m4->SetParent(m);*/
 
 	lightsList = new list<Light*>();
 	
@@ -85,43 +76,21 @@ bool Game::OnStart()
 		(*iB)->SetDiffuse(diffuse);
 		(*iB)->SetSpecular(specular);
 	}
-
-	//rootEntity;
 	
 	BaseGame::GetRootEntity();
 
 	return true;
 }
 
-vec2 prevPos;
-
-
-float xPos = 0.0f;
-float yRot = 0.0f;
-
-float yRot2 = 0.f;
-
-float at = 1.0f;
-
-vec3 newscale = { 1.f,1.f,1.f };
-
-//Entity3D* m5;
-//Entity3D* m6;
-
-//Entity3D* grupo;
-//Entity3D* gruposub1;
-//Entity3D* gruposub2;
-
 bool Game::OnUpdate()
 {
 	shad->use();
 	shad->setVec3("viewPosition", cam->GetCameraPosition());
 	shad->setVec3("viewDirection", glm::normalize(cam->GetCameraDirection()));
-	
 
 	glm::vec3 objColor = { 1.0f,1.0f,1.0f };
 
-	pointLight->SetAttenuation(at);
+	pointLight->SetAttenuation(1.0f);
 	
 	//m->SetPos(plpos);
 
@@ -141,92 +110,46 @@ bool Game::OnUpdate()
 	}
 	
 	cam->UpdateCamera();
-	
-	//point directionalLight input
-	if(Input::GetKeyPressed(GLFW_KEY_I))
-	{
-		plpos.z += BaseGame::GetDeltaTime() * 100.0f;
-	}
-	if (Input::GetKeyPressed(GLFW_KEY_K))
-	{
-		plpos.z -= BaseGame::GetDeltaTime() * 100.0f;
-	}
-	if (Input::GetKeyPressed(GLFW_KEY_J))
-	{
-		plpos.x -= BaseGame::GetDeltaTime() * 100.0f;
-	}
-	if (Input::GetKeyPressed(GLFW_KEY_L))
-	{
-		plpos.x += BaseGame::GetDeltaTime() * 100.0f;
-	}
-	if (Input::GetKeyPressed(GLFW_KEY_5))
-	{
-		//m5 = BaseGame::GetRootEntity()->GetChild("Cylinder.034__0");
-		//GetRootEntity()->GetAllChildsTypes();
-		//m2->SetParent(m5);
-		//m6 = BaseGame::GetRootEntity()->GetChild("Cylinder.029__0");
-		//m5->SetParent(m6);
-	}
-
-	if (Input::GetKeyPressed(GLFW_KEY_6))
-	{
-		/*grupo = BaseGame::GetRootEntity()->GetChild("group");
-		gruposub1 = BaseGame::GetRootEntity()->GetChild("Cube.037__0");
-		gruposub2 = BaseGame::GetRootEntity()->GetChild("Cylinder.033__0");*/
-	}
-	
-	/*if(Input::GetKeyPressed(GLFW_KEY_SPACE))
-	{
-		newscale = vec3(1.f, 1.f, 1.f) + vec3(10.f) * BaseGame::GetDeltaTime();
-		m3->SetScale(newscale);
-	}
-	
-	if (Input::GetKeyPressed(GLFW_KEY_C))
-	{
-		newscale = vec3(1.f, 1.f, 1.f) - vec3(10.f) * BaseGame::GetDeltaTime();
-		m3->SetScale(newscale);
-	}*/
 
 	if(Input::GetKeyReleased(GLFW_KEY_F))
 	{
 		spotLight->SetActive(!spotLight->GetActive());
 	}
 
-	if (Input::GetKeyReleased(GLFW_KEY_T))
+	if (Input::GetKeyReleased(GLFW_KEY_3))
 	{
 		render->showBSPCulledEntities = !render->showBSPCulledEntities;
 	}
-	if (Input::GetKeyReleased(GLFW_KEY_Y))
+
+	if (Input::GetKeyPressedOnce(GLFW_KEY_1))
 	{
-		//gruposub1->SetPos(vec3(100.f*BaseGame::GetDeltaTime(), 0.f, 0.f));
-	}
-	if (Input::GetKeyReleased(GLFW_KEY_U))
-	{
-		//gruposub2->SetPos(vec3(-100.f*BaseGame::GetDeltaTime(), 0.f, 0.f));
+		render->isBSPEnabled = !render->isBSPEnabled;
+
+		/*if (!render->isBSPEnabled)
+		{
+			render->TurnOffEntityCounter();
+		}*/
 	}
 
-	if (Input::GetKeyReleased(GLFW_KEY_N))
+	if (Input::GetKeyPressedOnce(GLFW_KEY_2))
 	{
-		newscale = vec3(1.f, 1.f, 1.f) + vec3(10.f) * BaseGame::GetDeltaTime();
-		//grupo->SetScale(newscale);
-	}
-	if (Input::GetKeyReleased(GLFW_KEY_M))
-	{
-		newscale = vec3(1.f, 1.f, 1.f) - vec3(10.f) * BaseGame::GetDeltaTime();
-		//grupo->SetScale(newscale);
+		render->isFrustumCullingEnabled = !render->isFrustumCullingEnabled;
+		/*if (!render->isFrustumCullingEnabled)
+		{
+			render->TurnOffEntityCounter();
+		}*/
 	}
 	
 	//model translation
 	if (Input::GetKeyPressed(GLFW_KEY_RIGHT))
 	{
-		m->SetPos(vec3(25.f * BaseGame::GetDeltaTime(), 0.f, 0.f));
+		m->SetPos(vec3(-25.f * BaseGame::GetDeltaTime(), 0.f, 0.f));
 	}
 
 	if (Input::GetKeyPressed(GLFW_KEY_LEFT))
 	{
-		m->SetPos(vec3(-25.f * BaseGame::GetDeltaTime(), 0.f, 0.f));
+		m->SetPos(vec3(25.f * BaseGame::GetDeltaTime(), 0.f, 0.f));
 	}
-
 	
 	if (Input::GetKeyPressed(GLFW_KEY_UP))
 	{

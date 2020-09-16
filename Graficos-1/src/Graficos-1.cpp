@@ -6,7 +6,7 @@ void main()
 	Game* g = new Game();
 	
 
-	if (g->Start(600, 800, (char*) "BOCA JUNIORS"))
+	if (g->Start(600, 800, (char*) "Boke Engine Mark II"))
 	{
 		g->Loop();
 	}
