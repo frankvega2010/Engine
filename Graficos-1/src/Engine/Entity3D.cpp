@@ -246,6 +246,38 @@ void Entity3D::SetIsInFrustumAll(bool frustumState)
 
 	isInFrustum = frustumState;
 
+	bool found = (std::find(Renderer::renderer->entitiesRendered.begin(), Renderer::renderer->entitiesRendered.end(), this) != Renderer::renderer->entitiesRendered.end());
+
+	//BSP ENabled
+	if (isInFrustum)
+	{
+		if (isVisible)
+		{
+			if (entityType == mesh)
+			{
+				Entity3D::entitiesInScreen++;
+				if (!found)
+				{
+					Renderer::renderer->entitiesRendered.push_back(this);
+					std::cout << Renderer::renderer->entitiesRendered.size() << endl;
+				}
+			}
+		}
+	}
+	else
+	{
+		if (entityType == mesh)
+		{
+			if (found)
+			{
+				Renderer::renderer->entitiesRendered.remove(this);
+				std::cout << Renderer::renderer->entitiesRendered.size() << endl;
+			}
+		}
+		
+	}
+
+
 	if (GetChilds().size() > 0)
 	{
 		for (list<Entity3D*>::iterator itBeg = childs.begin(); itBeg != childs.end(); ++itBeg)
