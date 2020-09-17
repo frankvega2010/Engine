@@ -41,7 +41,6 @@ bool Game::OnStart()
 	m->SetName("Nanosuit");
 
 	m2 = new Model("res/model/nanosuit.obj", false, false);
-	
 	m3 = new Model("res/model/nanosuit.obj", false, false);
 	m4 = new Model("res/model/nanosuit.obj", false, false);
 
@@ -51,6 +50,7 @@ bool Game::OnStart()
 	m2->SetPos(vec3(-12.f, -1.f, 0.f));
 	m3->SetPos(vec3(0.f, -1.f, 12.f));
 	m4->SetPos(vec3(0.f, -1.f, -12.f));
+
 	m->SetScale(vec3(0.5f, 0.5f, 0.5f));
 	m2->SetScale(vec3(0.5f, 0.5f, 0.5f));
 	m3->SetScale(vec3(0.5f, 0.5f, 0.5f));

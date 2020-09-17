@@ -94,7 +94,6 @@ public:
 	int lastPlaneIndex = 0;
 	int lastPlaneBool = -1;
 	void SetIsInFrustumAll(bool frustumState);
-	static int entitiesInScreen;
 	glm::mat4 worldModel = glm::mat4(1.0f);
 };
 

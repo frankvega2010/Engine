@@ -7,7 +7,6 @@ using namespace std;
 Renderer* Renderer::renderer = nullptr;
 Camera* Renderer::cam = new Camera();
 vector<BSP> Renderer::bspPlanes;
-float test = 0;
 
 bool Renderer::Start(Window* wnd) {
 	cout << "Renderer::Start()" << endl;
@@ -208,15 +207,8 @@ void Renderer::CheckSceneVisibility(Entity3D* root)
 				// para que el otro plano no lo tenga que chequear de nuevo.
 
 				const bool toRemove = Renderer::renderer->IsEntityInCameraSide(entity, bspPlanes[i]);
-
 				return toRemove;
 			}), entities.end());
-
-			if (showBSPCulledEntities)
-			{
-				cout << "BSP Entities In Screen: " << Entity3D::entitiesInScreen << endl;
-			}
-			
 		}
 	}
 
@@ -267,14 +259,11 @@ bool Renderer::IsEntityInCameraSide(Entity3D* entity, BSP currentPlane)
 	return toRemove;
 }
 
-void Renderer::TurnOffEntityCounter()
-{
-	Entity3D::entitiesInScreen = 0;
-}
-
 void Renderer::CheckEntityVisibility(Entity3D* toRender)
 {
 	bool initialFrustumState = toRender->GetIsInFrustum();
+
+	//chequea si la entidad esta en la lista
 	bool found = (std::find(entitiesRendered.begin(), entitiesRendered.end(), toRender) != entitiesRendered.end());
 
 	if (!toRender->GetBSP() && !toRender->IsRootEntity())
@@ -287,41 +276,20 @@ void Renderer::CheckEntityVisibility(Entity3D* toRender)
 			{
 				if (toRender->entityType == mesh)
 				{
-					Entity3D::entitiesInScreen++;
 					if (!found)
 					{
 						entitiesRendered.push_back(toRender);
 						std::cout << entitiesRendered.size() << endl;
 					}
-
 				}
-
 			}
 			else
 			{
-				Entity3D::entitiesInScreen--;
 				if (found)
 				{
 					entitiesRendered.remove(toRender);
 					std::cout << entitiesRendered.size() << endl;
 				}
-				if (Entity3D::entitiesInScreen < 0)
-				{
-					Entity3D::entitiesInScreen = 0;
-				}
-
-			}
-
-			if (initialFrustumState != toRender->GetIsInFrustum())
-			{
-				if (toRender->GetVisibility() == toRender->GetLastVisibilityState())
-				{
-					
-
-					//cout << "FRUSTUM Entities In Screen: " << Entity3D::entitiesInScreen << endl;
-				}
-
-				
 			}
 		}
 		else
@@ -332,7 +300,6 @@ void Renderer::CheckEntityVisibility(Entity3D* toRender)
 				{
 					if (toRender->entityType == mesh)
 					{
-						Entity3D::entitiesInScreen++;
 						if (!found) 
 						{
 							entitiesRendered.push_back(toRender);
@@ -342,20 +309,12 @@ void Renderer::CheckEntityVisibility(Entity3D* toRender)
 				}
 				else
 				{
-
-					Entity3D::entitiesInScreen--;
 					if (found)
 					{
 						entitiesRendered.remove(toRender);
 						std::cout << entitiesRendered.size() << endl;
 					}
-					if (Entity3D::entitiesInScreen < 0)
-					{
-						Entity3D::entitiesInScreen = 0;
-					}
 				}
-
-				cout << "Entities In Screen: " << entitiesRendered.size() << endl;
 			}
 		}
 
@@ -374,27 +333,7 @@ void Renderer::CheckEntityVisibility(Entity3D* toRender)
 		{
 			toRender->SetIsInFrustumAll(false);
 		}
-
-		/*if (!toRender->GetBSP())
-		{
-			if (toRender->GetVisibility())
-			{
-				if (found) {
-					entitiesRendered.push_back(toRender);
-					std::cout << entitiesRendered.size() << endl;
-				}
-			}
-			else
-			{
-				if (!found)
-				{
-					entitiesRendered.remove(toRender);
-					std::cout << entitiesRendered.size() << endl;
-				}
-			}
-		}*/
 	}
-
 }
 
 Renderer::Renderer() {

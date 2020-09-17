@@ -56,7 +56,6 @@ public:
 	bool isFrustumCullingEnabled = true;
 	bool showBSPCulledEntities = false;
 	bool IsEntityInCameraSide(Entity3D* entity, BSP currentPlane);
-	void TurnOffEntityCounter();
 	static Camera* cam;
 	
 	static Renderer* renderer;

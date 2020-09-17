@@ -6,8 +6,6 @@
 #include "Camera.h"
 #include "Model.h"
 
-int Entity3D::entitiesInScreen;
-
 Entity3D::Entity3D(Entity3D* newParent)
 {
 	parent = nullptr;
@@ -187,7 +185,6 @@ void Entity3D::Draw(Shader shader)
 				ent->Draw(shader);
 			}
 		}
-
 	}
 	
 	//AABB->DrawCollisionBox(worldModel);
@@ -255,7 +252,6 @@ void Entity3D::SetIsInFrustumAll(bool frustumState)
 		{
 			if (entityType == mesh)
 			{
-				Entity3D::entitiesInScreen++;
 				if (!found)
 				{
 					Renderer::renderer->entitiesRendered.push_back(this);
@@ -276,7 +272,6 @@ void Entity3D::SetIsInFrustumAll(bool frustumState)
 		}
 		
 	}
-
 
 	if (GetChilds().size() > 0)
 	{
@@ -352,16 +347,6 @@ void Entity3D::SetVisibilityAll(int visState)
 	lastVisibilityState = isVisible;
 	isVisible = visState;
 
-	//cout << "IS VISIBLE " << isVisible << " &  IS VISIBLE INITIAL " << initialState << endl;
-
-	if (lastVisibilityState != isVisible)
-	{
-		
-
-		//cout << "IS VISIBLE " << isVisible << " &  IS IN FRUSTUM " << isInFrustum << endl;
-		//cout << "BSP Entities In Screen: " << Entity3D::entitiesInScreen << endl;
-	}
-
 	bool found = (std::find(Renderer::renderer->entitiesRendered.begin(), Renderer::renderer->entitiesRendered.end(), this) != Renderer::renderer->entitiesRendered.end());
 
 	if (isVisible)
@@ -370,7 +355,6 @@ void Entity3D::SetVisibilityAll(int visState)
 		{
 			if (entityType == mesh)
 			{
-				Entity3D::entitiesInScreen++;
 				if (!found)
 				{
 					Renderer::renderer->entitiesRendered.push_back(this);
@@ -378,7 +362,6 @@ void Entity3D::SetVisibilityAll(int visState)
 				}
 			}
 		}
-
 	}
 	else
 	{
@@ -389,14 +372,7 @@ void Entity3D::SetVisibilityAll(int visState)
 				Renderer::renderer->entitiesRendered.remove(this);
 				std::cout << Renderer::renderer->entitiesRendered.size() << endl;
 			}
-
-			Entity3D::entitiesInScreen--;
-			if (Entity3D::entitiesInScreen < 0)
-			{
-				Entity3D::entitiesInScreen = 0;
-			}
 		}
-
 	}
 	
 	if (GetChilds().size() > 0)
@@ -407,8 +383,6 @@ void Entity3D::SetVisibilityAll(int visState)
 			ent->SetVisibilityAll(isVisible);
 		}
 	}
-
-	
 }
 
 void Entity3D::SetVisibility(int visState)
@@ -419,27 +393,18 @@ void Entity3D::SetVisibility(int visState)
 	isVisible = visState;
 	bool found = (std::find(Renderer::renderer->entitiesRendered.begin(), Renderer::renderer->entitiesRendered.end(), this) != Renderer::renderer->entitiesRendered.end());
 
-	if (lastVisibilityState != isVisible)
-	{
-
-		
-
-		//cout << "BSP Entities In Screen: " << Entity3D::entitiesInScreen << endl;
-	}
 	if (isVisible)
 	{
 		if (isInFrustum)
 		{
 			if (entityType == mesh)
 			{
-				Entity3D::entitiesInScreen++;
 				if (!found)
 				{
 					Renderer::renderer->entitiesRendered.push_back(this);
 					std::cout << Renderer::renderer->entitiesRendered.size() << endl;
 				}
 			}
-
 		}
 
 	}
@@ -452,13 +417,7 @@ void Entity3D::SetVisibility(int visState)
 				Renderer::renderer->entitiesRendered.remove(this);
 				std::cout << Renderer::renderer->entitiesRendered.size() << endl;
 			}
-			Entity3D::entitiesInScreen--;
-			if (Entity3D::entitiesInScreen < 0)
-			{
-				Entity3D::entitiesInScreen = 0;
-			}
 		}
-
 	}
 
 }
