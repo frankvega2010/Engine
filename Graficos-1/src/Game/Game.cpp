@@ -114,11 +114,6 @@ bool Game::OnUpdate()
 		spotLight->SetActive(!spotLight->GetActive());
 	}
 
-	if (Input::GetKeyReleased(GLFW_KEY_3))
-	{
-		render->showBSPCulledEntities = !render->showBSPCulledEntities;
-	}
-
 	if (Input::GetKeyPressedOnce(GLFW_KEY_1))
 	{
 		render->isBSPEnabled = !render->isBSPEnabled;

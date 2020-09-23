@@ -348,9 +348,37 @@ void Entity3D::SetVisibilityAll(int visState)
 
 	bool found = (std::find(Renderer::renderer->entitiesRendered.begin(), Renderer::renderer->entitiesRendered.end(), this) != Renderer::renderer->entitiesRendered.end());
 
-	if (isVisible)
+	if (Renderer::renderer->isFrustumCullingEnabled)
 	{
-		if (isInFrustum)
+		if (isVisible)
+		{
+			if (isInFrustum)
+			{
+				if (entityType == mesh)
+				{
+					if (!found)
+					{
+						Renderer::renderer->entitiesRendered.push_back(this);
+						std::cout << Renderer::renderer->entitiesRendered.size() << endl;
+					}
+				}
+			}
+		}
+		else
+		{
+			if (entityType == mesh)
+			{
+				if (found)
+				{
+					Renderer::renderer->entitiesRendered.remove(this);
+					std::cout << Renderer::renderer->entitiesRendered.size() << endl;
+				}
+			}
+		}
+	}
+	else
+	{
+		if (isVisible)
 		{
 			if (entityType == mesh)
 			{
@@ -361,18 +389,20 @@ void Entity3D::SetVisibilityAll(int visState)
 				}
 			}
 		}
-	}
-	else
-	{
-		if (entityType == mesh)
+		else
 		{
-			if (found)
+			if (entityType == mesh)
 			{
-				Renderer::renderer->entitiesRendered.remove(this);
-				std::cout << Renderer::renderer->entitiesRendered.size() << endl;
+				if (found)
+				{
+					Renderer::renderer->entitiesRendered.remove(this);
+					std::cout << Renderer::renderer->entitiesRendered.size() << endl;
+				}
 			}
 		}
 	}
+
+	
 	
 	if (GetChilds().size() > 0)
 	{
@@ -392,9 +422,37 @@ void Entity3D::SetVisibility(int visState)
 	isVisible = visState;
 	bool found = (std::find(Renderer::renderer->entitiesRendered.begin(), Renderer::renderer->entitiesRendered.end(), this) != Renderer::renderer->entitiesRendered.end());
 
-	if (isVisible)
+	if (Renderer::renderer->isFrustumCullingEnabled)
 	{
-		if (isInFrustum)
+		if (isVisible)
+		{
+			if (isInFrustum)
+			{
+				if (entityType == mesh)
+				{
+					if (!found)
+					{
+						Renderer::renderer->entitiesRendered.push_back(this);
+						std::cout << Renderer::renderer->entitiesRendered.size() << endl;
+					}
+				}
+			}
+		}
+		else
+		{
+			if (entityType == mesh)
+			{
+				if (found)
+				{
+					Renderer::renderer->entitiesRendered.remove(this);
+					std::cout << Renderer::renderer->entitiesRendered.size() << endl;
+				}
+			}
+		}
+	}
+	else
+	{
+		if (isVisible)
 		{
 			if (entityType == mesh)
 			{
@@ -405,16 +463,15 @@ void Entity3D::SetVisibility(int visState)
 				}
 			}
 		}
-
-	}
-	else
-	{
-		if (entityType == mesh)
+		else
 		{
-			if (found)
+			if (entityType == mesh)
 			{
-				Renderer::renderer->entitiesRendered.remove(this);
-				std::cout << Renderer::renderer->entitiesRendered.size() << endl;
+				if (found)
+				{
+					Renderer::renderer->entitiesRendered.remove(this);
+					std::cout << Renderer::renderer->entitiesRendered.size() << endl;
+				}
 			}
 		}
 	}

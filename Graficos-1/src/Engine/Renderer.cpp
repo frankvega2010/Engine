@@ -185,6 +185,26 @@ void Renderer::CollectAllRootEntities(list<Entity3D*>& entities, Entity3D* entit
 		if (!ent->GetBSP() && !ent->IsRootEntity())
 		{
 			entities.push_back(ent);
+			if (!isFrustumCullingEnabled && !isBSPEnabled)
+			{
+				if (ent->GetParent() != nullptr && !ent->GetParent()->IsRootEntity())
+				{
+					//chequea si la entidad esta en la lista
+					bool found = (std::find(entitiesRendered.begin(), entitiesRendered.end(), ent) != entitiesRendered.end());
+
+					if (!found)
+					{
+						entitiesRendered.push_back(ent);
+						std::cout << entitiesRendered.size() << endl;
+					}
+				}
+				
+			}
+		}
+
+		if (!isFrustumCullingEnabled && !isBSPEnabled)
+		{
+			CollectAllRootEntities(entities, ent);
 		}
 				
 	}
@@ -294,26 +314,23 @@ void Renderer::CheckEntityVisibility(Entity3D* toRender)
 		}
 		else
 		{
-			if (initialFrustumState != toRender->GetIsInFrustum())
+			if (toRender->GetIsInFrustum())
 			{
-				if (toRender->GetIsInFrustum())
+				if (toRender->entityType == mesh)
 				{
-					if (toRender->entityType == mesh)
+					if (!found)
 					{
-						if (!found) 
-						{
-							entitiesRendered.push_back(toRender);
-							std::cout << entitiesRendered.size() << endl;
-						}
-					}
-				}
-				else
-				{
-					if (found)
-					{
-						entitiesRendered.remove(toRender);
+						entitiesRendered.push_back(toRender);
 						std::cout << entitiesRendered.size() << endl;
 					}
+				}
+			}
+			else
+			{
+				if (found)
+				{
+					entitiesRendered.remove(toRender);
+					std::cout << entitiesRendered.size() << endl;
 				}
 			}
 		}
