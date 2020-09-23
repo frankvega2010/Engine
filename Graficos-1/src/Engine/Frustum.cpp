@@ -21,10 +21,6 @@ bool Frustum::IsBoxVisible(const glm::vec3& minp, const glm::vec3& maxp, Entity3
 			(glm::dot(m_planes[i], glm::vec4(maxp.x, maxp.y, maxp.z, 1.0f)) < 0.0))
 		{
 			isCurrentlyInFrustum = false;
-			/*if (isCurrentlyInFrustum != isInFrustum)
-			{
-				//cout << ent->GetName() << " is NOT IN frustum" << endl;
-			}*/
 			return isCurrentlyInFrustum;
 		}
 	}
@@ -39,10 +35,7 @@ bool Frustum::IsBoxVisible(const glm::vec3& minp, const glm::vec3& maxp, Entity3
 	out = 0; for (int i = 0; i < 8; i++) out += ((m_points[i].z < minp.z) ? 1 : 0); if (out == 8) return false;
 
 	isCurrentlyInFrustum = true;
-	/*if (isCurrentlyInFrustum != isInFrustum)
-	{
-		//cout << ent->GetName() << " is IN frustum" << endl;
-	}*/
+
 	return isCurrentlyInFrustum;
 }
 

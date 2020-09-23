@@ -92,8 +92,6 @@ bool Game::OnUpdate()
 
 	pointLight->SetAttenuation(1.0f);
 	
-	//m->SetPos(plpos);
-
 	spotLight->SetPosition(cam->GetCameraPosition());
 	spotLight->SetDirection(cam->GetCameraDirection());
 	shad->use();
@@ -124,20 +122,11 @@ bool Game::OnUpdate()
 	if (Input::GetKeyPressedOnce(GLFW_KEY_1))
 	{
 		render->isBSPEnabled = !render->isBSPEnabled;
-
-		/*if (!render->isBSPEnabled)
-		{
-			render->TurnOffEntityCounter();
-		}*/
 	}
 
 	if (Input::GetKeyPressedOnce(GLFW_KEY_2))
 	{
 		render->isFrustumCullingEnabled = !render->isFrustumCullingEnabled;
-		/*if (!render->isFrustumCullingEnabled)
-		{
-			render->TurnOffEntityCounter();
-		}*/
 	}
 	
 	//model translation

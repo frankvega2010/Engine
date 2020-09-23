@@ -88,17 +88,6 @@ void Model::processNode(aiNode *node, const aiScene *scene, Entity3D* par)
 		{
 			thisNode->SetBSP(true);
 		}
-
-		/*if(thisNode->GetName()== "Cube.037__0" || thisNode->GetName() == "Cylinder.033__0")
-		{
-			Entity3D* ent = BaseGame::GetRootEntity()->GetChild("group");
-			if (!ent)
-			{
-				ent = new Entity3D(par);
-				ent->SetName("group");
-			}
-			thisNode->SetParent(ent);
-		}*/
 	}
 
 	if (!thisNode)
@@ -120,10 +109,6 @@ void Model::processNode(aiNode *node, const aiScene *scene, Entity3D* par)
 		if (thisNode)
 			processNode(node->mChildren[i], scene, thisNode);
 	}
-
-	/*vector<glm::vec3> vertices;
-	thisNode->GetVerticesPositions(vertices);*/
-	
 	
 	if(thisNode->entityType == mesh)
 	{

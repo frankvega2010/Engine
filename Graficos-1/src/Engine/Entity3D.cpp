@@ -34,7 +34,6 @@ Entity3D::Entity3D(Entity3D* newParent)
 	
 	collisionBox->GenerateBoundingBox(bounds);
 	AABB->GenerateBoundingBox(bounds);
-	//BaseGame::GetRootEntity()->CalculateBoundsWithChilds();
 }
 
 Entity3D::Entity3D(string newName)
@@ -186,7 +185,7 @@ void Entity3D::Draw(Shader shader)
 			}
 		}
 	}
-	
+	// descomentar para mostrar las cajas de colisiones
 	//AABB->DrawCollisionBox(worldModel);
 }
 

@@ -29,9 +29,6 @@ Camera::Camera(Window* w, glm::vec3 p, glm::vec3 t, glm::vec3 f, glm::vec3 u)
 	cameraTarget = t;
 
 	LookAt();
-
-	// Create frustum
-	// Calculate frustum
 }
 
 void Camera::SetCamera(Window* w, glm::vec3 p, glm::vec3 t, glm::vec3 f, glm::vec3 u)
@@ -43,11 +40,7 @@ void Camera::SetCamera(Window* w, glm::vec3 p, glm::vec3 t, glm::vec3 f, glm::ve
 	cameraPos = p; cameraUp = u; cameraFront = f;
 	cameraTarget = t;
 
-
 	LookAt();
-
-	// Create frustum
-	// Calculate frustum
 }
 
 void Camera::LookAt()
@@ -87,14 +80,9 @@ void Camera::UpdateCamera()
 		moved = true;
 	}
 
-	//frustum->calculate_frustum(actualWindow, cameraRight, up, cameraFront, cameraPos, glm::radians(45.0f), 1.0f, 100.0f);
-
-
 	if (moved)
 	{
-		//frustum->calculate_frustum(actualWindow, cameraRight, up, cameraFront, cameraPos, cameraFOV, cameraNear, cameraFar + 300);
 		LookAt();
-		// Calculate frustum
 	}
 		
 }

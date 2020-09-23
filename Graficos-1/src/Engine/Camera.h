@@ -11,8 +11,6 @@ private:
 	glm::vec3 cameraPos;
 	glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
 	glm::vec3 worldUp;
-	//glm::vec3 up;
-	//glm::vec3 cameraDirection;
 	glm::vec3 cameraRight;
 	glm::vec3 cameraUp;
 
