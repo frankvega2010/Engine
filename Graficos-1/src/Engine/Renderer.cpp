@@ -185,6 +185,7 @@ void Renderer::CollectAllRootEntities(list<Entity3D*>& entities, Entity3D* entit
 		if (!ent->GetBSP() && !ent->IsRootEntity())
 		{
 			entities.push_back(ent);
+
 			if (!isFrustumCullingEnabled && !isBSPEnabled)
 			{
 				if (ent->GetParent() != nullptr && !ent->GetParent()->IsRootEntity())
@@ -288,7 +289,7 @@ void Renderer::CheckEntityVisibility(Entity3D* toRender)
 
 	if (!toRender->GetBSP() && !toRender->IsRootEntity())
 	{
-		toRender->SetIsInFrustum(f->IsBoxVisible(toRender->AABB->GetMin(), toRender->AABB->GetMax(), toRender, toRender->GetIsInFrustum()));
+		toRender->SetIsInFrustum(f->IsBoxVisible(toRender->AABB->GetMin(), toRender->AABB->GetMax(), toRender));
 
 		if (isBSPEnabled)
 		{

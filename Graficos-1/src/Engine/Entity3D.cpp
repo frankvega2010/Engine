@@ -138,9 +138,9 @@ void Entity3D::SetScale(vec3 sc)
 
 void Entity3D::Draw(Shader shader)
 {
-	if (name == "root")
+	if (isRoot)
 	{
-		// inicio de chequeo BSP
+		// inicio de chequeo BSP y Frustum Culling
 		Renderer::renderer->CheckSceneVisibility(this);
 	}
 

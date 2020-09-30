@@ -5,7 +5,7 @@ Frustum::Frustum(glm::mat4 m)
 	UpdateFrustum(m);
 }
 
-bool Frustum::IsBoxVisible(const glm::vec3& minp, const glm::vec3& maxp, Entity3D* ent,const bool isInFrustum) const
+bool Frustum::IsBoxVisible(const glm::vec3& minp, const glm::vec3& maxp, Entity3D* ent) const
 {
 	bool isCurrentlyInFrustum = false;
 	// check box outside/inside of frustum
